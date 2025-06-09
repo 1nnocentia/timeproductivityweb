@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily:{
+                        heading: ['Cinzel', 'serif']
+                    }
+                },
+                colors:{
+                    'text':{
+                        50: '#0f0d0b',
+                        900: '#f4f3f0'
+                    },
+                    'background': {
+                        50: '#100e0a',
+                        100: '#1f1b14',
+                        200: '#3f3727',
+                        300: '#5e523b',
+                        400: '#7d6e4f',
+                        500: '#9d8962',
+                        600: '#b0a182',
+                        700: '#c4b8a1',
+                        800: '#d8d0c0',
+                        900: '#ebe7e0',
+                        950: '#F5F3EF',
+                    },
+                    'primary':{
+                        50: '#110e08',
+                        100: '#231b10',
+                        200: '#453621',
+                        300: '#685131',
+                        400: '#8b6c41',
+                        500: '#ad8752',
+                        600: '#be9f74',
+                        700: '#ceb797',
+                        800: '#decfba',
+                        900: '#efe7dc',
+                        950: '#f7f3ee',
+                    },
+                    'secondary':{
+                        50: '#120e07',
+                        100: '#241b0f',
+                        200: '#48371e',
+                        300: '#6d522c',
+                        400: '#916d3b',
+                        500: '#b5884a',
+                        600: '#c4a06e',
+                        700: '#d3b892',
+                        800: '#e1d0b7',
+                        900: '#f0e7db',
+                        950: '#f8f3ed',
+                    },
+                    'accent':{
+                        50: '#130e06',
+                        100: '#271c0c',
+                        200: '#4e3718',
+                        300: '#745325',
+                        400: '#9b6f31',
+                        500: '#c28b3d',
+                        600: '#cea264',
+                        700: '#dab98b',
+                        800: '#e7d0b1',
+                        900: '#f3e8d8',
+                        950: '#f9f3ec',
+                    },
+                    'red':{
+                        50:'#de2f30',
+                        100:'#e84948',
+                        150:'#f26363'
+                    },
+                    'purple':{
+                        50:'#972de0',
+                        100:'#b247ea',
+                        150:'#cd61f3'
+                    },
+                    'blue':{
+                        50:'#362ee0',
+                        100:'#5348ea',
+                        150:'#6f60f4'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-accent-950">
+    <div class="flex h-screen">
+
+        <!-- SIDEBAR -->
+        <div class="hidden md:flex md:flex-shrink-0 fixed h-screen z-20">
+            <div class="flex flex-col w-60 bg-primary-100">
+                <div class="flex justify-center h-15 pr-5 my-6 pt-6">
+                    <span class="ml-2 text-3xl font-bold text-accent-900 font-heading">Kelompok 2</span>
+                </div>
+
+                <div class="flex flex-col flex-grow p-4 overflow-y-auto scrollbar-hide">
+                    <nav class="flex-1 space-y-4">
+                        <div class="flex hover:bg-accent-900/10 rounded-lg items-center px-2">
+                            <img class="w-10 h-10" src="/Aset PNG/Aset Aplikasi_Profile.png" alt="">
+                            <a href="/profile.html" class="flex items-center px-4 py-3 text-lg font-bold text-accent-900 rounded-lg">
+                                Profile
+                            </a>
+                        </div>
+
+                        <div class="flex hover:bg-accent-900/10 rounded-lg items-center px-2">
+                            <img class="w-10 h-10" src="/Aset PNG/Aset Aplikasi_Dashboard Icon.png" alt="">
+                            <a href="/index.html" class="flex items-center px-4 py-3 text-lg font-bold text-accent-900 rounded-lg">
+                                Dashboard
+                            </a>
+                        </div>
+
+                        <div class="flex bg-accent-900 rounded-lg items-center px-2 border-2 border-accent-400">
+                            <img class="w-10 h-10" src="/Aset PNG/Aset Aplikasi_Calendar Icon.png" alt="">
+                            <a href="/schedule.html" class="flex items-center px-4 py-3 text-lg font-bold text-primary-100 ">
+                                Calendar
+                            </a>
+                        </div>
+                        
+                        <div class="flex hover:bg-accent-900/10 rounded-lg items-center px-2">
+                            <img class="w-10 h-10" src="/Aset PNG/Aset Aplikasi_Setting Icon.png" alt="">
+                            <a href="/settings.html" class="flex items-center px-4 py-3 text-lg font-bold text-accent-900 rounded-lg">
+                                Settings
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dummy Sidebar -->
+        <div class="flex h-screen">
+            <div class="hidden md:block w-60 h-screen bg-primary-100 z-0"></div>
+        </div>
+
+        <!-- Main Calendar Section -->
+        <main class="flex-1 mx-6 my-1">
+            <div class="flex flex-col items-center mt-5">
+                <span class="text-3xl font-bold text-primary-50 font-heading mb-6">Schedule</span>
+            </div>
+            <div class="flex flex-col bg-white text-black rounded-tl-3xl px-8 py-6 relative shadow-lg">
+                <!-- View Switcher -->
+                <div class="flex justify-end mb-4 gap-2">
+                    <button id="dayBtn" class="px-4 py-2 rounded-lg font-semibold bg-accent-300 text-accent-900 hover:bg-accent-400 transition">Day</button>
+                    <button id="monthBtn" class="px-4 py-2 rounded-lg font-semibold bg-accent-300 text-accent-900 hover:bg-accent-400 transition">Month</button>
+                    <button id="yearBtn" class="px-4 py-2 rounded-lg font-semibold bg-accent-300 text-accent-900 hover:bg-accent-400 transition">Year</button>
+                </div>
+                <!-- Calendar Content -->
+                <div id="calendarContent" class="overflow-y-auto max-h-[70vh] pr-2"></div>
+            </div>
+        </main>
+    </div>
+    <script>
+        function getDaysInMonth(year, month) {
+            return new Date(year, month + 1, 0).getDate();
+        }
+        function getMonthName(month) {
+            return ["January","February","March","April","May","June","July","August","September","October","November","December"][month];
+        }
+
+        let currentView = 'month';
+        let selectedDate = new Date();
+
+        function renderDayView(date) {
+            let hoursHtml = '';
+            for (let h = 0; h < 24; h++) {
+                const hourLabel = (h === 0 ? '12:00 AM' : h < 12 ? `${h}:00 AM` : h === 12 ? '12:00 PM' : `${h-12}:00 PM`);
+                hoursHtml += `
+                    <div class="flex items-center gap-4 px-4 py-2 border-b border-accent-200 hover:bg-accent-100 transition">
+                        <span class="w-24 text-right font-semibold text-primary-500">${hourLabel}</span>
+                        <div class="flex-1 h-4"></div>
+                    </div>
+                `;
+            }
+            document.getElementById('calendarContent').innerHTML = `
+                <div class="text-xl font-semibold mb-2">${getMonthName(date.getMonth())} ${date.getDate()}, ${date.getFullYear()}</div>
+                <div class="overflow-y-auto max-h-[60vh] bg-accent-950 rounded-xl shadow-inner mb-4">
+                    ${hoursHtml}
+                </div>
+                <div class="flex justify-end">
+                    <button class="mt-2 px-4 py-2 rounded bg-accent-300 text-accent-900 hover:bg-accent-400" onclick="renderMonthView(selectedDate)">Back to Months</button>
+                </div>
+            `;
+        }
+
+        function renderMonthView(date) {
+            let year = date.getFullYear();
+            let monthsHtml = '';
+            for (let m = 0; m < 12; m++) {
+                const days = getDaysInMonth(year, m);
+                let daysHtml = '';
+                for (let d = 1; d <= days; d++) {
+                    daysHtml += `<button class="w-8 h-8 m-1 rounded-full font-semibold hover:bg-blue-200 transition ${d === date.getDate() && m === date.getMonth() ? 'bg-blue-600 text-white' : 'bg-gray-100 text-black'}" onclick="selectDayFromMonth(${year},${m},${d})">${d}</button>`;
+                }
+                monthsHtml += `
+                    <div class="mb-8 p-4 bg-accent-950 rounded-xl shadow">
+                        <div class="text-lg font-bold mb-2 text-primary-500">${getMonthName(m)} ${year}</div>
+                        <div class="flex flex-wrap">${daysHtml}</div>
+                    </div>
+                `;
+            }
+            document.getElementById('calendarContent').innerHTML = monthsHtml;
+        }
+
+        function renderYearView(date) {
+            let yearsHtml = '';
+            let baseYear = date.getFullYear();
+            for (let y = baseYear - 2; y <= baseYear + 2; y++) {
+                yearsHtml += `<button class="w-32 h-16 m-2 rounded-lg font-semibold hover:bg-blue-200 transition ${y === date.getFullYear() ? 'bg-blue-600 text-white' : 'bg-gray-100 text-black'}" onclick="selectYear(${y})">${y}</button>`;
+            }
+            document.getElementById('calendarContent').innerHTML = `
+                <div class="text-xl font-semibold mb-2">Select Year</div>
+                <div class="flex flex-wrap max-w-3xl">${yearsHtml}</div>
+            `;
+        }
+
+        function selectDayFromMonth(year, month, day) {
+            selectedDate = new Date(year, month, day);
+            renderDayView(selectedDate);
+            currentView = 'day';
+            updateActiveButton();
+        }
+        function selectYear(year) {
+            selectedDate.setFullYear(year);
+            renderMonthView(selectedDate);
+            currentView = 'month';
+            updateActiveButton();
+        }
+
+        function updateActiveButton() {
+            document.getElementById('dayBtn').classList.toggle('bg-accent-400', currentView === 'day');
+            document.getElementById('monthBtn').classList.toggle('bg-accent-400', currentView === 'month');
+            document.getElementById('yearBtn').classList.toggle('bg-accent-400', currentView === 'year');
+        }
+
+        // Button listeners
+        document.getElementById('dayBtn').onclick = () => { renderDayView(selectedDate); currentView = 'day'; updateActiveButton(); };
+        document.getElementById('monthBtn').onclick = () => { renderMonthView(selectedDate); currentView = 'month'; updateActiveButton(); };
+        document.getElementById('yearBtn').onclick = () => { renderYearView(selectedDate); currentView = 'year'; updateActiveButton(); };
+
+        // Initial render
+        renderMonthView(selectedDate);
+        updateActiveButton();
+
+        // Expose for inline onclick
+        window.renderMonthView = renderMonthView;
+        window.selectDayFromMonth = selectDayFromMonth;
+        window.selectYear = selectYear;
+    </script>
+</body>
+</html>
