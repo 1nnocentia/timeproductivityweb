@@ -5,8 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NamaWebsite</title>
     <link rel="stylesheet" href="/dist/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
 </head>
-<body>
-    
+<body class="font-sans text-gray-900 dark:text-white bg-white dark:bg-dark-background transition-color duration-300">
+    <!-- Header Section -->
+     <header class="fixed w-full top-0 z-50 bg-white/95 dark:bg-dark-background/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-xl font-extrabold">NamaWebsite</span>
+                </div>
+                <ul class="hidden md:flex space-x-8">
+                    <li>
+                        <a href="#dashboard" class="text-gray-700 
+                        dark:text-gray-300 
+                        hover:text-primary 
+                        dark:hover:text-primary 
+                        transition-colors">About</a>
+                    </li>
+                    <li>
+                        <a href="#schedule" class="text-gray-700 
+                        dark:text-gray-300 
+                        hover:text-primary 
+                        dark:hover:text-primary 
+                        transition-colors">Skills</a>
+                    </li>
+                    <li>
+                        <a href="#friends" class="text-gray-700 
+                        dark:text-gray-300 
+                        hover:text-primary 
+                        dark:hover:text-primary 
+                        transition-colors">Projects</a>
+                    </li>
+                </ul>
+                <div class="flex items-center space-x-4">
+                    <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
+                    <button title="Profile">
+                        <i class="fa-solid fa-user text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"></i>
+                    </button>
+
+                     <!-- Settings Icon -->
+                    <button title="Settings">
+                        <i class="fa-solid fa-gear text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"></i>
+                    </button>
+
+                     <!-- Logout Icon -->
+                    <button title="Logout">
+                        <i class="fa-solid fa-right-from-bracket text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors"></i>
+                    </button>
+                    
+                    <button id="themeToggle" class="">
+                        <i class="fa-solid fa-moon text-gray-600 dark:text-gray-400"></i>
+                    </button>
+                    <button class="md:hidden p-2" id="menuToggle">
+                        <div class="w-6 h-5 flex flex-col justify-between">
+                            <span class="w-full h-0.5 bg-gray-600 dark:bg-gray-400 transition-all"></span>
+                        </div>
+                    </button>
+                </div>
+            </nav>
+        </div>
+      </header>
 </body>
 </html>
