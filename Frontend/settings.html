@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TICKQUEST</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily:{
+                        heading: ['Cinzel', 'serif']
+                    }
+                },
+
+                colors:{
+                    'text':{
+                        50: '#0f0d0b',
+                        900: '#f4f3f0'
+                    },
+
+                    'background': {
+                        50: '#100e0a',
+                        100: '#1f1b14',
+                        200: '#3f3727',
+                        300: '#5e523b',
+                        400: '#7d6e4f',
+                        500: '#9d8962',
+                        600: '#b0a182',
+                        700: '#c4b8a1',
+                        800: '#d8d0c0',
+                        900: '#ebe7e0',
+                        950: 'F5F3EF',
+                    },
+
+                    'primary':{
+                        50: '#110e08',
+                        100: '#231b10',
+                        200: '#453621',
+                        300: '#685131',
+                        400: '#8b6c41',
+                        500: '#ad8752',
+                        600: '#be9f74',
+                        700: '#ceb797',
+                        800: '#decfba',
+                        900: '#efe7dc',
+                        950: '#f7f3ee',
+                    },
+
+                    'secondary':{
+                        50: '#120e07',
+                        100: '#241b0f',
+                        200: '#48371e',
+                        300: '#6d522c',
+                        400: '#916d3b',
+                        500: '#b5884a',
+                        600: '#c4a06e',
+                        700: '#d3b892',
+                        800: '#e1d0b7',
+                        900: '#f0e7db',
+                        950: '#f8f3ed',
+                    },
+
+                    'accent':{
+                        50: '#130e06',
+                        100: '#271c0c',
+                        200: '#4e3718',
+                        300: '#745325',
+                        400: '#9b6f31',
+                        500: '#c28b3d',
+                        600: '#cea264',
+                        700: '#dab98b',
+                        800: '#e7d0b1',
+                        900: '#f3e8d8',
+                        950: '#f9f3ec',
+                    },
+
+                    'red':{
+                        50:'#de2f30',
+                        100:'#e84948',
+                        150:'#f26363'
+                    },
+
+                    'purple':{
+                        50:'#972de0',
+                        100:'#b247ea',
+                        150:'#cd61f3'
+                    },
+
+                    'blue':{
+                        50:'#362ee0',
+                        100:'#5348ea',
+                        150:'#6f60f4'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-accent-950">
+    <div class="flex h-screen">
+
+        <!-- SIDEBAR -->
+        <div class="hidden md:flex md:flex-shrink-0 fixed h-screen z-20">
+            <div class="flex flex-col w-60 bg-primary-100">
+                <div class="flex justify-center h-15 pr-5 my-6 pt-6">
+                    <span class="ml-2 text-3xl font-bold text-accent-900 font-heading">Kelompok 2</span>
+                </div>
+
+                <div class="flex flex-col flex-grow p-4 overflow-y-auto scrollbar-hide">
+                    <nav class="flex-1 space-y-4">
+                        <div class="flex hover:bg-accent-900/10 rounded-lg items-center px-2">
+                            <img class="w-10 h-10" src="/Aset PNG/Aset Aplikasi_Profile.png" alt="">
+                            <a href="/profile.html" class="flex items-center px-4 py-3 text-lg font-bold text-accent-900 rounded-lg">
+                                Profile
+                            </a>
+                        </div>
+
+                        <div class="flex hover:bg-accent-900/10 rounded-lg items-center px-2">
+                            <img class="w-10 h-10" src="/Aset PNG/Aset Aplikasi_Dashboard Icon.png" alt="">
+                            <a href="/index.html" class="flex items-center px-4 py-3 text-lg font-bold text-accent-900 rounded-lg">
+                                Dashboard
+                            </a>
+                        </div>
+
+                        <div class="flex hover:bg-accent-900/10 rounded-lg items-center px-2">
+                            <img class="w-10 h-10" src="/Aset PNG/Aset Aplikasi_Calendar Icon.png" alt="">
+                            <a href="#" class="flex items-center px-4 py-3 text-lg font-bold text-accent-900 rounded-lg">
+                                Calendar
+                            </a>
+                        </div>
+                        
+                        <div class="flex bg-accent-900 rounded-lg items-center px-2 border-2 border-accent-400">
+                            <img class="w-10 h-10" src="/Aset PNG/Aset Aplikasi_Setting Icon.png" alt="">
+                            <a href="/settings.html" class="flex items-center px-4 py-3 text-lg font-bold text-primary-100 ">
+                                Settings
+                            </a>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dummy Sidebar -->
+        <div class="flex h-screen">
+            <div class="hidden md:block w-60 h-screen bg-primary-100 z-0"></div>
+        </div>
+
+        <!-- Main -->
+        <main class="flex-1 mx-6 my-1">
+            <!-- Atas -->
+            <div class="flex justify-between h-20">
+                <div class="flex items-center">
+                    <img src="Aset PNG/Aset Aplikasi_Personal 2.png" alt="" class="w-12 h-12 rounded-full object-cover border-[1px] border-primary-100">
+                    <span class="text-2xl pl-3 font-semibold text-primary-50 ">Innocentia</span>
+                </div>
+                
+                <div class="flex items-center">
+                    <span class="text-xl pl-3 font-semibold text-primary-50">365 Days</span>
+                    <img src="/Aset PNG/Aset Aplikasi_Api.png" alt="" class="w-10 h-10">
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+</html>
