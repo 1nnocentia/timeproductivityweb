@@ -10,13 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <title>Clockin</title>
 </head>
-<body class="font-sans text-text-950 dark:text-white bg-white dark:bg-dark-background transition-color duration-300">
+<body class="font-sans   transition-color duration-300">
     <!-- Header Section -->
-    <header class="fixed w-full top-0 z-50 bg-primary-500 dark:bg-dark-background/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+    <header class="fixed w-full top-0 z-50 text-text-100 bg-primary-900  backdrop-blur-sm shadow-sm transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <span class="text-xl font-extrabold">CLOCKIN</span>
+                    <span class="text-xl text-text-100 font-extrabold">CLOCKIN</span>
                 </div>
                 <ul class="hidden md:flex space-x-8">
                     <li>
@@ -41,20 +41,21 @@
                         transition-colors">Friends</a>
                     </li>
                 </ul>
+
                 <div class="flex items-center space-x-4">
                     <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
                     <button title="Profile">
-                        <i class="fa-solid fa-user text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"></i>
+                        <i class="fa-solid fa-user text-primary-600 dark:text-primary-400 hover:text-primary dark:hover:text-primary transition-colors"></i>
                     </button>
 
                      <!-- Settings Icon -->
                     <button title="Settings">
-                        <i class="fa-solid fa-gear text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary transition-colors"></i>
+                        <i class="fa-solid fa-gear text-primary-600 dark:text-primary-400  hover:text-primary dark:hover:text-primary transition-colors"></i>
                     </button>
 
                      <!-- Logout Icon -->
                     <button title="Logout">
-                        <i class="fa-solid fa-right-from-bracket text-gray-600 dark:text-gray-400 hover:text-red-500 transition-colors"></i>
+                        <i class="fa-solid fa-right-from-bracket text-primary-600 dark:text-primary-400  hover:text-red-500 transition-colors"></i>
                     </button>
                     
                     <button id="themeToggle" class="">
@@ -66,6 +67,7 @@
                         </div>
                     </button>
                 </div>
+
             </nav>
         </div>
     </header>
@@ -73,8 +75,8 @@
     <section id="top" class="pt-20 mx-9">
         <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
 
-            <div class="flex col-span-1 items-center bg-secondary-500 border p-2">
-                <img class="w-12 h-12" src="/Frontend/Aset_PNG/Aset_Aplikasi_Api.png" alt="">
+            <div class="flex col-span-1 items-center bg-secondary-100 border p-2">
+                <img class="w-12 h-12" src="/assets/Aset_Aplikasi_Api.png" alt="">
                 <div class="flex flex-col ">
                     <span class="text-sm">Your Streak</span>
                     <span class="text-xl font-medium">230 Days</span>
@@ -82,12 +84,12 @@
                 
             </div>
 
-            <div class="flex flex-col col-span-3 bg-secondary-500 border p-2">
-                <span class="text-2xl">Good Morning, User!</span>
+            <div class="flex flex-col col-span-3 bg-secondary-300 border p-2">
+                <span class="text-2xl text-text-100">Good Morning, User!</span>
                 <p>are you lorem ipsum doler sit amet conseqtuer?</p>
             </div>
 
-            <div class="flex col-span-2 items-center bg-secondary-500 border p-2">
+            <div class="flex col-span-2 items-center bg-secondary-800 border p-2">
                 <span>Days</span>
             </div>
         </div>
@@ -96,13 +98,49 @@
     <section id="top" class="pt-2 mx-9">
         <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
 
-            <div class="flex flex-col col-span-3 bg-secondary-500 border p-2">
-                <span class="text-2xl">Good Morning, User!</span>
-                <p>are you lorem ipsum doler sit amet conseqtuer?</p>
+            <div class="flex flex-col col-span-4 bg-secondary-300 border p-2">
+                <span class="text-2xl">Today Schedule</span>
+                <hr class="border-t-2 border-primary-100 my-2">
+
             </div>
 
-            <div class="flex col-span-3 items-center bg-secondary-500 border p-2">
-                <span> apinya emang gitu</span>
+            <div class="flex col-span-2 items-center bg-secondary-800 border p-2">
+                <span>Ongoing Activities</span>
+            </div>
+        </div>
+    </section>
+    
+    <section id="top" class="pt-2 mx-9">
+        <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
+
+            <!-- Progress -->
+            <div class="flex flex-col col-span-4 bg-secondary-300 border p-2">
+                <div class="flex justify-between">
+                    <span class="text-2xl">Progress</span>
+                    <button class="text-sm bg-accent-700 text-text-100 px-3 rounded-[5px] hover:bg-accent-700/80 border-accent-100" >
+                        <a href="#">Show Details</a>
+                    </button>
+                </div>
+                
+                <hr class="border-t-2 border-primary-100 my-2">
+
+                <div class="bg-accent-950 border-[1px] p-2 rounded-[3px] border-primary-100">
+                    <div class="flex justify-between px-2">
+                        <span class="font-heading font-bold text-text-100">Mid Priority</span>
+                        <span class="font-heading font-semibold">3/6 Finished</span>
+                    </div>
+                    <div class="flex items-center">
+                        <img class="w-14 h-14" src="Aset PNG/Aset Aplikasi_Priority mid.png" alt="">
+                        <div class="w-full bg-purple-150/15 rounded-full h-4">
+                            <div class="bg-purple-50 h-4 rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div class="flex col-span-2 items-center bg-secondary-800 border p-2">
+                <span>Leaderboard</span>
             </div>
         </div>
     </section>
