@@ -8,34 +8,36 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- google fonts here -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <title>Clockin</title>
 </head>
-<body class="font-sans   transition-color duration-300">
+
+<body class="font-sans transition-color bg-primary duration-300">
     <!-- Header Section -->
-    <header class="fixed w-full top-0 z-50 text-text-100 bg-primary-900  backdrop-blur-sm shadow-sm transition-all duration-300">
+    <header class="fixed w-full top-0 z-50 text-text-100 bg-accent-900  backdrop-blur-sm drop-shadow-default_1 transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
                 <div class="flex items-center">
-                    <span class="text-xl text-text-100 font-extrabold">CLOCKIN</span>
+                    <span class="text-xl text-text-100 font-extrabold font-heading">CLOCKIN</span>
                 </div>
                 <ul class="hidden md:flex space-x-8">
                     <li>
-                        <a href="#dashboard" class="text-gray-700 
-                        dark:text-gray-300 
+                        <a href="#dashboard" class="text-text-200 
+                        
                         hover:text-primary 
                         dark:hover:text-primary 
                         transition-colors">Dashboard</a>
                     </li>
                     <li>
-                        <a href="#schedule" class="text-gray-700 
-                        dark:text-gray-300 
+                        <a href="#schedule" class="text-text-200 
+                        
                         hover:text-primary 
                         dark:hover:text-primary 
                         transition-colors">Schedule</a>
                     </li>
                     <li>
-                        <a href="#friends" class="text-gray-700 
-                        dark:text-gray-300 
+                        <a href="#friends" class="text-text-200 
+                        
                         hover:text-primary 
                         dark:hover:text-primary 
                         transition-colors">Friends</a>
@@ -45,25 +47,25 @@
                 <div class="flex items-center space-x-4">
                     <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
                     <button title="Profile">
-                        <i class="fa-solid fa-user text-primary-600 dark:text-primary-400 hover:text-primary dark:hover:text-primary transition-colors"></i>
+                        <i class="fa-solid fa-user text-primary-200  hover:text-primary dark:hover:text-primary transition-colors"></i>
                     </button>
 
                      <!-- Settings Icon -->
                     <button title="Settings">
-                        <i class="fa-solid fa-gear text-primary-600 dark:text-primary-400  hover:text-primary dark:hover:text-primary transition-colors"></i>
+                        <i class="fa-solid fa-gear text-primary-200 hover:text-primary dark:hover:text-primary transition-colors"></i>
                     </button>
 
                      <!-- Logout Icon -->
                     <button title="Logout">
-                        <i class="fa-solid fa-right-from-bracket text-primary-600 dark:text-primary-400  hover:text-red-500 transition-colors"></i>
+                        <i class="fa-solid fa-right-from-bracket text-primary-200  hover:text-red-500 transition-colors"></i>
                     </button>
                     
                     <button id="themeToggle" class="">
-                        <i class="fa-solid fa-moon text-gray-600 dark:text-gray-400"></i>
+                        <i class="fa-solid fa-moon text-primary-200 "></i>
                     </button>
                     <button class="md:hidden p-2" id="menuToggle">
                         <div class="w-6 h-5 flex flex-col justify-between">
-                            <span class="w-full h-0.5 bg-gray-600 dark:bg-gray-400 transition-all"></span>
+                            <span class="w-full h-0.5 bg-gray-600  transition-all"></span>
                         </div>
                     </button>
                 </div>
@@ -72,77 +74,195 @@
         </div>
     </header>
 
-    <section id="top" class="pt-20 mx-9">
-        <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
+    <div class="flex flex-col mx-24 gap-6">
 
-            <div class="flex col-span-1 items-center bg-secondary-100 border p-2">
-                <img class="w-12 h-12" src="/assets/Aset_Aplikasi_Api.png" alt="">
-                <div class="flex flex-col ">
-                    <span class="text-sm">Your Streak</span>
-                    <span class="text-xl font-medium">230 Days</span>
-                </div>
-                
-            </div>
-
-            <div class="flex flex-col col-span-3 bg-secondary-300 border p-2">
-                <span class="text-2xl text-text-100">Good Morning, User!</span>
-                <p>are you lorem ipsum doler sit amet conseqtuer?</p>
-            </div>
-
-            <div class="flex col-span-2 items-center bg-secondary-800 border p-2">
-                <span>Days</span>
-            </div>
-        </div>
-    </section>
-    
-    <section id="top" class="pt-2 mx-9">
-        <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
-
-            <div class="flex flex-col col-span-4 bg-secondary-300 border p-2">
-                <span class="text-2xl">Today Schedule</span>
-                <hr class="border-t-2 border-primary-100 my-2">
-
-            </div>
-
-            <div class="flex col-span-2 items-center bg-secondary-800 border p-2">
-                <span>Ongoing Activities</span>
-            </div>
-        </div>
-    </section>
-    
-    <section id="top" class="pt-2 mx-9">
-        <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
-
-            <!-- Progress -->
-            <div class="flex flex-col col-span-4 bg-secondary-300 border p-2">
-                <div class="flex justify-between">
-                    <span class="text-2xl">Progress</span>
-                    <button class="text-sm bg-accent-700 text-text-100 px-3 rounded-[5px] hover:bg-accent-700/80 border-accent-100" >
-                        <a href="#">Show Details</a>
-                    </button>
-                </div>
-                
-                <hr class="border-t-2 border-primary-100 my-2">
-
-                <div class="bg-accent-950 border-[1px] p-2 rounded-[3px] border-primary-100">
-                    <div class="flex justify-between px-2">
-                        <span class="font-heading font-bold text-text-100">Mid Priority</span>
-                        <span class="font-heading font-semibold">3/6 Finished</span>
+        <section class="pt-20 mx-16">
+            <div class="grid lg:grid-cols-10 grid-cols-1 gap-6">
+                <!-- STREAK -->
+                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center col-span-2">
+                    <div class="flex flex-col">
+                        <span class="text-accent font-body text-sm ">Your Streak</span>
+                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
                     </div>
-                    <div class="flex items-center">
-                        <img class="w-14 h-14" src="Aset PNG/Aset Aplikasi_Priority mid.png" alt="">
-                        <div class="w-full bg-purple-150/15 rounded-full h-4">
-                            <div class="bg-purple-50 h-4 rounded-full" style="width: 50%"></div>
+                    <img class="w-16 h-16" src="/assets/Aset_Aplikasi_Api.png" alt="">
+                    
+                </div>
+
+                <div class="p-4 bg-secondary rounded-lg drop-shadow-default col-span-5">
+                    <span class="text-accent font-heading text-2xl font-black">Good Morning, User!</span>
+                    <p class="text-accent font-body text-sm">Coffee ☕ ready? Let's tackle the day!</p>
+                </div>
+
+                <div class="p-4 bg-secondary rounded-lg drop-shadow-default col-span-3">
+                    <span class="text-accent font-heading text-2xl font-black">Days</span>
+                    <div class="flex gap-4 mt-2">
+                        <div class="w-8 h-8 bg-accent_green rounded-full"></div>
+                        <div class="w-8 h-8 bg-accent_green rounded-full"></div>
+                        <div class="w-8 h-8 bg-accent_green rounded-full"></div>
+                        <div class="w-8 h-8 bg-accent_red rounded-full"></div>
+                        <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                        <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                        <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mx-16">
+            <div class="grid lg:grid-cols-10 grid-cols-1 gap-6">
+                <!-- TODAY SCHEDULE -->
+                <div class="flex flex-col p-4 bg-secondary rounded-lg drop-shadow-default col-span-7">
+                    <div class="flex justify-between">
+                        <span class="text-accent font-heading text-3xl font-black">Today Schedule</span>
+
+                        <div class="space-x-2">
+
+                            <button class="py-2 px-3 bg-accent_2 text-accent text-sm font-semibold rounded-lg drop-shadow-default">
+                                <a href="#">More</a>
+                            </button>
+
+                            <button class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default">
+                                <a href="#">+ Add New Task</a>
+                            </button>
+
                         </div>
                     </div>
+
+                    <div class="mt-5">
+                        <div class="space-y-3">
+                            <div class="bg-accent-950 flex border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="w-2 h-full min-h-[3rem] bg-accent_red rounded-l-md mr-4"></div>
+
+                                <div>
+                                    <span class="font-bold text-xl">
+                                    Project ALP 
+                                    </span>
+                                    <p class="text-sm">PLISSS HELP ME TO FINISH IT EARLYYY</p>
+                                </div>
+
+                            </div>
+
+                            <div class="bg-accent-950 flex border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="w-2 h-full min-h-[3rem] bg-accent_green rounded-l-md mr-4"></div>
+
+                                <div>
+                                    <span class="font-bold text-xl">
+                                    Tidur siang
+                                    </span>
+                                    <p class="text-sm">Actually it is important for meee! hiks TT</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+                <div class="p-4 bg-secondary rounded-lg drop-shadow-default col-span-3">
+                    <span class="text-accent font-heading text-2xl font-black">Ongoing</span>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mx-16">
+            <div class="grid lg:grid-cols-10 grid-cols-1 gap-6">
+                <!-- TODAY SCHEDULE -->
+                <div class="flex flex-col p-4 bg-secondary rounded-lg drop-shadow-default col-span-7">
+                    <div class="flex justify-between">
+                        <span class="text-accent font-heading text-3xl font-black">Progress</span>
+
+                        <button class="py-2 px-3 bg-accent_2 text-accent text-sm font-semibold rounded-lg drop-shadow-default">
+                                <a href="#">See Detail</a>
+                            </button>
+                    </div>
+                    
+                    
+                    
+                </div>
+
+                <div class="p-4 bg-secondary rounded-lg drop-shadow-default col-span-3">
+                    <span class="text-accent font-heading text-2xl font-black">Leaderboard</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- <section id="top" class="pt-20 mx-9">
+            <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
+
+                <div class="flex justify-between col-span-1 items-center bg-secondary p-4">
+                    <img class="w-12 h-12" src="/assets/Aset_Aplikasi_Api.png" alt="">
+                    <div class="flex flex-col ">
+                        <span class="text-sm">Your Streak</span>
+                        <span class="text-xl font-medium">230 Days</span>
+                    </div>
+                    
+                </div>
+
+                <div class="flex flex-col col-span-3 bg-secondary  p-3">
+                    <span class="text-2xl text-text-100">Good Morning, User!</span>
+                    <p>are you lorem ipsum doler sit amet conseqtuer?</p>
+                </div>
+
+                <div class="flex col-span-2 bg-secondary p-3">
+                    <span>Days</span>
                 </div>
             </div>
+        </section>
+        
+        <section id="top" class="pt-2 mx-9">
+            <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
 
-            <!-- Leaderboard -->
-            <div class="flex col-span-2 items-center bg-secondary-800 border p-2">
-                <span>Leaderboard</span>
+                <div class="flex flex-col col-span-4 bg-secondary  p-3">
+                    <span class="text-2xl">Today Schedule</span>
+                    <hr class="border-t-2 border-primary-100 my-2">
+
+                </div>
+
+                <div class="flex col-span-2 bg-secondary p-3">
+                    <span>Ongoing Activities</span>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+        
+        <section id="top" class="pt-2 mx-9">
+            <div class="grid lg:grid-cols-6 grid-cols-1 gap-2">
+
+                
+                <div class="flex flex-col col-span-4 bg-secondary p-3">
+                    <div class="flex justify-between">
+                        <span class="text-2xl">Progress</span>
+                        <button class="text-sm bg-accent-700 text-text-100 px-3 rounded-[5px] hover:bg-accent-700/80 border-accent-100" >
+                            <a href="#">Show Details</a>
+                        </button>
+                    </div>
+                    
+                    <hr class="border-t-2 border-accent my-2">
+
+                    <div class="flex justify-between">
+                        <span class="text-lg font-heading font-bold text-text-100">High Priority</span>
+                        <span class=" font-heading font-semibold">3/6 Finished</span>
+                    </div>
+                    <div class="flex items-center">
+                        <img class="w-14 h-14" src="/assets/Aset_Aplikasi_Priority-high.png" alt="">
+                        <div class="w-full bg-accent_red/20 rounded-full h-4">
+                            <div class="bg-accent_red h-4 rounded-full" style="width: 50%"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                
+                <div class="flex col-span-2 bg-secondary p-3 drop-shadow-sm rounded-md">
+                    <span>Leaderboard</span>
+                </div>
+            </div>
+        </section> -->
+    </div>
+
+    
 </body>
 </html>
