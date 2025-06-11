@@ -33,4 +33,13 @@ document.addEventListener('DOMContentLoaded', function() {
             closePopup();
         }
     });
+
+    
+
 });
+
+function updatePriorityLabel(value) {
+  const label = document.getElementById('priorityValue');
+  const levels = ['Non Critical', 'Perventive', 'Urgent', 'Emergency'];
+  label.textContent = levels[value];
+}
