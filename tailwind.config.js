@@ -23,6 +23,7 @@ module.exports = {
         accent_purple:'#B69BE2',
         accent_blue:'#9BBFE2',
         accent_green:'#B9E29B',
+        accentLight_pink:'#FFCDF1',
 
       //   'text':{
       //     50: '#0e0e0b',
