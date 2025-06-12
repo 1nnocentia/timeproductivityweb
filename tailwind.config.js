@@ -14,16 +14,16 @@ module.exports = {
       },
 
       colors: {
-        primary: '#F3EAE0',
-        secondary: '#FFFFFF',
-        accent: '#2D2314',
-        accent_2:'#EDE3D6',
+        primary: '#F3EAE0', //bg
+        secondary: '#FFFFFF', //card
+        accent: '#2D2314', //button, text
+        // accent_2:'#EDE3D6',
 
-        accent_red:'#E29B9C',
-        accent_purple:'#B69BE2',
-        accent_blue:'#9BBFE2',
-        accent_green:'#B9E29B',
-        accentLight_pink:'#FFCDF1',
+        accent_red:'#E29B9C', //chart
+        accent_purple:'#B69BE2', //chart
+        accent_blue:'#9BBFE2', //chart
+        accent_green:'#B9E29B', //chart
+        accentLight_ink:'#FFCDF1', //chart
 
       //   'text':{
       //     50: '#0e0e0b',
@@ -47,7 +47,7 @@ module.exports = {
       //     400: '#884444',
       //     500: '#aa5555',
       //     600: '#bb7777',
-      //     700: '#cc9999',
+           700: '#cc9999',
       //     800: '#ddbbbb',
       //     900: '#eedddd',
       //     950: '#f6eeee',

@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="build/tailwind.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <!-- google fonts here -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
@@ -19,9 +21,11 @@
     <header class="fixed w-full top-0 z-50 text-text-100 bg-accent-900  backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
+
                 <div class="flex items-center">
                     <span class="text-xl text-text-100 font-extrabold font-heading">CLOCKIN</span>
                 </div>
+
                 <ul class="hidden md:flex space-x-8">
                     <li>
                         <a href="#dashboard" class="text-accent
@@ -424,42 +428,133 @@
     </div>
 
     <!-- POP UP ADD NEW FILE -->
-    <div id="popupOverlay" class="fixed inset-0 bg-accent bg-opacity-20 hidden z-50">
+    <div id="popupOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
         <div class="flex items-center justify-center min-h-full">
             <!-- Kotak Popup -->
             <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4 mb-4">
                 <div class="flex justify-between items-center">
-                    
                     <span class="text-accent font-heading text-2xl font-black">Hello, User!</span>
                 
                     <button id="closePopup">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
-                    
                 </div>
                 
                 <div class="py-2 space-y-2">
-                    <!-- title -->
-                    <input class="w-full px-4 py-3 border border-accent/10 rounded-[3px] focus:outline-none focus:ring-1 focus:ring-accent" type="text" id="title" name="title" placeholder="Title">
-
-                    <!-- Date -->
-                    <input class="w-full px-4 py-3 border border-accent/10 rounded-[3px] focus:outline-none focus:ring-1 focus:ring-accent" type="date" id="date" name="date" >
                     
-                    <!-- Sliding -->
-                    <div class="w-full">
-                        <label for="priority" class="block text-sm font-medium text-gray-700 mb-2">Priority</label>
-                        <input type="range" id="priority" min="0" max="3" step="1" value="1"
-                            class="w-full accent-red-500"
-                            onchange="updatePriorityLabel(this.value)">
-                        
-                        <div class="flex justify-between text-sm mt-2 font-semibold">
-                            <span class="text-red-500 flex items-center gap-1"><img src="/assets/Aset_Aplikasi_Non_critical.png" class="w-4 h-4">Non Critical</span>
-                            <span class="text-yellow-500 flex items-center gap-1"><img src="/icons/mid.png" class="w-4 h-4"> Mid</span>
-                            <span class="text-green-500 flex items-center gap-1"><img src="/icons/low.png" class="w-4 h-4"> Low</span>
-                        </div>
+                    <!-- Title -->
+                    <div>
+                        <input type="text" id="title" name="title" placeholder="Title Activities" class="w-full px-4 py-3 border border-accent/10 rounded-[3px] focus:outline-none focus:ring-2 focus:ring-accent_blue" >
                     </div>
 
-                    <p id="priorityValue" class="mt-2 font-bold text-center"></p>
+                    <div>
+                        <input type="text" id="title" name="title" placeholder="Title Activities" class="w-full px-4 py-3 border border-accent/10 rounded-[3px] focus:outline-none focus:ring-2 focus:ring-accent_blue" >
+                    </div>
+                    
+
+                    <!-- Date -->
+                    <div>
+                        <span class="text-accent/50 hover:text-accent/80 text-sm">Deadline Date</span>
+                        <input class="w-full px-4 py-3 border border-accent/10 rounded-[3px] " type="date" id="date" name="date" >
+                    </div>
+
+                    <!-- Category -->
+                    <div>
+                        <input type="text" placeholder="Category" class="w-full px-4 py-3 border border-accent/10 rounded-[3px] ">
+                    </div>
+                    
+                    <!-- Label -->
+                    <!-- <div class="w-full">
+
+                        <div class="flex items-center justify-between text-xs font-medium font-body text-accent/80 mb-2 px-2">
+                            <span>
+                                Non Critical
+                            </span>
+                            <span>
+                                Perventive
+                            </span>
+                            <span>
+                                Urgent
+                            </span>
+                            <span>
+                                Emergency
+                            </span>
+                        </div>
+                    </div> -->
+
+                    <!-- Slider Bar -->
+                    <div class="relative h-2 bg-gray-200 rounded-full w-full mb-3 flex items-center">
+                        <!-- Progress -->
+                        <div id="slider-fill" class="absolute h-2 bg-accent_blue rounded-full left-0 w-[0%] transition-all duration-300"></div>
+
+                        <!-- Markers -->
+                        <div class="absolute left-0 cursor-pointer" onclick="setLevel(0)">
+                            <img id="gem-1" src="/assets/Aset_Aplikasi_Non_critical.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute  left-[33%] cursor-pointer" onclick="setLevel(1)">
+                            <img id="icon-1" src="/assets/Aset_Aplikasi_Perventive.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute  left-[66%] cursor-pointer" onclick="setLevel(2)">
+                            <img id="icon-2" src="/assets/Aset_Aplikasi_Urgent.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute left-[90%] cursor-pointer" onclick="setLevel(3)">
+                            <img id="icon-3" src="diamond-grey.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                    </div>
+
+
+                    <!-- <div class="relative w-[80%] h-20">
+                        <div class="absolute top-1/2 transform -translate-y-1/2 w-full h-4 bg-gray-200 rounded-full z-0"></div>
+                        <div id="progress-bar" class="absolute top-1/2 transform -translate-y-1/2 h-4 bg-blue-400 rounded-full z-10 transition-all duration-300" style="width: 0%"></div>
+
+                        
+                        <div class="absolute top-1/2 transform -translate-y-1/2 w-full flex justify-between px-4 z-20">
+
+                            <button class="gem-button" data-index="0" data-color="accent_green">
+                                <img src="/assets/Aset_Aplikasi_Gem_Gray.png" alt="" class="w-6 gem-image">
+                            </button>
+
+                            <button class="gem-button" data-index="1" data-color="accent_blue">
+                                <img src="/assets/Aset_Aplikasi_Gem_Gray.png" alt="" class="w-6 gem-image">
+                            </button>
+
+                            <button class="gem-button" data-index="2" data-color="bg-accent_purple">
+                                <img src="/assets/Aset_Aplikasi_Gem_Gray.png" alt="" class="w-6 gem-image">
+                            </button>
+
+                            <button class="gem-button" data-index="3" data-color="accent_red">
+                                <img src="/assets/Aset_Aplikasi_Gem_Gray.png" alt="" class="w-6 gem-image">
+                            </button>
+
+                        </div>
+
+                    </div> -->
+                    
+                    <!-- <div class="relative h-2 bg-gray-200 rounded-full w-full mb-3 flex items-center">
+                        <div id="slider-fill" class="absolute h-2 bg-sky-300 rounded-full left-0 w-[5%] transition-all duration-300"></div>
+
+                        <div class="absolute left-0 cursor-pointer" onclick="setLevel(0)">
+                            <img id="gem-1" src="/assets/Aset_Aplikasi_Non_critical.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute left-[33%] cursor-pointer" onclick="setLevel(1)">
+                            <img id="icon-1" src="/assets/Aset_Aplikasi_Perventive.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute left-[66%] cursor-pointer" onclick="setLevel(2)">
+                            <img id="icon-2" src="/assets/Aset_Aplikasi_Urgent.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute left-[90%] cursor-pointer" onclick="setLevel(3)">
+                            <img id="icon-3" src="/assets/Aset_Aplikasi_Emergency.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+                    </div> -->
+                    
+                    <!-- <p id="priorityValue" class="mt-2 font-bold text-center"></p> -->
 
                 </div>
                 
@@ -470,8 +565,34 @@
                 </button> -->
             </div>
         </div>
-        
     </div>
+
+    
+    <script>
+        // Ganti sesuai urutan level: Non-Critical, Perventive, Urgent, Emergency
+        const progressWidths = ["2%", "35%", "68%", "100%"];
+        const icons = [
+        { id: "gem-1", active: "/assets/Aset_Aplikasi_Non_critical.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
+        { id: "icon-1", active: "/assets/Aset_Aplikasi_Perventive.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
+        { id: "icon-2", active: "/assets/Aset_Aplikasi_Urgent.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
+        { id: "icon-3", active: "/assets/Aset_Aplikasi_Emergency.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" }
+        ];
+
+        function setLevel(level) {
+        // Update progress bar width
+        document.getElementById("slider-fill").style.width = progressWidths[level];
+
+        // Update all icons
+        icons.forEach((icon, index) => {
+            const img = document.getElementById(icon.id);
+            img.src = index === level ? icon.active : icon.inactive;
+        });
+        }
+
+        // Set default value (level 1 - Perventive)
+        setLevel(1);
+    </script>
+
     <!-- Script.js -->
     <script src="script.js"></script>
 </body>

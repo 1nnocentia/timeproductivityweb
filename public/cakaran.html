@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Slider</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <!-- Modal -->
+  <div class="bg-white rounded-xl p-6 w-[400px] relative shadow-lg">
+
+    <!-- Slider Track -->
+    <div class="relative h-2 bg-gray-200 rounded-full w-full mb-3 flex items-center">
+      <!-- Progress -->
+      <div id="slider-fill" class="absolute h-2 bg-sky-300 rounded-full left-0 w-[0%] transition-all duration-300"></div>
+
+      <!-- Markers -->
+      <div class="absolute left-0 cursor-pointer" onclick="setLevel(0)">
+        <img id="gem-1" src="/assets/Aset_Aplikasi_Non_critical.png" class="w-5 h-5 transition-all duration-300" />
+      </div>
+
+      <div class="absolute  left-[33%] cursor-pointer" onclick="setLevel(1)">
+        <img id="icon-1" src="/assets/Aset_Aplikasi_Perventive.png" class="w-5 h-5 transition-all duration-300" />
+      </div>
+
+      <div class="absolute  left-[66%] cursor-pointer" onclick="setLevel(2)">
+        <img id="icon-2" src="/assets/Aset_Aplikasi_Urgent.png" class="w-5 h-5 transition-all duration-300" />
+      </div>
+
+      <div class="absolute left-[90%] cursor-pointer" onclick="setLevel(3)">
+        <img id="icon-3" src="diamond-grey.png" class="w-5 h-5 transition-all duration-300" />
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Ganti sesuai urutan level: Non-Critical, Perventive, Urgent, Emergency
+    const progressWidths = ["2%", "35%", "68%", "100%"];
+    const icons = [
+      { id: "gem-1", active: "/assets/Aset_Aplikasi_Non_critical.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
+      { id: "icon-1", active: "/assets/Aset_Aplikasi_Perventive.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
+      { id: "icon-2", active: "/assets/Aset_Aplikasi_Urgent.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
+      { id: "icon-3", active: "/assets/Aset_Aplikasi_Emergency.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" }
+    ];
+
+    function setLevel(level) {
+      // Update progress bar width
+      document.getElementById("slider-fill").style.width = progressWidths[level];
+
+      // Update all icons
+      icons.forEach((icon, index) => {
+        const img = document.getElementById(icon.id);
+        img.src = index === level ? icon.active : icon.inactive;
+      });
+    }
+
+    // Set default value (level 1 - Perventive)
+    setLevel(1);
+  </script>
+
+</body>
+</html>
