@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="build/tailwind.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- google fonts here -->
+    <!-- Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <!-- Medieval -->
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Clockin</title>
+</head>
+<body class="font-sans transition-color bg-primary duration-300">
+    <!-- Header Section -->
+    <header class="fixed w-full top-0 z-50 text-text-100 bg-accent-900  backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <span class="text-xl text-text-100 font-extrabold font-heading">CLOCKIN</span>
+                </div>
+
+                <div class="flex items-center space-x-12">
+                    <a href="../public/login.html" class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors duration-300">
+                        Login
+                    </a>
+                <button id="themeToggle" class="">
+                    <i class="fa-solid fa-moon text-primary-200"></i>
+                </button>
+
+                <button class="md:hidden p-2" id="menuToggle">
+                    <div class="w-6 h-5 flex flex-col justify-between">
+                        <span class="w-full h-0.5 bg-accent transition-all"></span>
+                    </div>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+</body>
+</html>
