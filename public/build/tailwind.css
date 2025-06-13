@@ -562,14 +562,8 @@ video {
 .top-1\/2 {
   top: 50%;
 }
-.z-0 {
-  z-index: 0;
-}
 .z-10 {
   z-index: 10;
-}
-.z-20 {
-  z-index: 20;
 }
 .z-50 {
   z-index: 50;
@@ -610,6 +604,9 @@ video {
 .mb-4 {
   margin-bottom: 1rem;
 }
+.ml-2 {
+  margin-left: 0.5rem;
+}
 .mr-4 {
   margin-right: 1rem;
 }
@@ -621,9 +618,6 @@ video {
 }
 .mt-4 {
   margin-top: 1rem;
-}
-.ml-2 {
-  margin-left: 0.5rem;
 }
 .block {
   display: block;
@@ -651,9 +645,6 @@ video {
 }
 .h-2 {
   height: 0.5rem;
-}
-.h-20 {
-  height: 5rem;
 }
 .h-3 {
   height: 0.75rem;
@@ -706,12 +697,6 @@ video {
 .w-\[400px\] {
   width: 400px;
 }
-.w-\[5\%\] {
-  width: 5%;
-}
-.w-\[80\%\] {
-  width: 80%;
-}
 .w-full {
   width: 100%;
 }
@@ -757,11 +742,11 @@ video {
 .gap-2 {
   gap: 0.5rem;
 }
-.gap-6 {
-  gap: 1.5rem;
-}
 .gap-4 {
   gap: 1rem;
+}
+.gap-6 {
+  gap: 1.5rem;
 }
 .gap-x-2 {
   -moz-column-gap: 0.5rem;
@@ -786,11 +771,6 @@ video {
   --tw-space-x-reverse: 0;
   margin-right: calc(2rem * var(--tw-space-x-reverse));
   margin-left: calc(2rem * calc(1 - var(--tw-space-x-reverse)));
-}
-.space-y-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 .space-y-3 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
@@ -845,19 +825,15 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(155 191 226 / var(--tw-bg-opacity, 1));
 }
-.bg-accent_blue\/30 {
-  background-color: rgb(155 191 226 / 0.3);
+.bg-accent_blue\/50 {
+  background-color: rgb(155 191 226 / 0.5);
 }
 .bg-accent_green {
   --tw-bg-opacity: 1;
   background-color: rgb(185 226 155 / var(--tw-bg-opacity, 1));
 }
-.bg-accent_purple {
-  --tw-bg-opacity: 1;
-  background-color: rgb(182 155 226 / var(--tw-bg-opacity, 1));
-}
-.bg-accent_purple\/30 {
-  background-color: rgb(182 155 226 / 0.3);
+.bg-accent_purple\/50 {
+  background-color: rgb(182 155 226 / 0.5);
 }
 .bg-accent_red {
   --tw-bg-opacity: 1;
@@ -867,16 +843,15 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
-.bg-blue-400 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(96 165 250 / var(--tw-bg-opacity, 1));
-}
 .bg-gem_blue {
   --tw-bg-opacity: 1;
   background-color: rgb(123 214 235 / var(--tw-bg-opacity, 1));
 }
 .bg-gem_blue\/20 {
   background-color: rgb(123 214 235 / 0.2);
+}
+.bg-gem_blue\/80 {
+  background-color: rgb(123 214 235 / 0.8);
 }
 .bg-gem_green {
   --tw-bg-opacity: 1;
@@ -927,15 +902,6 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
-.bg-accent_blue\/50 {
-  background-color: rgb(155 191 226 / 0.5);
-}
-.bg-accent_purple\/50 {
-  background-color: rgb(182 155 226 / 0.5);
-}
-.bg-gem_blue\/80 {
-  background-color: rgb(123 214 235 / 0.8);
-}
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -971,6 +937,10 @@ video {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
 .py-3 {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
@@ -978,10 +948,6 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
-}
-.py-2\.5 {
-  padding-top: 0.625rem;
-  padding-bottom: 0.625rem;
 }
 .pt-20 {
   padding-top: 5rem;
@@ -1052,20 +1018,16 @@ video {
 .text-accent\/80 {
   color: rgb(45 35 20 / 0.8);
 }
+.text-accent\/90 {
+  color: rgb(45 35 20 / 0.9);
+}
 .text-secondary {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
-.text-white {
+.text-primary {
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-.text-gray-700 {
-  --tw-text-opacity: 1;
-  color: rgb(55 65 81 / var(--tw-text-opacity, 1));
-}
-.text-accent\/90 {
-  color: rgb(45 35 20 / 0.9);
+  color: rgb(243 234 224 / var(--tw-text-opacity, 1));
 }
 .shadow-lg {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
@@ -1108,10 +1070,6 @@ video {
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-.hover\:bg-blue-600:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
-}
 .hover\:bg-gem_blue:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(123 214 235 / var(--tw-bg-opacity, 1));
@@ -1134,10 +1092,6 @@ video {
 .focus\:ring-accent_blue:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(155 191 226 / var(--tw-ring-opacity, 1));
-}
-.focus\:ring-\[\#803f22\]:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(128 63 34 / var(--tw-ring-opacity, 1));
 }
 @media (min-width: 768px) {
 
