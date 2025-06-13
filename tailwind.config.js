@@ -19,11 +19,17 @@ module.exports = {
         accent: '#2D2314', //button, text
         // accent_2:'#EDE3D6',
 
-        accent_red:'#E29B9C', //chart
-        accent_purple:'#B69BE2', //chart
-        accent_blue:'#9BBFE2', //chart
-        accent_green:'#B9E29B', //chart
-        accentLight_ink:'#FFCDF1', //chart
+        gem_red:'#EC7980', //chart
+        gem_purple:'#DC7BEB', //chart
+        gem_blue:'#7BD6EB', //chart
+        gem_green:'#82E97B', //chart
+        
+
+        accent_red:'#E29B9C', //category
+        accent_purple:'#B69BE2', //category
+        accent_blue:'#9BBFE2', //category
+        accent_green:'#B9E29B', //category
+        accentLight_ink:'#FFCDF1', //category
 
       //   'text':{
       //     50: '#0e0e0b',
