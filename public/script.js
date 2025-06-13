@@ -66,4 +66,50 @@ document.addEventListener('DOMContentLoaded', function() {
         colorOptions.classList.add('hidden');
     });
     
+    // PRIORITY CUSTOM
+    const gemData = [
+        {
+            active: "/assets/Aset_Aplikasi_Non_critical.png",
+            inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
+            color: '#82E97B',
+            description: 'Tasks with low impact that can be done later without causing problems.'
+        },
+
+        {
+            active: "/assets/Aset_Aplikasi_Perventive.png",
+            inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
+            color: '#7BD6EB',
+            description: 'Regular tasks done to avoid bigger issues in the future.'
+        },
+        
+        {
+            active: "/assets/Aset_Aplikasi_Urgent.png",
+            inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
+            color: '#DC7BEB',
+            description: 'Important tasks that should be handled soon to prevent disruption.'
+        },
+
+        {
+            active: "/assets/Aset_Aplikasi_Emergency.png",
+            inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
+            color: '#EC7980',
+            description: 'Critical issues that must be fixed immediately to ensure safety or function.'
+        }
+    ];
+
+    function setLevel(level) {
+        // update fill bar
+        const fillWidths = [10, 33, 66, 90];
+        const sliderFill = document.getElementById("slider-fill");
+        sliderFill.style.width = `${fillWidths[level]}%`;
+        sliderFill.style.backgroundColor = gemData[level].color;
+
+        // update info text
+        const info = document.getElementById("gem-info");
+        info.innerText = `GEM ${level + 1} - ${gemData[level].description}`;
+    }
+
+
+    // TAMBAHKAN ITEM KE UI
+    
 });

@@ -404,7 +404,7 @@
                             <div class="flex items-center space-x-2">
                                 <span class="text-lg text-accent font-bold w-5 text-center">3</span>
                                 <img src="/assets/Aset_Aplikasi_Personal_1.png" alt="" class="w-10 h-10 rounded-full">
-                                <h3 class="font-semibold text-accent ">Patrick</h3>
+                                <h3 class="font-semibold text-accent ">Stella & Vivi</h3>
                             </div>
                             <div class="flex items-center space-x-1">
                                 <span class="font-body text-sm text-accent/80">20</span>
@@ -416,7 +416,7 @@
                             <div class="flex items-center space-x-2">
                                 <span class="text-lg text-accent font-bold w-5 text-center">4</span>
                                 <img src="/assets/Aset_Aplikasi_Personal_2.png" alt="" class="w-10 h-10 rounded-full">
-                                <h3 class="font-semibold text-accent ">Gladys</h3>
+                                <h3 class="font-semibold text-accent ">Taima Gladys</h3>
                             </div>
                             <div class="flex items-center space-x-1">
                                 <span class="font-body text-sm text-accent/80">1</span>
@@ -453,12 +453,26 @@
                 </div>
                 
                 <div class="mt-4 space-y-4">
-                    
+                    <!-- Event or Task -->
+                    <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium font-body">Choose Your Type Quest</label>
+                    <div class="flex gap-4">
+                        <label class="inline-flex items-center w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent">
+                            <input type="radio" name="itemType" value="task" checked class="form-radio text-accent" id="taskType">
+                            <span class="ml-2">Task</span>
+                        </label>
+                        <label class="inline-flex items-center w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent">
+                            <input type="radio" name="itemType" value="event" class="form-radio text-accent" id="eventType">
+                            <span class="ml-2">Event</span>
+                        </label>
+                    </div>
+
                     <!-- Title -->
                     <div>
                         <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium font-body">Title</label>
                         <input type="text" id="activityTitle" name="title" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
                     </div>
+
+                    
 
                     <!-- Desc -->
                     <div>
@@ -470,18 +484,7 @@
                         <input type="text" id="title" name="title" placeholder="Title Activities" class="w-full px-4 py-3 border border-accent/10 rounded-[3px] focus:outline-none focus:ring-2 focus:ring-accent_blue" >
                     </div> -->
 
-                    <!-- Event or Task -->
-                    <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium font-body">Choose Your Type Quest</label>
-                    <div class="flex gap-4">
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="itemType" value="task" checked class="form-radio text-accent" id="taskType">
-                            <span class="ml-2">Task</span>
-                        </label>
-                        <label class="inline-flex items-center">
-                            <input type="radio" name="itemType" value="event" class="form-radio text-accent" id="eventType">
-                            <span class="ml-2">Event</span>
-                        </label>
-                    </div>
+                    
 
                     <!-- Date -->
                     <div>
@@ -552,93 +555,53 @@
                         </div>
                         
                     </div>
-                    
-                    <!-- Label -->
-                    <!-- <div class="w-full">
-
-                        <div class="flex items-center justify-between text-xs font-medium font-body text-accent/80 mb-2 px-2">
-                            <span>
-                                Non Critical
-                            </span>
-                            <span>
-                                Perventive
-                            </span>
-                            <span>
-                                Urgent
-                            </span>
-                            <span>
-                                Emergency
-                            </span>
-                        </div>
-                    </div> -->
 
                     <!-- Slider Bar -->
-                     <div>
+                    <div>
                         <label for="Priority" class="block text-accent/90 mb-1 text-sm font-medium font-body">Priority</label>
-                     </div>
+                    </div>
+                     
                     <div class="relative h-2 bg-gray-200 rounded-full w-full mb-3 flex items-center">
                         <!-- Progress -->
                         <div id="slider-fill" class="absolute h-2 bg-accent_blue rounded-full left-0 w-[0%] transition-all duration-300"></div>
 
                         <!-- Markers -->
-                        <div class="absolute left-[5%] cursor-pointer" onclick="setLevel(0)">
-                            <img id="gem-1" src="/assets/Aset_Aplikasi_Non_critical.png" class="w-5 h-5 transition-all duration-300" />
+                        <div class="absolute left-[0%] cursor-pointer" onclick="setLevel(0)">
+                            <img id="gem-0" src="/assets/Aset_Aplikasi_Non_critical.png" class="w-5 h-5 transition-all duration-300" />
                         </div>
 
-                        <div class="absolute  left-[33%] cursor-pointer" onclick="setLevel(1)">
-                            <img id="icon-1" src="/assets/Aset_Aplikasi_Perventive.png" class="w-5 h-5 transition-all duration-300" />
+                        <div class="absolute left-[33%] cursor-pointer" onclick="setLevel(1)">
+                            <img id="gem-1" src="/assets/Aset_Aplikasi_Perventive.png" class="w-5 h-5 transition-all duration-300" />
                         </div>
 
-                        <div class="absolute  left-[66%] cursor-pointer" onclick="setLevel(2)">
-                            <img id="icon-2" src="/assets/Aset_Aplikasi_Urgent.png" class="w-5 h-5 transition-all duration-300" />
+                        <div class="absolute left-[66%] cursor-pointer" onclick="setLevel(2)">
+                            <img id="gem-2" src="/assets/Aset_Aplikasi_Urgent.png" class="w-5 h-5 transition-all duration-300" />
                         </div>
 
-                        <div class="absolute left-[90%] cursor-pointer" onclick="setLevel(3)">
-                            <img id="icon-3" src="diamond-grey.png" class="w-5 h-5 transition-all duration-300" />
+                        <div class="absolute left-[94%] cursor-pointer" onclick="setLevel(3)">
+                            <img id="gem-3" src="/assets/Aset_Aplikasi_Emergency.png" class="w-5 h-5 transition-all duration-300" />
                         </div>
-
                     </div>
 
-                    <button id="closePopup" class="bg-accent/80 hover:bg-accent text-primary font-bold py-2 px-4 rounded">
-                        Submit
-                    </button>
+                    <!-- Info Box -->
+                    <div id="gem-info" class="text-accent mt-2 text-sm font-body">
+                        
+                    </div>
+
+                    <div>
+                        <button id="submitBtn" type="submit" class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default">
+                            Add Quest
+                        </button>
+                    </div>
+
 
                 </div>
-                
-               
-
-                
             </div>
         </div>
     </div>
 
     
-    <script>
-        // Ganti sesuai urutan level: Non-Critical, Perventive, Urgent, Emergency
-        const progressWidths = ["2%", "35%", "68%", "100%"];
-        const icons = [
-        { id: "gem-1", active: "/assets/Aset_Aplikasi_Non_critical.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
-        { id: "icon-1", active: "/assets/Aset_Aplikasi_Perventive.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
-        { id: "icon-2", active: "/assets/Aset_Aplikasi_Urgent.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" },
-        { id: "icon-3", active: "/assets/Aset_Aplikasi_Emergency.png", inactive: "/assets/Aset_Aplikasi_Gem_Gray.png" }
-        ];
-
-        function setLevel(level) {
-        // Update progress bar width
-        document.getElementById("slider-fill").style.width = progressWidths[level];
-
-        // Update all icons
-        icons.forEach((icon, index) => {
-            const img = document.getElementById(icon.id);
-            img.src = index === level ? icon.active : icon.inactive;
-        });
-        }
-
-        // Set default value (level 1 - Perventive)
-        setLevel(1);
-
-
-    </script>
+    
 
     <!-- Script.js -->
     <script src="script.js"></script>
