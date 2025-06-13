@@ -53,10 +53,9 @@
                     </li>
                 </ul>
 
-                <button class="bg-accent p-2">
-                    <a href="#" class="text-primary"></a>
-                    <span >Login</span>
-                </button>
+                <!-- <button class="bg-accent p-2">
+                    <a href="#" class="text-primary">Login</a>
+                </button> -->
 
 
                 <div class="flex items-center space-x-4">
@@ -457,13 +456,13 @@
                     
                     <!-- Title -->
                     <div>
-                        <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium">Title</label>
+                        <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium font-body">Title</label>
                         <input type="text" id="activityTitle" name="title" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
                     </div>
 
                     <!-- Desc -->
                     <div>
-                        <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium">Description</label>
+                        <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium font-body">Description</label>
                         <input type="text" id="activityTitle" name="title" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
                     </div>
 
@@ -472,29 +471,31 @@
                     </div> -->
 
                     <!-- Event or Task -->
-                    <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium">Choose Your Type Quest</label>
+                    <label for="activityTitle" class="block text-accent/90 mb-1 text-sm font-medium font-body">Choose Your Type Quest</label>
                     <div class="flex gap-4">
                         <label class="inline-flex items-center">
                             <input type="radio" name="itemType" value="task" checked class="form-radio text-accent" id="taskType">
-                            <span class="ml-2">Task (Deadline)</span>
+                            <span class="ml-2">Task</span>
                         </label>
                         <label class="inline-flex items-center">
                             <input type="radio" name="itemType" value="event" class="form-radio text-accent" id="eventType">
-                            <span class="ml-2">Event (Schedule)</span>
+                            <span class="ml-2">Event</span>
                         </label>
                     </div>
 
                     <!-- Date -->
                     <div>
-                        <label for="activityDate" class="block text-accent/90 mb-1 text-sm font-medium">Date</label>
+                        <label for="activityDate" class="block text-accent/90 mb-1 text-sm font-medium font-body">Date</label>
                         <input type="date" id="activityDate" name="date" class="w-full px-4 py-3 border border-accent/10 rounded-[3px]" required>
                     </div>
 
-                    <!-- Input TIme - Berubah Berdasarkan Jenis -->
+                    <!-- Input Time - Berubah Berdasarkan Jenis -->
                     <div id="timeInputContainer">
+                        
                         <!-- Default: Task (deadline) -->
                         <div id="taskTimeInput">
-                            <label for="deadlineTime" class="block text-accent/90 mb-1 text-sm font-medium">Deadline Time</label>
+                            <label for="deadlineTime" class="block text-accent/90 mb-1 text-sm font-medium font-body">Deadline Time</label>
+
                             <input type="time" id="deadlineTime" name="deadlineTime" class="w-full px-4 py-3 border border-accent/10 rounded-[3px]" required>
                         </div>
 
@@ -505,6 +506,7 @@
                                     <label for="startTime" class="block text-accent/90 mb-1 text-sm font-medium">Start Time</label>
                                     <input type="time" id="startTime" name="startTime" class="w-full px-4 py-3 border border-accent/10 rounded-[3px]" required>
                                 </div>
+
                                 <div>
                                     <label for="endTime" class="block text-accent/90 mb-1 text-sm font-medium">End Time</label>
                                     <input type="time" id="endTime" name="endTime" class="w-full px-4 py-3 border border-accent/10 rounded-[3px]" required>
@@ -519,12 +521,36 @@
 
                     <!-- Category -->
                     <div>
-                        <label for="activityCategory" class="mb-1 font-medium">Category</label>
-                        <select id="activityCategory" name="category" class="w-full px-4 py-3 border border-accent/10 rounded-[3px] bg-accent-blue appearance-none">
-                            <option value="Campus">Campus</option>
-                            <option value="Work">Work</option>
-                            <option value="Personal">Personal</option>
-                        </select>
+                        <label for="Category" class="block text-accent/90 mb-1 text-sm font-medium font-body">Category</label>
+
+                        <div class="flex space-x-1 m-1">
+                            <input type="text" id="activityTitle" name="title" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
+
+                            <!-- <label for="">Pick Color</label> -->
+                            <div class="relative flex items-center border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent">
+                                <button id="colorPickerBtn" class="w-5 h-5 rounded-full bg-accent_blue"></button>
+
+                                <div id="colorOptions" class="absolute z-10 mt-2 bg-white border p-2 rounded-md drop-shadow-default hidden">
+                                    <div class="flex gap-2">
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #E29B9C;" data-color="#E29B9C"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #B69BE2;" data-color="#B69BE2"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #9BBFE2;" data-color="#9BBFE2"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #B9E29B;" data-color="#B9E29B"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #9BDCE2;" data-color="#9BDCE2"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #F59FD9;" data-color="#F59FD9"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        
                     </div>
                     
                     <!-- Label -->
@@ -547,12 +573,15 @@
                     </div> -->
 
                     <!-- Slider Bar -->
+                     <div>
+                        <label for="Priority" class="block text-accent/90 mb-1 text-sm font-medium font-body">Priority</label>
+                     </div>
                     <div class="relative h-2 bg-gray-200 rounded-full w-full mb-3 flex items-center">
                         <!-- Progress -->
                         <div id="slider-fill" class="absolute h-2 bg-accent_blue rounded-full left-0 w-[0%] transition-all duration-300"></div>
 
                         <!-- Markers -->
-                        <div class="absolute left-0 cursor-pointer" onclick="setLevel(0)">
+                        <div class="absolute left-[5%] cursor-pointer" onclick="setLevel(0)">
                             <img id="gem-1" src="/assets/Aset_Aplikasi_Non_critical.png" class="w-5 h-5 transition-all duration-300" />
                         </div>
 
@@ -569,9 +598,11 @@
                         </div>
 
                     </div>
-                    <button id="closePopup" class="bg-gem_blue/80 hover:bg-gem_blue text-accent font-bold py-2 px-4 rounded">
+
+                    <button id="closePopup" class="bg-accent/80 hover:bg-accent text-primary font-bold py-2 px-4 rounded">
                         Submit
                     </button>
+
                 </div>
                 
                
@@ -605,6 +636,8 @@
 
         // Set default value (level 1 - Perventive)
         setLevel(1);
+
+
     </script>
 
     <!-- Script.js -->
