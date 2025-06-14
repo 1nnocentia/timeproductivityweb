@@ -1,26 +1,95 @@
 // js/script.js
+const gemData = [
+    {
+        active: "/assets/Aset_Aplikasi_Non_critical.png",
+        inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
+        color: '#82E97B',
+        description: 'Tasks with low impact that can be done later without causing problems.'
+    },
+
+    {
+        active: "/assets/Aset_Aplikasi_Perventive.png",
+        inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
+        color: '#7BD6EB',
+        description: 'Regular tasks done to avoid bigger issues in the future.'
+    },
+    
+    {
+        active: "/assets/Aset_Aplikasi_Urgent.png",
+        inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
+        color: '#DC7BEB',
+        description: 'Important tasks that should be handled soon to prevent disruption.'
+    },
+
+    {
+        active: "/assets/Aset_Aplikasi_Emergency.png",
+        inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
+        color: '#EC7980',
+        description: 'Critical issues that must be fixed immediately to ensure safety or function.'
+    }
+];
+
+let currentLevel = -1;
+
+function setLevel(level) {
+    // if same level, do nothing
+    if (currentLevel === level) {
+        return;
+    }
+
+    // update fill bar
+    const fillWidths = [0, 33, 66, 94];
+    const sliderFill = document.getElementById("slider-fill");
+    if (sliderFill) { // pake validasi untuk menghindari error
+        sliderFill.style.width = `${fillWidths[level]}%`;
+        sliderFill.style.backgroundColor = gemData[level].color;
+    }
+
+    // update gems nya
+    for (let i = 0; i < gemData.length; i++) {
+    const gemImage = document.getElementById(`gem-${i}`);
+        if (gemImage) { 
+            if (i === level) {
+                gemImage.src = gemData[i].active;
+            } else {
+                gemImage.src = gemData[i].inactive;
+            }
+        }
+    }
+
+    // update dskripsi prioritasnya
+    const info = document.getElementById("gem-info");
+    if (info) {
+        info.innerText = `${gemData[level].description}`;
+        info.style.color = gemData[level].color;
+    }
+    
+    currentLevel = level;
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     const openPopupBtn = document.getElementById('openPopup');
     const closePopupBtn = document.getElementById('closePopup');
     const popupOverlay = document.getElementById('popupOverlay');
 
-    function openPopup() {
-        popupOverlay.classList.remove('hidden');
+    if (openPopupBtn) {
+        openPopupBtn.addEventListener('click', function() {
+            if (popupOverlay) popupOverlay.classList.remove('hidden');
+        });
+    }
+    if (closePopupBtn) {
+        closePopupBtn.addEventListener('click', function() {
+            if (popupOverlay) popupOverlay.classList.add('hidden');
+        });
     }
 
-    function closePopup() {
-        popupOverlay.classList.add('hidden');
+    if (popupOverlay) {
+        popupOverlay.addEventListener('click', function(e) {
+            if (e.target === popupOverlay) { 
+                popupOverlay.classList.add('hidden');
+            }
+        });
     }
-
-    openPopupBtn.addEventListener('click', openPopup);
-    closePopupBtn.addEventListener('click', closePopup);
-
-    popupOverlay.addEventListener('click', function(e) {
-        if (e.target === popupOverlay) {
-            closePopup();
-        }
-    });
 
     // EVENT OR TASK : TIME OPTION
     const taskTypeRadio = document.getElementById('taskType');
@@ -29,87 +98,78 @@ document.addEventListener('DOMContentLoaded', function() {
     const eventTimeInput = document.getElementById('eventTimeInput');
 
     function toggleTimeInputs() {
-        if (taskTypeRadio.checked) {
-            taskTimeInput.classList.remove('hidden');
-            eventTimeInput.classList.add('hidden');
-        } else {
-            taskTimeInput.classList.add('hidden');
-            eventTimeInput.classList.remove('hidden');
+    if (taskTypeRadio && eventTypeRadio && taskTimeInput && eventTimeInput) {
+            if (taskTypeRadio.checked) {
+                taskTimeInput.classList.remove('hidden');
+                eventTimeInput.classList.add('hidden');
+            } else {
+                taskTimeInput.classList.add('hidden');
+                eventTimeInput.classList.remove('hidden');
+            }
         }
     }
 
     toggleTimeInputs();
-    taskTypeRadio.addEventListener('change', toggleTimeInputs);
-    eventTypeRadio.addEventListener('change', toggleTimeInputs);
+    if (taskTypeRadio) taskTypeRadio.addEventListener('change', toggleTimeInputs);
+    if (eventTypeRadio) eventTypeRadio.addEventListener('change', toggleTimeInputs);
 
     // COLOR OPTION BG 
     const colorPickerBtn = document.getElementById('colorPickerBtn');
     const colorOptions = document.getElementById('colorOptions');
-    let selectedColor = 'accent_blue'
+
+    // initial color
+    if (colorPickerBtn) {
+        colorPickerBtn.style.backgroundColor = '#E29B9C';
+    }
 
     // Tampilkan atau sembunyikan dropdown warna saat diklik
-    colorPickerBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        colorOptions.classList.toggle('hidden');
-    });
+    if (colorPickerBtn) {
+        colorPickerBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (colorOptions) {
+                colorOptions.classList.toggle('hidden');
+            }
+        });
+    }
 
-    // Saat warna diklik, ganti warna button
-    colorOptions.addEventListener('click', function (e) {
-        if (e.target.dataset.color) {
-            selectedColor = e.target.dataset.color;
-            colorPickerBtn.style.backgroundColor = selectedColor;
+    if (colorOptions) {
+        colorOptions.addEventListener('click', function (e) {
+            if (e.target.dataset.color) {
+                const selectedColor = e.target.dataset.color;
+                if (colorPickerBtn) {
+                    colorPickerBtn.style.backgroundColor = selectedColor;
+                }
+                if (colorOptions) {
+                    colorOptions.classList.add('hidden');
+                }
+            }
+        });
+    }
+    document.addEventListener('click', function () {
+        if (colorOptions) {
             colorOptions.classList.add('hidden');
         }
     });
 
-    document.addEventListener('click', function () {
-        colorOptions.classList.add('hidden');
-    });
-    
     // PRIORITY CUSTOM
-    const gemData = [
-        {
-            active: "/assets/Aset_Aplikasi_Non_critical.png",
-            inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
-            color: '#82E97B',
-            description: 'Tasks with low impact that can be done later without causing problems.'
-        },
-
-        {
-            active: "/assets/Aset_Aplikasi_Perventive.png",
-            inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
-            color: '#7BD6EB',
-            description: 'Regular tasks done to avoid bigger issues in the future.'
-        },
-        
-        {
-            active: "/assets/Aset_Aplikasi_Urgent.png",
-            inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
-            color: '#DC7BEB',
-            description: 'Important tasks that should be handled soon to prevent disruption.'
-        },
-
-        {
-            active: "/assets/Aset_Aplikasi_Emergency.png",
-            inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
-            color: '#EC7980',
-            description: 'Critical issues that must be fixed immediately to ensure safety or function.'
-        }
-    ];
-
-    function setLevel(level) {
-        // update fill bar
-        const fillWidths = [10, 33, 66, 90];
-        const sliderFill = document.getElementById("slider-fill");
-        sliderFill.style.width = `${fillWidths[level]}%`;
-        sliderFill.style.backgroundColor = gemData[level].color;
-
-        // update info text
-        const info = document.getElementById("gem-info");
-        info.innerText = `GEM ${level + 1} - ${gemData[level].description}`;
+    //  awal load, belum ada level yang dipilih
+    const info = document.getElementById("gem-info");
+    if (info) {
+        info.innerText = "";
     }
 
+    // pastikan dlu semua gems nya inactive
+    for (let i = 0; i < gemData.length; i++) {
+        const gemImage = document.getElementById(`gem-${i}`);
+        if (gemImage) {
+            gemImage.src = gemData[i].inactive;
+        }
+    }
 
-    // TAMBAHKAN ITEM KE UI
-    
-});
+    // pastikan juga slidernya tidak ada yang terisi
+    const sliderFill = document.getElementById("slider-fill");
+        if (sliderFill) {
+            sliderFill.style.width = `0%`;
+            sliderFill.style.backgroundColor = 'transparent';
+        }
+    });
