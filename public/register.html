@@ -4,10 +4,13 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="build/tailwind.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <!-- google fonts here -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <title>Register - Clockin</title>
     <style>
         .toggle-checkbox:checked {
@@ -19,18 +22,21 @@
         }
     </style>
 </head>
-<body class="font-sans text-text-950 dark:text-white bg-white dark:bg-dark-background transition-color duration-300">
+<body class="font-sans transition-color bg-primary duration-300">
     <!-- Header Section -->
-    <header class="fixed w-full top-0 z-50 bg-primary-500 dark:bg-dark-background/95 backdrop-blur-sm shadow-sm transition-all duration-300">
+    <header class="fixed w-full top-0 z-50 text-text-100 bg-primary dark:bg-accent backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
+                <!-- CLOCKIN -->
                 <div class="flex items-center">
-                    <span class="text-xl font-extrabold">CLOCKIN</span>
+                    <span class="text-xl font-extrabold font-heading dark:text-primary">CLOCKIN</span>
                 </div>
+                <!-- Theme Toggle & Menu Toggle -->
                 <div class="flex items-center space-x-4">
                     <button id="themeToggle" class="">
-                        <i class="fa-solid fa-moon text-gray-600 dark:text-gray-400"></i>
+                        <i class="fa-solid fa-moon text-accent dark:text-primary"></i>
                     </button>
+                    
                     <button class="md:hidden p-2" id="menuToggle">
                         <div class="w-6 h-5 flex flex-col justify-between">
                             <span class="w-full h-0.5 bg-gray-600 dark:bg-gray-400 transition-all"></span>
@@ -40,72 +46,79 @@
             </nav>
         </div>
     </header>
+
     <!-- Registration box (Login) -->
-    <section class="bg-white">
-        <div>
-        <div class="flex items-center justify-center min-h-screen p-4">
-                <div class="flex flex-col md:flex-row w-full max-w-4xl mx-auto p-4 md:p-8 bg-white rounded-2xl shadow-lg">
-                    <!-- Left side - Registration Form -->
-                    <div class="w-full md:w-1/2 md:pr-8">
-                        <h3 class="text-gray-800 text-center text-xl md:text-2xl font-bold mb-2">Create an Account</h3>
-                        <p class="text-gray-600 mb-6 text-center text-sm md:text-base">
-                            Join us and boost your productivity with Clockin. <br>
-                            Get started for free.
-                        </p>
-                        <form>
-                            <!-- Nickname -->
-                            <div class="mb-4 flex gap-4">
-                                <input type="text" placeholder="Nickname" 
-                                    class="w-full px-4 py-2 rounded-full text-gray-800 border border-gray-800 focus:outline-none focus:border-primary-500">
-                            </div>
-                            <!-- Username -->
-                            <div class="mb-4">
-                                <input type="text" placeholder="Username" required
-                                    class="w-full px-4 py-2 rounded-full text-gray-800 border border-gray-800 focus:outline-none focus:border-primary-500">
-                            </div>
-                            <!-- Email -->
-                            <div class="mb-4">
-                                <input type="email" placeholder="Email" required 
-                                    class="w-full px-4 py-2 rounded-full text-gray-800 border border-gray-800 focus:outline-none focus:border-primary-500">
-                            </div>
-                            <!-- Password -->
-                            <div class="mb-4 relative">
-                                <input type="password" id="password" placeholder="Password" required
-                                    pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
-                                    title="Password must contain at least 8 characters, 1 capital letter, 1 number, and 1 special character"
-                                    class="w-full px-4 py-2 rounded-full text-gray-800 border border-gray-800 focus:outline-none focus:border-primary-500">
-                                <button type="button" id="togglePassword" class="absolute right-4 top-2 text-gray-600 hover:text-gray-800">
-                                    <i class="fa-solid fa-eye"></i>
-                                </button>
-                                <p class="text-xs text-red-500 mt-1">Password must have at least 8 characters, 1 capital letter, 1 number, and 1 special character</p>
-                            </div>
-                            <!-- Checkbox -->
-                            <div class="flex flex-col sm:flex-row justify-between mb-6 space-y-2 sm:space-y-0">
-                                <label class="flex items-center">
-                                    <div class="relative inline-block w-8 h-4 mr-2 align-middle select-none">
-                                        <input type="checkbox" 
-                                            class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out left-0 top-0"
-                                        />
-                                        <div class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-300 cursor-pointer"></div>
-                                    </div>
-                                    <span class="text-sm text-gray-600">I agree to the terms and conditions</span>
-                                </label>
-                            </div>
-                            <!-- Register Button -->
-                            <button type="submit" 
-                                class="w-full bg-primary-500 text-white py-2 px-4 rounded-full hover:bg-primary-600 transition-all duration-300 flex items-center justify-center space-x-2">
-                                <span>Register</span>
+    <section class="bg-primary dark:bg-gray-700 min-h-screen flex items-center justify-center p-4 pt-20"> <!-- Added pt-20 for header space -->
+        <div class="w-full max-w-4xl mx-auto">
+            <div class="flex flex-col md:flex-row bg-white dark:bg-gray-500/40 rounded-2xl shadow-lg overflow-hidden">
+                <!-- Left side - Registration Form -->
+                <div class="w-full md:w-1/2 p-6 sm:p-8">
+                    <h3 class="text-gray-800 dark:text-gray-100 text-center text-2xl font-bold mb-4">Create an Account</h3>
+                    <p class="text-gray-600 dark:text-gray-300 mb-8 text-center text-sm sm:text-base">
+                        Join us and boost your productivity with Clockin.<br>
+                        Get started for free.
+                    </p>
+                    <form class="space-y-6">
+                        <!-- Nickname -->
+                        <div>
+                            <input type="text" name="nickname" placeholder="Nickname" 
+                                class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
+                        </div>
+                        
+                        <!-- Username -->
+                        <div>
+                            <input type="text" name="username" placeholder="Username" required
+                                class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
+                        </div>
+                        
+                        <!-- Email -->
+                        <div>
+                            <input type="email" name="email" placeholder="Email" required 
+                                class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
+                        </div>
+                        
+                        <!-- Password -->
+                        <div class="relative">
+                            <input type="password" id="password" name="password" placeholder="Password" required
+                                pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+                                class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
+                            <button type="button" id="togglePassword" 
+                                class="absolute right-4 top-3 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white focus:outline-none">
+                                <i class="fa-solid fa-eye"></i>
                             </button>
-                            <!-- Login Link -->
-                            <p class="text-center mt-4 text-sm text-gray-600">
-                                Already have an account? 
-                                <a href="../public/login.html" class=" font-semibold text-primary-500 hover:text-primary-600">Login here</a>
-                            </p>
-                        </form>
+                            <p class="text-xs text-red-500 mt-1">Password must have at least 8 characters, 1 capital letter, 1 number, and 1 special character</p>
+                        </div>
+                        
+                        <!-- Checkbox -->
+                        <div class="flex flex-col sm:flex-row justify-between mb-6 space-y-2 sm:space-y-0">
+                            <label class="flex items-center">
+                                <div class="relative inline-block w-8 h-4 mr-2 align-middle select-none">
+                                    <input type="checkbox" name="terms" required
+                                        class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-300 dark:border-gray-600 appearance-none cursor-pointer transition-transform duration-200 ease-in-out left-0 top-0"
+                                    />
+                                    <div class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 dark:text-gray-300">I agree to the terms and conditions</span>
+                            </label>
+                        </div>
+                        <!-- Register Button -->
+                        <button type="submit" 
+                            class="w-full font-medium bg-accent text-white py-3 dark:bg-primary dark:text-gray-900 rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-accent">
+                            Register
+                        </button>
+                    </form>
+                    <!-- Login Link -->
+                    <div class="mt-8 text-center">
+                        <p class="text-gray-600 dark:text-gray-300">
+                            Already have an account? 
+                            <a href="../public/login.html" class="text-primary-500 dark:text-primary-400 hover:text-primary-600 dark:hover:text-primary-300 font-semibold">Login here</a>
+                        </p>
                     </div>
-                    <!-- Right side - Logo -->
-                    <div class="hidden md:flex w-full md:w-1/2 items-center justify-center p-8 rounded-r-2xl">
-                        <img src="../assets/2.png" alt="Clockin Logo" class="h-auto">
+                </div>
+                
+                <!-- Right side - Logo -->
+                <div class="hidden md:flex w-full md:w-1/2 items-center justify-center p-8 bg-gray-50 dark:bg-gray-500/40">
+                    <img src="../assets/2.png" alt="Clockin Logo" class="w-64 lg:w-80 h-auto object-contain">
                 </div>
             </div>
         </div>
@@ -125,6 +138,40 @@
             icon.classList.add('fa-eye');
         }
     });
+</script>
+<script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const icon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+
+            // Toggle theme
+            themeToggle.addEventListener('click', function() {
+                html.classList.toggle('dark');
+                
+                // Update icon
+                if (html.classList.contains('dark')) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.theme = 'dark';
+                } else {
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.theme = 'light';
+                }
+            });
+
+            themeToggle.addEventListener('mouseleave', function() {
+                icon.classList.remove(html.classList.contains('dark') ? 'fa-moon' : 'fa-sun');
+                icon.classList.add(html.classList.contains('dark') ? 'fa-sun' : 'fa-moon');
+            });
+        });
+    
 </script>
 </body>
 </html>
