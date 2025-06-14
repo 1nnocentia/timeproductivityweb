@@ -173,3 +173,69 @@ document.addEventListener('DOMContentLoaded', function() {
             sliderFill.style.backgroundColor = 'transparent';
         }
     });
+
+function openModal() {
+    document.getElementById('addActivityModal').classList.remove('hidden');
+}
+function closeModal() {
+    document.getElementById('addActivityModal').classList.add('hidden');
+}
+function openQuestModal() {
+  document.getElementById('addQuestModal').classList.remove('hidden');
+}
+function closeQuestModal() {
+  document.getElementById('addQuestModal').classList.add('hidden');
+}
+function toggleTimeInput(type) {
+  const taskInput = document.getElementById('taskTimeInput');
+  const eventInput = document.getElementById('eventTimeInput');
+  if (type === 'event') {
+    taskInput.classList.add('hidden');
+    eventInput.classList.remove('hidden');
+  } else {
+    taskInput.classList.remove('hidden');
+    eventInput.classList.add('hidden');
+  }
+}
+
+// Show modal
+document.getElementById('addCategoryBtn').onclick = function() {
+  document.getElementById('addCategoryModal').classList.remove('hidden');
+};
+// Hide modal
+function closeCategoryModal() {
+  document.getElementById('addCategoryModal').classList.add('hidden');
+}
+// Add category
+function addCategory(event) {
+  event.preventDefault();
+  const name = document.getElementById('categoryNameInput').value;
+  const color = document.getElementById('categoryColorInput').value;
+  if (name.trim() === "") return;
+
+  // Create category box
+  const box = document.createElement('div');
+  box.className = "relative flex items-center px-3 py-1 rounded-lg text-white text-sm font-semibold";
+  box.style.backgroundColor = color;
+
+  // Category name
+  const span = document.createElement('span');
+  span.textContent = name;
+
+  // Delete button
+  const delBtn = document.createElement('button');
+  delBtn.innerHTML = '&times;';
+  delBtn.className = "ml-2 text-white text-lg font-bold hover:text-red-400 focus:outline-none";
+  delBtn.onclick = function() {
+    box.remove();
+  };
+
+  box.appendChild(span);
+  box.appendChild(delBtn);
+
+  document.getElementById('categoryList').appendChild(box);
+
+  // Reset and close modal
+  document.getElementById('categoryForm').reset();
+  closeCategoryModal();
+}
