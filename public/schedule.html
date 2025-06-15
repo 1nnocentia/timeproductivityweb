@@ -49,7 +49,9 @@
     <div class="flex justify-between items-center mb-2">
       <div class="flex items-center gap-2">
         <span class="font-heading text-2xl text-primary-400 font-bold">CALENDAR</span>
-        <span class="ml-6 text-base text-primary-400 font-semibold" id="calendar-title">June 2025</span>
+        <span class="ml-6 text-base text-primary-400 font-semibold cursor-pointer" id="calendar-title" onclick="showYearView()">
+          June 2025
+        </span>
       </div>
       <!-- Week/Month/Year buttons moved here -->
       <div class="flex items-center gap-2">
@@ -245,33 +247,33 @@
         </div>
         <!-- MONTH VIEW -->
         <div id="month-view" class="hidden h-full grid grid-cols-4 grid-rows-3 gap-6 p-8">
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">January</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">February</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">March</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">April</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">May</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">June</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">July</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">August</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">September</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">October</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">November</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">December</div>
+          <button onclick="showMonthDates(0)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">January</button>
+          <button onclick="showMonthDates(1)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">February</button>
+          <button onclick="showMonthDates(2)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">March</button>
+          <button onclick="showMonthDates(3)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">April</button>
+          <button onclick="showMonthDates(4)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">May</button>
+          <button onclick="showMonthDates(5)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">June</button>
+          <button onclick="showMonthDates(6)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">July</button>
+          <button onclick="showMonthDates(7)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">August</button>
+          <button onclick="showMonthDates(8)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">September</button>
+          <button onclick="showMonthDates(9)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">October</button>
+          <button onclick="showMonthDates(10)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">November</button>
+          <button onclick="showMonthDates(11)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">December</button>
         </div>
         <!-- YEAR VIEW -->
         <div id="year-view" class="hidden h-full grid grid-cols-4 grid-rows-3 gap-6 p-8">
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2020</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2021</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2022</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2023</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2024</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2025</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2026</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2027</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2028</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2029</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2030</div>
-          <div class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24">2031</div>
+          <button onclick="showMonthsForYear(2022)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2022</button>
+          <button onclick="showMonthsForYear(2023)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2023</button>
+          <button onclick="showMonthsForYear(2024)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2024</button>
+          <button onclick="showMonthsForYear(2025)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2025</button>
+          <button onclick="showMonthsForYear(2026)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2026</button>
+          <button onclick="showMonthsForYear(2027)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2027</button>
+          <button onclick="showMonthsForYear(2028)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2028</button>
+          <button onclick="showMonthsForYear(2029)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2029</button>
+          <button onclick="showMonthsForYear(2030)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2030</button>
+          <button onclick="showMonthsForYear(2031)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2031</button>
+          <button onclick="showMonthsForYear(2032)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2032</button>
+          <button onclick="showMonthsForYear(2033)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2033</button>
         </div>
       </div>
       <!-- Plus Button -->
@@ -289,7 +291,7 @@
       <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Category</button>
       <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Date</button>
     </div>
-    <button id="addCategoryBtn" class="text-accent-500 text-left underline text-sm mb-2">+ add category</button>
+    <button id="addCategoryBtn" class="text-accent-500 text-left text-sm mb-2">+ add category</button>
     <!-- No activity type or form here -->
     <div id="categoryList" class="flex flex-wrap gap-2 mt-2"></div>
   </aside>
@@ -542,7 +544,7 @@ function toggleTimeInput(type) {
 function closeModal() {
     document.getElementById('addActivityModal').classList.add('hidden');
 }
-</script>
+</script> 
   <script src="script.js"></script>
 </body>
 </html>

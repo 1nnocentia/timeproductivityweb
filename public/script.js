@@ -239,3 +239,96 @@ function addCategory(event) {
   document.getElementById('categoryForm').reset();
   closeCategoryModal();
 }
+
+// Example: June 2025 has 5 weeks
+const monthNames = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
+function showMonth(monthIdx) {
+  // Hide month cards
+  document.getElementById('monthCards').classList.add('hidden');
+  // Show date grid
+  const dateGrid = document.getElementById('dateGrid');
+  dateGrid.classList.remove('hidden');
+
+  // Get current year (or set your own)
+  const year = 2025;
+  const firstDay = new Date(year, monthIdx, 1).getDay();
+  const lastDate = new Date(year, monthIdx + 1, 0).getDate();
+
+  // Build grid header
+  let html = `
+    <div class="flex justify-between items-center mb-4">
+      <span class="text-xl font-bold text-accent-500">${monthNames[monthIdx]} ${year}</span>
+      <button onclick="backToMonths()" class="text-accent-500 underline text-sm">Back to months</button>
+    </div>
+    <div class="grid grid-cols-7 text-center text-base font-semibold text-gray-500 mb-2">
+      <div>S</div><div>M</div><div>T</div><div>W</div><div>T</div><div>F</div><div>S</div>
+    </div>
+    <div class="grid grid-cols-7 gap-y-6 text-lg font-bold">
+  `;
+
+  // Fill blanks before first day
+  for (let i = 0; i < firstDay; i++) {
+    html += `<div></div>`;
+  }
+
+  // Fill days
+  for (let d = 1; d <= lastDate; d++) {
+    html += `<div class="rounded-lg bg-gray-100 py-6 hover:bg-accent-100 transition cursor-pointer">${d}</div>`;
+  }
+
+  html += '</div>';
+  dateGrid.innerHTML = html;
+}
+
+function backToMonths() {
+  document.getElementById('dateGrid').classList.add('hidden');
+  document.getElementById('monthCards').classList.remove('hidden');
+}
+
+// Initial render
+renderCalendar(selectedDate.getFullYear(), selectedDate.getMonth());
+
+let selectedYear = 2025;
+let selectedMonth = 5; // 0 = January
+
+function showYearView() {
+  document.getElementById('year-view').classList.remove('hidden');
+  document.getElementById('month-view').classList.add('hidden');
+  document.getElementById('dateGrid').classList.add('hidden');
+}
+
+function showMonthsForYear(year) {
+  selectedYear = year;
+  updateCalendarTitle();
+  document.getElementById('year-view').classList.add('hidden');
+  document.getElementById('month-view').classList.remove('hidden');
+  document.getElementById('dateGrid').classList.add('hidden');
+}
+
+function showMonthDates(monthIdx) {
+  selectedMonth = monthIdx;
+  updateCalendarTitle();
+  document.getElementById('month-view').classList.add('hidden');
+  document.getElementById('dateGrid').classList.remove('hidden');
+  renderDateGrid(selectedYear, selectedMonth);
+}
+
+function updateCalendarTitle() {
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  document.getElementById('calendar-title').textContent = `${monthNames[selectedMonth]} ${selectedYear}`;
+}
+
+// Example renderDateGrid function (implement as you wish)
+function renderDateGrid(year, month) {
+  // ...generate your date grid for the selected year and month...
+}
+
+// Initialize title on page load
+updateCalendarTitle();
