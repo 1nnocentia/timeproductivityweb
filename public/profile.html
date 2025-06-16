@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="build/tailwind.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- google fonts here -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Profile - Clockin</title>
+</head>
+<body class="font-sans transition-color bg-primary duration-300">
+    <!-- Header Section -->
+    <header class="fixed w-full top-0 z-50 text-text-100  backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+
+                <div class="flex items-center">
+                    <span class="text-xl text-text-100 font-extrabold font-heading">CLOCKIN</span>
+                </div>
+
+                <ul class="hidden md:flex space-x-8">
+                    <li>
+                        <a href="#dashboard" class="text-accent
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#schedule" class="text-accent
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Schedule</a>
+                    </li>
+                    <li>
+                        <a href="#friends" class="text-accent
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Friends</a>
+                    </li>
+                </ul>
+
+                <div class="flex items-center space-x-4">
+                    <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
+                    <button title="Profile">
+                        <i class="fa-solid fa-user text-accent hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+
+                    <!-- Settings Icon -->
+                    <button title="Settings">
+                        <i class="fa-solid fa-gear text-accent hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+
+                    <!-- Logout Icon -->
+                    <button title="Logout">
+                        <i class="fa-solid fa-right-from-bracket text-accent hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+                    
+                    <button id="themeToggle" class="">
+                        <i class="fa-solid fa-moon text-primary-200 "></i>
+                    </button>
+
+                    <button class="md:hidden p-2" id="menuToggle">
+                        <div class="w-6 h-5 flex flex-col justify-between">
+                            <span class="w-full h-0.5 bg-accent transition-all"></span>
+                        </div>
+                    </button>
+                </div>
+
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 mt-24">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Profile Card -->
+            <div class="md:col-span-2 bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6">
+                <div class="flex items-center gap-6">
+                    <!-- Profile Picture -->
+                    <div class="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 p-1">
+                    <img src="../assets/Aset_Aplikasi_Personal_4.png" alt="Profile" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div>
+                        <h1 class="font-heading font-black text-2xl dark:text-white">Aristo</h1>
+                        <p class="text-gray-600 dark:text-gray-400">yuukiyuna</p>
+                        <button class="mt-2 px-4 py-1 text-sm rounded-lg font-sans
+                        bg-gray-100 dark:bg-gray-800 text-gray-700 
+                        dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
+                            Edit Profile
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Streak Card -->
+            <div class="font-heading bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h2 class="text-2xl font-bold dark:text-white mb-1">CURRENT STREAK</h2>
+                        <div class="text-4xl font-bold dark:text-white">20 DAYS</div>
+                    </div>
+                    <img src="../assets/Aset_Aplikasi_Api.png" alt="Streak Fire" class="w-24 h-24">
+                </div>
+        </div>
+
+        <!-- Achievements Grid -->
+        <div class="mt-8 ">
+            <h2 class="text-3xl font-bold mb-6 dark:text-white">ACHIEVEMENT</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Achievement Cards -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
+                    <img src="../assets/Aset_Aplikasi_Api.png" alt="7 Days" class="w-24 h-14 mb-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold mb-1">7</div>
+                        <div class="text-2xl font-bold mb-2">DAYS</div>
+                        <div class="text-gray-600">STREAK</div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
+                    <img src="../assets/Aset_Aplikasi_Api.png" alt="30 Days" class="w-20 h-20 mb-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold mb-1">30</div>
+                        <div class="text-2xl font-bold mb-2">DAYS</div>
+                        <div class="text-gray-600">STREAK</div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
+                    <img src="../assets/Aset_Aplikasi_Api.png" alt="100 Days" class="w-20 h-20 mb-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold mb-1">100</div>
+                        <div class="text-2xl font-bold mb-2">DAYS</div>
+                        <div class="text-gray-600">STREAK</div>
+                    </div>
+                </div>
+
+                <!-- Second Row -->
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
+                    <img src="../assets/Aset_Aplikasi_Api.png" alt="200 Days" class="w-20 h-20 mb-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold mb-1">200</div>
+                        <div class="text-2xl font-bold mb-2">DAYS</div>
+                        <div class="text-gray-600">STREAK</div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
+                    <img src="../assets/Aset_Aplikasi_Api.png" alt="300 Days" class="w-20 h-20 mb-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold mb-1">300</div>
+                        <div class="text-2xl font-bold mb-2">DAYS</div>
+                        <div class="text-gray-600">STREAK</div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
+                    <img src="../assets/Aset_Aplikasi_Api.png" alt="365 Days" class="w-20 h-20 mb-6">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold mb-1">365</div>
+                        <div class="text-2xl font-bold mb-2">DAYS</div>
+                        <div class="text-gray-600">STREAK</div>
+                    </div>
+                </div>
+            </div>
+    </main>
+</body>
+<script src="../assets/script.js"></script>
+</html>
