@@ -38,7 +38,7 @@ function setLevel(level) {
     }
 
     // update fill bar
-    const fillWidths = [0, 33, 66, 94];
+    const fillWidths = [5, 35, 70, 100];
     const sliderFill = document.getElementById("slider-fill");
     if (sliderFill) { // pake validasi untuk menghindari error
         sliderFill.style.width = `${fillWidths[level]}%`;
@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
     document.addEventListener('click', function () {
         if (colorOptions) {
             colorOptions.classList.add('hidden');
@@ -174,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-function openModal() {
+    function openModal() {
     document.getElementById('addActivityModal').classList.remove('hidden');
 }
 function closeModal() {
