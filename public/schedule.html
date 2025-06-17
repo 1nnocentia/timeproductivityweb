@@ -42,59 +42,62 @@
   </header>
 
 <!-- MAIN CONTENT -->
-<main class="max-w-7xl mx-auto mt-28 px-2 flex gap-4">
+<main class="max-w-7xl mx-auto mt-28 px-2 flex gap-4" style="align-items: stretch;">
   <!-- Calendar Card -->
   <section class="flex-1 bg-white rounded-xl shadow p-5 drop-shadow-default min-w-0 flex flex-col" style="height:700px;">
     <!-- Header and Controls -->
     <div class="flex justify-between items-center mb-2">
       <div class="flex items-center gap-2">
         <span class="font-heading text-2xl text-primary-400 font-bold">CALENDAR</span>
-        <span class="ml-6 text-base text-primary-400 font-semibold cursor-pointer" id="calendar-title" onclick="showYearView()">
+        <!-- Calendar Title (no onclick, no year/month switching) -->
+        <span class="ml-6 text-base text-primary-400 font-semibold" id="calendar-title">
           June 2025
         </span>
       </div>
-      <!-- Week/Month/Year buttons moved here -->
+      <!-- Calendar Controls -->
       <div class="flex items-center gap-2">
-        <button class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500" onclick="setView('week')">Week</button>
-        <button class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500" onclick="setView('month')">Month</button>
-        <button class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500" onclick="setView('year')">Year</button>
+        <button id="weekBtn" class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500">Week</button>
+        <button id="monthBtn" class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500">Month</button>
+        <button id="yearBtn" class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500">Year</button>
       </div>
+
+      <div class="flex items-center gap-2 mb-4">
+      <span class="text-xs text-primary-400">Filter :</span>
+      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Priority</button>
+      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Category</button>
+      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Date</button>
+      </div>
+
     </div>
     <!-- Calendar Views -->
     <div class="relative flex-1 overflow-x-hidden calendar-scroll h-full">
       <div class="w-full h-full overflow-y-auto">
+        <!-- WEEK VIEW -->
         <div id="week-view" class="flex h-full">
           <!-- Time Labels -->
-          <div class="flex flex-col w-16">
-            <div class="h-10"></div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">12 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">1 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">2 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">3 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">4 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">5 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">6 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">7 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">8 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">9 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">10 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">11 AM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">12 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">1 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">2 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">3 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">4 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">5 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">6 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">7 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">8 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">9 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">10 PM</div>
-            <div class="h-10 flex items-center justify-end pr-2 text-xs text-accent-500">11 PM</div>
+          <div class="flex flex-col w-16 border-r border-gray-200">
+            <div class="h-8"></div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">12 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">1 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">2 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">3 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">4 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">5 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">6 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">7 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">8 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">9 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">10 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">11 AM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">12 PM</div>
+            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">1 PM</div>
+            
+            
+            
           </div>
           <!-- Week Grid --> 
-          <div class="flex-1 h-full">
-            <div class="grid grid-cols-7 border-t border-l border-gray-200 bg-white rounded-xl h-full min-w-full">
+          <div class="flex-1" style="height:700px;">
+            <div class="grid grid-cols-7 border-t border-l border-gray-200 bg-white rounded-xl h-full min-w-full relative" id="calendarGrid">
               <!-- Header Row -->
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Sun</div>
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Mon</div>
@@ -104,8 +107,7 @@
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Fri</div>
               <div class="border-b border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Sat</div>
               <!-- 24 rows for 12 AM to 11 PM -->
-              <!-- Each row is 7 empty cells, one for each day -->
-              <!-- Repeat this block 24 times -->
+
               <!-- 12 AM -->
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
@@ -242,58 +244,109 @@
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-gray-200 h-10"></div>
+              <!-- 5 PM -->
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div>
+              <!-- 6 PM -->
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div>
+              <!-- 7 PM -->
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div>
+              <!-- 8 PM -->
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div>
+              <!-- 9 PM -->
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div>
+              <!-- 10 PM -->
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div>
+              <!-- 11 PM -->
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div>
+
             </div>
           </div>
         </div>
         <!-- MONTH VIEW -->
         <div id="month-view" class="hidden h-full grid grid-cols-4 grid-rows-3 gap-6 p-8">
-          <button onclick="showMonthDates(0)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">January</button>
-          <button onclick="showMonthDates(1)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">February</button>
-          <button onclick="showMonthDates(2)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">March</button>
-          <button onclick="showMonthDates(3)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">April</button>
-          <button onclick="showMonthDates(4)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">May</button>
-          <button onclick="showMonthDates(5)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">June</button>
-          <button onclick="showMonthDates(6)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">July</button>
-          <button onclick="showMonthDates(7)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">August</button>
-          <button onclick="showMonthDates(8)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">September</button>
-          <button onclick="showMonthDates(9)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">October</button>
-          <button onclick="showMonthDates(10)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">November</button>
-          <button onclick="showMonthDates(11)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">December</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">January</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">February</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">March</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">April</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">May</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">June</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">July</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">August</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">September</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">October</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">November</button>
+          <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">December</button>
         </div>
         <!-- YEAR VIEW -->
         <div id="year-view" class="hidden h-full grid grid-cols-4 grid-rows-3 gap-6 p-8">
-          <button onclick="showMonthsForYear(2022)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2022</button>
-          <button onclick="showMonthsForYear(2023)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2023</button>
-          <button onclick="showMonthsForYear(2024)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2024</button>
-          <button onclick="showMonthsForYear(2025)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2025</button>
-          <button onclick="showMonthsForYear(2026)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2026</button>
-          <button onclick="showMonthsForYear(2027)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2027</button>
-          <button onclick="showMonthsForYear(2028)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2028</button>
-          <button onclick="showMonthsForYear(2029)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2029</button>
-          <button onclick="showMonthsForYear(2030)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2030</button>
-          <button onclick="showMonthsForYear(2031)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2031</button>
-          <button onclick="showMonthsForYear(2032)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2032</button>
-          <button onclick="showMonthsForYear(2033)" class="flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2033</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2022</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2023</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2024</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2025</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2026</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2027</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2028</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2029</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2030</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2031</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2032</button>
+          <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2033</button>
         </div>
       </div>
-      <!-- Plus Button -->
-      <button id="openPopup" class="absolute bottom-8 right-8 bg-accent hover:bg-accent/80 text-primary text-3xl rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
-        <i class="fa-solid fa-plus"></i>
-      </button>
     </div>
+    <!-- Plus Button -->
+    <button id="openPopup" class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default">
+      <i class="fa-solid fa-plus"></i>
+    </button>
   </section>
   <!-- Category Card -->
-  <aside class="w-80 bg-white rounded-xl shadow p-5 drop-shadow-default h-fit">
+  <aside class="w-80 bg-white rounded-xl shadow p-5 drop-shadow-default h-full" style="height:700px;">
     <h2 class="text-2xl font-heading font-bold mb-2 text-accent-500">CATEGORY</h2>
-    <div class="flex items-center gap-2 mb-4">
-      <span class="text-xs text-primary-400">Filter :</span>
-      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Priority</button>
-      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Category</button>
-      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Date</button>
-    </div>
     <button id="addCategoryBtn" class="text-accent-500 text-left text-sm mb-2">+ add category</button>
     <!-- No activity type or form here -->
-    <div id="categoryList" class="flex flex-wrap gap-2 mt-2"></div>
+    <div id="categoryList" class="flex flex-col gap-2 mt-"></div>
   </aside>
 </main>
 

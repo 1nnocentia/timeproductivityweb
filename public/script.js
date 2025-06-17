@@ -346,6 +346,3 @@ function updateCalendarTitle() {
 function renderDateGrid(year, month) {
   // ...generate your date grid for the selected year and month...
 }
-
-// Initialize title on page load
-updateCalendarTitle();
