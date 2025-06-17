@@ -13,9 +13,15 @@
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <script src="script.js"></script>
     <style>
+        .toggle-checkbox {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         .toggle-checkbox:checked {
             transform: translateX(16px);
             border-color: #3B82F6;
+        }
+        .toggle-label {
+            transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .toggle-checkbox:checked + .toggle-label {
             background-color: #3B82F6;
@@ -23,9 +29,9 @@
     </style>
     <title>Login - Clockin</title>
 </head>
-<body class="font-sans transition-color bg-primary duration-300">
+<body class="font-body transition-color bg-primary duration-300">
     <!-- Header Section -->
-    <header class="fixed w-full top-0 z-50 text-text-100 bg-primary dark:bg-accent backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
+    <header class="fixed w-full top-0 z-50 text-text-100 backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
                 <!-- CLOCKIN -->
@@ -48,12 +54,12 @@
             </div>
         </header>
         <!-- Login Box -->
-        <section class="bg-primary dark:bg-gray-700 min-h-screen flex items-center justify-center px-4 py-16 sm:py-24">
+        <section class="bg-primary dark:bg-gray-500 min-h-screen flex items-center justify-center px-4 py-16 sm:py-24">
         <div class="w-full max-w-4xl mx-auto">
-            <div class="flex flex-col md:flex-row bg-white/90 dark:bg-gray-500/40 rounded-2xl shadow-lg overflow-hidden">
+            <div class="flex flex-col md:flex-row bg-white/90 dark:bg-gray-700 rounded-2xl shadow-lg overflow-hidden">
                 <!-- Left side - Login Form -->
                 <div class="w-full md:w-1/2 p-6 sm:p-8">
-                    <h3 class="text-gray-800 dark:text-gray-100 text-center text-2xl font-bold mb-4">Welcome Back</h3>
+                    <h3 class="text-gray-800 dark:text-gray-100 text-center text-2xl font-heading font-bold mb-4">Welcome Back</h3>
                     <p class="text-gray-600 dark:text-gray-100 mb-8 text-center text-sm sm:text-base">Helping and boost your productivity with Clockin.<br>
                         Get started for free.</p>
                     
@@ -69,7 +75,10 @@
                             <input type="password" id="password" placeholder="Password" required
                                 class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
                             <button type="button" onclick="togglePassword()"
-                                class="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-600 dark:text-gray-300 hover:text-gray-400 dark:hover:text-white focus:outline-none">
+                                class="absolute right-4 top-1/2 transform -translate-y-1/2 
+                                text-gray-600 dark:text-gray-300 transition-colors
+                                hover:text-gray-400 dark:hover:text-white 
+                                focus:outline-none">
                                 <i class="fa-solid fa-eye w-5 h-5" id="togglePassword"></i>
                             </button>
                         </div>
@@ -88,22 +97,21 @@
                         </script>
                         
                         <!-- Remember Me & Forgot Password -->
-                        <div class="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0">
-                            <label class="flex items-center">
+                        <div class="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0">                            <label class="flex items-center">
                                 <div class="relative inline-block w-8 h-4 mr-2 align-middle select-none">
-                                    <input type="checkbox" 
-                                        class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-300 appearance-none cursor-pointer transition-transform duration-200 ease-in-out left-0 top-0"
+                                    <input type="checkbox" id="rememberMe"
+                                        class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-800 appearance-none cursor-pointer transition-transform duration-200 ease-in-out left-0 top-0"
                                     />
                                     <div class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></div>
                                 </div>
                                 <span class="text-sm text-gray-600 dark:text-white">Remember me</span>
                             </label>
-                            <a href="../public/forgot_password.html" class="text-sm text-gray-500 hover:text-accent dark:hover:text-primary">Forgot password?</a>
+                            <a href="../public/forgot_password.html" class="text-sm text-gray-500 dark:text-gray-400/70 hover:text-accent dark:hover:text-primary transition-colors">Forgot password?</a>
                         </div>
                         
                         <!-- Submit -->
                         <button type="submit" 
-                            class="w-full font-medium bg-accent dark:bg-primary text-white dark:text-gray-700 py-3 rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-accent dark:focus:ring-accent">
+                            class="w-full font-semibold bg-accent dark:bg-primary text-white dark:text-gray-700 py-3 rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-accent dark:focus:ring-accent">
                             Login
                         </button>
                     </form>
@@ -111,7 +119,7 @@
                     <div class="mt-8 text-center">
                         <p class="text-gray-600 dark:text-gray-100">
                             Not a member? 
-                            <a href="../public/register.html" class="text-primary-500 hover:text-primary-600 font-semibold">Register now</a>
+                            <a href="../public/register.html" class="text-white font-semibold hover:text-primary transition-colors">Register now</a>
                         </p>
                     </div>
                 </div>
@@ -122,5 +130,137 @@
                 </div>
             </div>
         </section>
+
+        <script>
+            // Theme toggle functionality
+            document.addEventListener('DOMContentLoaded', function() {
+                const themeToggle = document.getElementById('themeToggle');
+                const html = document.documentElement;
+                const icon = themeToggle.querySelector('i');
+
+                // Check for saved theme preference
+                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    html.classList.add('dark');
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                }
+
+                // Toggle theme
+                themeToggle.addEventListener('click', function() {
+                    html.classList.toggle('dark');
+                    
+                    // Update icon
+                    if (html.classList.contains('dark')) {
+                        icon.classList.replace('fa-moon', 'fa-sun');
+                        localStorage.theme = 'dark';
+                    } else {
+                        icon.classList.replace('fa-sun', 'fa-moon');
+                        localStorage.theme = 'light';
+                    }
+                });
+
+                // Load saved credentials if remember me was checked
+                loadSavedCredentials();
+            });
+
+            // Load saved credentials from localStorage
+            function loadSavedCredentials() {
+                const savedUsername = localStorage.getItem('rememberedUsername');
+                const savedPassword = localStorage.getItem('rememberedPassword');
+                const rememberMe = localStorage.getItem('rememberMe') === 'true';
+
+                if (rememberMe && savedUsername && savedPassword) {
+                    document.getElementById('username').value = savedUsername;
+                    document.getElementById('password').value = savedPassword;
+                    document.getElementById('rememberMe').checked = true;
+                    
+                    // Show a subtle indication that credentials were loaded
+                    const usernameField = document.getElementById('username');
+                    usernameField.style.borderColor = '#10B981';
+                    setTimeout(() => {
+                        usernameField.style.borderColor = '';
+                    }, 2000);
+                }
+            }
+
+            // Save credentials to localStorage
+            function saveCredentials(username, password, remember) {
+                if (remember) {
+                    localStorage.setItem('rememberedUsername', username);
+                    localStorage.setItem('rememberedPassword', password);
+                    localStorage.setItem('rememberMe', 'true');
+                } else {
+                    localStorage.removeItem('rememberedUsername');
+                    localStorage.removeItem('rememberedPassword');
+                    localStorage.removeItem('rememberMe');
+                }
+            }
+
+            // Form submission handling
+            document.querySelector('form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+
+                // Save or clear credentials based on remember me checkbox
+                saveCredentials(username, password, rememberMe);
+
+                try {
+                    const response = await fetch('http://localhost:8080/api/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            usernameOrEmail: username,
+                            password: password
+                        })
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        
+                        // Save JWT token
+                        localStorage.setItem('jwtToken', data.token);
+                        localStorage.setItem('userId', data.userId);
+                        
+                        alert('Login successful!');
+                        window.location.href = 'index.html'; // Redirect to dashboard
+                    } else {
+                        const data = await response.json();
+                        alert('Login failed: ' + (data.message || 'Please check your credentials'));
+                        
+                        // If login failed, clear saved credentials
+                        if (rememberMe) {
+                            saveCredentials('', '', false);
+                            document.getElementById('rememberMe').checked = false;
+                        }
+                    }
+                } catch (error) {
+                    alert('Error during login: ' + error.message);
+                }
+            });
+
+            // Add a quick login button for testing (you can remove this in production)
+            function addQuickLoginButton() {
+                const form = document.querySelector('form');
+                const quickLoginBtn = document.createElement('button');
+                quickLoginBtn.type = 'button';
+                quickLoginBtn.className = 'w-full mt-2 font-semibold bg-gray-500 text-white py-2 rounded-full hover:bg-gray-600 transition-colors text-sm';
+                quickLoginBtn.textContent = 'Quick Login (Test)';
+                quickLoginBtn.onclick = function() {
+                    document.getElementById('username').value = 'testuser';
+                    document.getElementById('password').value = 'TestPass123!';
+                    document.getElementById('rememberMe').checked = true;
+                };
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                submitBtn.parentNode.insertBefore(quickLoginBtn, submitBtn.nextSibling);
+            }
+
+            // Uncomment the line below to add a quick login button for testing
+            // addQuickLoginButton();
+        </script>
 </body>
 </html>
