@@ -102,9 +102,17 @@ document.addEventListener('DOMContentLoaded', function() {
             if (taskTypeRadio.checked) {
                 taskTimeInput.classList.remove('hidden');
                 eventTimeInput.classList.add('hidden');
+                // Set required biar bisa submit 
+                document.getElementById('deadlineTime').required = true;
+                document.getElementById('startTime').required = false;
+                document.getElementById('endTime').required = false;
             } else {
                 taskTimeInput.classList.add('hidden');
                 eventTimeInput.classList.remove('hidden');
+                // Set required biar bisa submit
+                document.getElementById('deadlineTime').required = false;
+                document.getElementById('startTime').required = true;
+                document.getElementById('endTime').required = true;
             }
         }
     }
@@ -173,40 +181,48 @@ document.addEventListener('DOMContentLoaded', function() {
             sliderFill.style.width = `0%`;
             sliderFill.style.backgroundColor = 'transparent';
         }
+<<<<<<<<< Temporary merge branch 1
     });
 
     function openModal() {
     document.getElementById('addActivityModal').classList.remove('hidden');
 }
+
 function closeModal() {
     document.getElementById('addActivityModal').classList.add('hidden');
 }
+
 function openQuestModal() {
   document.getElementById('addQuestModal').classList.remove('hidden');
 }
+
 function closeQuestModal() {
   document.getElementById('addQuestModal').classList.add('hidden');
 }
-function toggleTimeInput(type) {
-  const taskInput = document.getElementById('taskTimeInput');
-  const eventInput = document.getElementById('eventTimeInput');
-  if (type === 'event') {
-    taskInput.classList.add('hidden');
-    eventInput.classList.remove('hidden');
-  } else {
-    taskInput.classList.remove('hidden');
-    eventInput.classList.add('hidden');
-  }
-}
+
+
+// function toggleTimeInput(type) {
+//   const taskInput = document.getElementById('taskTimeInput');
+//   const eventInput = document.getElementById('eventTimeInput');
+//   if (taskType === 'event') {
+//     taskInput.classList.add('hidden');
+//     eventInput.classList.remove('hidden');
+//   } else {
+//     taskInput.classList.remove('hidden');
+//     eventInput.classList.add('hidden');
+//   }
+// }
 
 // Show modal
 document.getElementById('addCategoryBtn').onclick = function() {
   document.getElementById('addCategoryModal').classList.remove('hidden');
 };
+
 // Hide modal
 function closeCategoryModal() {
   document.getElementById('addCategoryModal').classList.add('hidden');
 }
+
 // Add category
 function addCategory(event) {
   event.preventDefault();
@@ -254,7 +270,7 @@ function showMonth(monthIdx) {
   const dateGrid = document.getElementById('dateGrid');
   dateGrid.classList.remove('hidden');
 
-  // Get current year (or set your own)
+  // Set year
   const year = 2025;
   const firstDay = new Date(year, monthIdx, 1).getDay();
   const lastDate = new Date(year, monthIdx + 1, 0).getDate();
