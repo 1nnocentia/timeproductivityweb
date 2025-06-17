@@ -349,3 +349,29 @@ function renderDateGrid(year, month) {
 
 // Initialize title on page load
 updateCalendarTitle();
+
+//////////////////////////////////////////////////////////////////////////////////
+
+function setView(view) {
+  document.getElementById('week-view').classList.add('hidden');
+  document.getElementById('month-view').classList.add('hidden');
+  document.getElementById('year-view').classList.add('hidden');
+  document.getElementById(view + '-view').classList.remove('hidden');
+}
+setView('week'); // Default view
+
+function toggleTimeInput(type) {
+    const taskInput = document.getElementById('taskTimeInput');
+    const eventInput = document.getElementById('eventTimeInput');
+
+    if (type === 'event') {
+        taskInput.classList.add('hidden');
+        eventInput.classList.remove('hidden');
+    } else {
+        taskInput.classList.remove('hidden');
+        eventInput.classList.add('hidden');
+    }
+}
+function closeModal() {
+    document.getElementById('addActivityModal').classList.add('hidden');
+}
