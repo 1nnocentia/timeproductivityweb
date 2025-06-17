@@ -22,9 +22,14 @@
         }
         .toggle-label {
             transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .toggle-checkbox:checked + .toggle-label {
+        }        .toggle-checkbox:checked + .toggle-label {
             background-color: #3B82F6;
+        }
+        
+        /* Toast animation styles */
+        #toastContent {
+            transform: translateX(100%);
+            opacity: 0;
         }
     </style>
 </head>
@@ -56,18 +61,18 @@
     <!-- Registration box (Login) -->
     <section class="bg-primary dark:bg-gray-500 min-h-screen flex items-center justify-center px-4 py-16 sm:py-24">
         <div class="w-full max-w-4xl mx-auto">
-            <div class="flex flex-col md:flex-row bg-white dark:bg-gray-700 rounded-2xl shadow-lg overflow-hidden">
-                <!-- Left side - Registration Form -->
-                <div class="w-full md:w-1/2 p-6 sm:p-8">
+            <div class="flex flex-col md:flex-row bg-white dark:bg-gray-700 rounded-2xl shadow-lg overflow-hidden">                <!-- Left side - Registration Form -->
+                <div class="w-full md:w-1/2 p-6 sm:p-8">                    
                     <h3 class="font-heading font-extrabold text-gray-800 dark:text-gray-100 text-center text-2xl mb-4">Create an Account</h3>
+                    
                     <p class="text-gray-600 dark:text-gray-300 mb-8 text-center text-sm sm:text-base">
                         Join us and boost your productivity with Clockin.<br>
                         Get started for free.
                     </p>
-                    <form class="space-y-6">
+                    <form id="registrationForm" class="space-y-6">                        
                         <!-- Nickname -->
                         <div>
-                            <input type="text" name="nickname" id="nickname" placeholder="Nickname" 
+                            <input type="text" name="nickname" id="nickname" placeholder="Nickname" required
                                 class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
                         </div>
                         
@@ -81,10 +86,9 @@
                         <div>
                             <input type="email" name="email" id="email" placeholder="Email" required 
                                 class="w-full px-4 py-3 rounded-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100  border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
-                        </div>
-                        
-                        <!-- Password -->
-                        <div class="relative">                            <input type="password" id="password" name="password" placeholder="Password" required
+                        </div>                          <!-- Password -->
+                        <div class="relative">
+                            <input type="password" id="password" name="password" placeholder="Password" required
                                 class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
                             <button type="button" id="togglePassword" 
                                 class="absolute right-4 top-3 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white focus:outline-none">
@@ -134,27 +138,46 @@
                     <img src="../assets/2.png" alt="Clockin Logo" class="w-64 lg:w-80 h-auto object-contain">
                 </div>
             </div>
+        </div>    </section>
+    
+    <!-- Floating Toast Notification -->
+    <div id="toastContainer" class="fixed top-20 right-4 z-50 hidden">
+        <div id="toastContent" class="max-w-sm px-4 py-3 rounded-lg shadow-lg text-white text-sm font-medium transform transition-all duration-300 ease-in-out">
+            <div class="flex items-center space-x-2">
+                <div id="toastIcon" class="flex-shrink-0">
+                    <!-- Icon will be added dynamically -->
+                </div>
+                <div id="toastMessage" class="flex-1">
+                    <!-- Message will be added here -->
+                </div>
+                <button id="toastCloseBtn" class="flex-shrink-0 ml-2 text-white hover:text-gray-200 focus:outline-none">
+                    <i class="fa-solid fa-times text-xs"></i>
+                </button>
+            </div>
         </div>
-    </section>
+    </div>
+    
+    <script src="db.js"></script>
+    <!-- Database utilities script -->
     <script>
-    document.getElementById('togglePassword').addEventListener('click', function() {
-        const password = document.getElementById('password');
-        const icon = this.querySelector('i');
-        // Toggle password visibility
-        if (password.type === 'password') {
-            password.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            password.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
-    });
-</script>
-<script>
-        // Theme toggle functionality
+        // Global variables for form validation
+        let isFormValid = false;
+        let passwordValidation = {
+            length: false,
+            uppercase: false,
+            number: false,
+            special: false
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
+            initializeThemeToggle();
+            initializePasswordToggle();
+            initializeFormValidation();
+            initializeRegistrationForm();
+        });
+
+        // Theme toggle functionality
+        function initializeThemeToggle() {
             const themeToggle = document.getElementById('themeToggle');
             const html = document.documentElement;
             const icon = themeToggle.querySelector('i');
@@ -183,8 +206,26 @@
                 icon.classList.remove(html.classList.contains('dark') ? 'fa-moon' : 'fa-sun');
                 icon.classList.add(html.classList.contains('dark') ? 'fa-sun' : 'fa-moon');
             });
-        });
-    
-</script>
+        }
+
+        // Password visibility toggle
+        function initializePasswordToggle() {
+            document.getElementById('togglePassword').addEventListener('click', function() {
+                const password = document.getElementById('password');
+                const icon = this.querySelector('i');
+                
+                // Toggle password visibility
+                if (password.type === 'password') {
+                    password.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    password.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        }
+    </script>
 </body>
 </html>

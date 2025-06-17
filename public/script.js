@@ -29,4 +29,26 @@
                 icon.classList.add(html.classList.contains('dark') ? 'fa-sun' : 'fa-moon');
             });
         });
-    
+
+
+        // Form submission
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Perform form validation and submission logic here
+        });
+        // Example of form validation
+        function validateForm() {
+            const nickname = document.getElementById('nickname').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!nickname || !username || !email || !password) {
+                alert('Please fill out all fields.');
+                return false;
+            }
+
+            // Additional validation logic can be added here
+            return true;
+        }

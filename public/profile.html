@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="build/tailwind.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- tailwind -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <!-- google fonts here -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
-    <title>Profile - Clockin</title>
+    <title>Clockin</title>
 </head>
+
 <body class="font-sans transition-color bg-primary duration-300">
     <!-- Header Section -->
-    <header class="fixed w-full top-0 z-50 text-text-100  backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
+    <header class="fixed w-full top-0 z-50 text-text-100 backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
 
@@ -26,23 +30,32 @@
                 <ul class="hidden md:flex space-x-8">
                     <li>
                         <a href="#dashboard" class="text-accent
+                        
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
                         transition-colors">Dashboard</a>
                     </li>
                     <li>
                         <a href="#schedule" class="text-accent
+                        
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
                         transition-colors">Schedule</a>
                     </li>
                     <li>
                         <a href="#friends" class="text-accent
+                        
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
+                        
                         transition-colors">Friends</a>
                     </li>
                 </ul>
+
+                <!-- <button class="bg-accent p-2">
+                    <a href="#" class="text-primary">Login</a>
+                </button> -->
+
 
                 <div class="flex items-center space-x-4">
                     <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
@@ -78,100 +91,500 @@
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 mt-24">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <!-- Profile Card -->
-            <div class="md:col-span-2 bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6">
-                <div class="flex items-center gap-6">
-                    <!-- Profile Picture -->
-                    <div class="w-24 h-24 rounded-full bg-gray-200 dark:bg-gray-700 p-1">
-                    <img src="../assets/Aset_Aplikasi_Personal_4.png" alt="Profile" class="w-full h-full rounded-full object-cover">
+    <div class="flex flex-col lg:mx-24 gap-6 mb-12">
+        <section class="pt-20 mx-3 lg:mx-16">
+            <div class="grid lg:grid-cols-3 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">
+                <!-- PROFILE -->
+                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center cols-span-3 lg:col-span-2">
+                        <div class="flex items-center space-x-4">                            <div class="relative">
+                                <!-- Current profile picture display -->
+                                <div class="w-32 h-32 bg-gray-300 rounded-full flex items-center justify-center">
+                                    <img id="currentProfilePicture" class="w-28 h-28" src="../assets/Aset_Aplikasi_Personal_4.png" alt="Profile Picture">
+                                </div>
+                                <!-- Change Picture Button -->
+                                <button id="changePictureBtn" class="absolute bottom-0 right-0 w-8 h-8 bg-accent text-primary rounded-full hover:bg-accent/80 transition-colors flex items-center justify-center">
+                                    <i class="fa-solid fa-camera text-xs"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="flex flex-col">
+                                <span id="userName" class="text-accent text-3xl font-black font-heading">Aristo</span>
+                                <span id="userUsername" class="text-accent text-sm font-medium font-body">yuukiyuna</span>
+                                <!-- Edit Profile Button -->
+                                <button id="editProfileBtn" class="font-body font-semibold mt-2 px-2 py-1 bg-accent/75 text-primary rounded-lg hover:bg-accent transition-colors">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+                                </button>
+                            </div>
+                            
+                        </div>
+                </div>
+                <!-- STREAK -->
+                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center">
+                    <div class="flex flex-col">
+                        <span class="text-accent font-body text-sm ">Your Streak</span>
+                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
                     </div>
-                    <div>
-                        <h1 class="font-heading font-black text-2xl dark:text-white">Aristo</h1>
-                        <p class="text-gray-600 dark:text-gray-400">yuukiyuna</p>
-                        <button class="mt-2 px-4 py-1 text-sm rounded-lg font-sans
-                        bg-gray-100 dark:bg-gray-800 text-gray-700 
-                        dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700">
-                            Edit Profile
+                    <img class="w-16 h-16" src="../assets/Aset_Aplikasi_Api.png" alt="">
+                    
+                </div>
+
+            </div>
+        </section>
+
+        <section class=" mx-3 lg:mx-16">
+            <div class="grid lg:grid-cols-3 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">
+                <!-- BADGE -->
+                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center">
+                        <div class="flex flex-col">
+                        <span class="text-accent font-body text-sm ">Your Streak</span>
+                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
+                    </div>
+                    <img class="w-16 h-16" src="../assets/Aset_Aplikasi_Api.png" alt="">
+                    
+                </div>
+                <!-- BADGE -->
+                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center">
+                    <div class="flex flex-col">
+                        <span class="text-accent font-body text-sm ">Your Streak</span>
+                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
+                    </div>
+                    <img class="w-16 h-16" src="../assets/Aset_Aplikasi_Api.png" alt="">
+                    
+                </div>
+
+                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center">
+                    <div class="flex flex-col">
+                        <span class="text-accent font-body text-sm ">Your Streak</span>
+                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
+                    </div>
+                    <img class="w-16 h-16" src="../assets/Aset_Aplikasi_Api.png" alt="">
+                </div>
+
+            </div>
+        </section>    </div>
+
+        <!-- Local Database Section -->
+        <section class="mx-3 lg:mx-16">
+            <div class="bg-secondary rounded-lg drop-shadow-default p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-accent text-2xl font-bold font-heading">My Activities Database</h2>
+                    <div class="flex space-x-2">
+                        <button id="addActivityBtn" class="px-4 py-2 bg-accent text-primary rounded-lg hover:bg-accent/80 transition-colors font-semibold">
+                            <i class="fa-solid fa-plus mr-2"></i>Add Activity
+                        </button>
+                        <button id="exportDataBtn" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-semibold">
+                            <i class="fa-solid fa-download mr-2"></i>Export
+                        </button>
+                        <button id="importDataBtn" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-semibold">
+                            <i class="fa-solid fa-upload mr-2"></i>Import
                         </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Streak Card -->
-            <div class="font-heading bg-white dark:bg-gray-900 rounded-xl shadow-sm p-6">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h2 class="text-2xl font-bold dark:text-white mb-1">CURRENT STREAK</h2>
-                        <div class="text-4xl font-bold dark:text-white">20 DAYS</div>
+                <!-- Database Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                    <div class="bg-primary/10 rounded-lg p-4 text-center">
+                        <div class="text-accent text-2xl font-bold" id="totalActivities">0</div>
+                        <div class="text-accent/80 text-sm">Total Activities</div>
                     </div>
-                    <img src="../assets/Aset_Aplikasi_Api.png" alt="Streak Fire" class="w-24 h-24">
+                    <div class="bg-primary/10 rounded-lg p-4 text-center">
+                        <div class="text-accent text-2xl font-bold" id="completedActivities">0</div>
+                        <div class="text-accent/80 text-sm">Completed</div>
+                    </div>
+                    <div class="bg-primary/10 rounded-lg p-4 text-center">
+                        <div class="text-accent text-2xl font-bold" id="pendingActivities">0</div>
+                        <div class="text-accent/80 text-sm">Pending</div>
+                    </div>
+                <div class="profile-option cursor-pointer" data-picture-id="aset_aplikasi_personal_5">
+                    <div class="w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center hover:ring-2 hover:ring-accent transition-all">
+                        <img class="w-16 h-16" src="../assets/Aset_Aplikasi_Personal_5.png" alt="Profile 5">
+                    </div>
                 </div>
+                <div class="profile-option cursor-pointer" data-picture-id="aset_aplikasi_personal_6">
+                    <div class="w-20 h-20 bg-gray-300 rounded-full flex items-center justify-center hover:ring-2 hover:ring-accent transition-all">
+                        <img class="w-16 h-16" src="../assets/Aset_Aplikasi_Personal_6.png" alt="Profile 6">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex justify-end space-x-2">
+                <button id="cancelBtn" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-colors">
+                    Cancel
+                </button>
+                <button id="savePictureBtn" class="px-4 py-2 bg-accent text-primary rounded hover:bg-accent/80 transition-colors" disabled>
+                    Save Picture
+                </button>
+            </div>
         </div>
+    </div>
 
-        <!-- Achievements Grid -->
-        <div class="mt-8 ">
-            <h2 class="text-3xl font-bold mb-6 dark:text-white">ACHIEVEMENT</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Achievement Cards -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
-                    <img src="../assets/Aset_Aplikasi_Api.png" alt="7 Days" class="w-24 h-14 mb-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-1">7</div>
-                        <div class="text-2xl font-bold mb-2">DAYS</div>
-                        <div class="text-gray-600">STREAK</div>
-                    </div>
-                </div>
+    <!-- Success/Error Messages -->
+    <div id="messageContainer" class="fixed top-20 right-4 z-50 hidden">
+        <div id="messageContent" class="px-4 py-2 rounded shadow-lg text-white"></div>
+    </div>
 
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
-                    <img src="../assets/Aset_Aplikasi_Api.png" alt="30 Days" class="w-20 h-20 mb-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-1">30</div>
-                        <div class="text-2xl font-bold mb-2">DAYS</div>
-                        <div class="text-gray-600">STREAK</div>
-                    </div>
-                </div>
+    <!-- Script.js -->    <script>
+        // Global variables
+        let currentUser = null;
+        let selectedProfilePictureId = null;
 
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
-                    <img src="../assets/Aset_Aplikasi_Api.png" alt="100 Days" class="w-20 h-20 mb-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-1">100</div>
-                        <div class="text-2xl font-bold mb-2">DAYS</div>
-                        <div class="text-gray-600">STREAK</div>
-                    </div>
-                </div>
+        // Profile picture ID to file mapping
+        const profilePictureMap = {
+            'aset_aplikasi_personal_1': '../assets/Aset_Aplikasi_Personal_1.png',
+            'aset_aplikasi_personal_2': '../assets/Aset_Aplikasi_Personal_2.png',
+            'aset_aplikasi_personal_3': '../assets/Aset_Aplikasi_Personal_3.png',
+            'aset_aplikasi_personal_4': '../assets/Aset_Aplikasi_Personal_4.png',
+            'aset_aplikasi_personal_5': '../assets/Aset_Aplikasi_Personal_5.png',
+            'aset_aplikasi_personal_6': '../assets/Aset_Aplikasi_Personal_6.png'
+        };
 
-                <!-- Second Row -->
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
-                    <img src="../assets/Aset_Aplikasi_Api.png" alt="200 Days" class="w-20 h-20 mb-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-1">200</div>
-                        <div class="text-2xl font-bold mb-2">DAYS</div>
-                        <div class="text-gray-600">STREAK</div>
-                    </div>
-                </div>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const icon = themeToggle.querySelector('i');
 
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
-                    <img src="../assets/Aset_Aplikasi_Api.png" alt="300 Days" class="w-20 h-20 mb-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-1">300</div>
-                        <div class="text-2xl font-bold mb-2">DAYS</div>
-                        <div class="text-gray-600">STREAK</div>
-                    </div>
-                </div>
+            // Check for saved theme preference
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
 
-                <div class="bg-white dark:bg-gray-900 rounded-xl p-8 flex flex-col items-center">
-                    <img src="../assets/Aset_Aplikasi_Api.png" alt="365 Days" class="w-20 h-20 mb-6">
-                    <div class="text-center">
-                        <div class="text-3xl font-bold mb-1">365</div>
-                        <div class="text-2xl font-bold mb-2">DAYS</div>
-                        <div class="text-gray-600">STREAK</div>
+            // Toggle theme
+            themeToggle.addEventListener('click', function() {
+                html.classList.toggle('dark');
+                
+                // Update icon
+                if (html.classList.contains('dark')) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.theme = 'dark';
+                } else {
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.theme = 'light';
+                }
+            });
+
+            themeToggle.addEventListener('mouseleave', function() {
+                icon.classList.remove(html.classList.contains('dark') ? 'fa-moon' : 'fa-sun');
+                icon.classList.add(html.classList.contains('dark') ? 'fa-sun' : 'fa-moon');
+            });
+
+            // Initialize profile functionality
+            initializeProfile();
+            initializeProfilePictureModal();
+            initializeDatabaseSection();
+        });
+
+        // Initialize profile data loading
+        function initializeProfile() {
+            // Check if user is logged in
+            const token = localStorage.getItem('jwtToken');
+            const userId = localStorage.getItem('userId');
+
+            if (!token || !userId) {
+                // Redirect to login if not authenticated
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user profile data
+            loadUserProfile(userId, token);
+        }
+
+        // Load user profile from backend
+        async function loadUserProfile(userId, token) {
+            try {
+                const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    currentUser = await response.json();
+                    updateProfileDisplay();
+                } else {
+                    console.error('Failed to load user profile');
+                    showMessage('Failed to load profile data', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                showMessage('Error loading profile data', 'error');
+            }
+        }
+
+        // Update profile display with user data
+        function updateProfileDisplay() {
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.nama || 'User';
+                document.getElementById('userUsername').textContent = currentUser.username || 'username';
+                
+                // Update profile picture
+                const profilePictureId = currentUser.profilePictureId || 'aset_aplikasi_personal_4';
+                const profilePictureSrc = profilePictureMap[profilePictureId] || '../assets/Aset_Aplikasi_Personal_4.png';
+                document.getElementById('currentProfilePicture').src = profilePictureSrc;
+            }
+        }
+
+        // Initialize profile picture modal functionality
+        function initializeProfilePictureModal() {
+            const modal = document.getElementById('profilePictureModal');
+            const changePictureBtn = document.getElementById('changePictureBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const savePictureBtn = document.getElementById('savePictureBtn');
+            const profileOptions = document.querySelectorAll('.profile-option');
+
+            // Open modal
+            changePictureBtn.addEventListener('click', function() {
+                modal.style.display = 'flex';
+                selectedProfilePictureId = null;
+                savePictureBtn.disabled = true;
+                clearProfileOptionSelection();
+            });
+
+            // Close modal
+            [closeModalBtn, cancelBtn].forEach(btn => {
+                btn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            });
+
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Handle profile option selection
+            profileOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    clearProfileOptionSelection();
+                    this.querySelector('div').classList.add('ring-2', 'ring-accent');
+                    selectedProfilePictureId = this.dataset.pictureId;
+                    savePictureBtn.disabled = false;
+                });
+            });
+
+            // Save profile picture
+            savePictureBtn.addEventListener('click', async function() {
+                if (selectedProfilePictureId && currentUser) {
+                    await updateProfilePicture(selectedProfilePictureId);
+                }
+            });
+        }
+
+        // Clear profile option selection
+        function clearProfileOptionSelection() {
+            document.querySelectorAll('.profile-option div').forEach(div => {
+                div.classList.remove('ring-2', 'ring-accent');
+            });
+        }
+
+        // Update profile picture via API
+        async function updateProfilePicture(profilePictureId) {
+            const token = localStorage.getItem('jwtToken');
+            const userId = localStorage.getItem('userId');
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        profilePictureId: profilePictureId
+                    })
+                });
+
+                if (response.ok) {
+                    const updatedUser = await response.json();
+                    currentUser = updatedUser;
+                    updateProfileDisplay();
+                    document.getElementById('profilePictureModal').style.display = 'none';
+                    showMessage('Profile picture updated successfully!', 'success');
+                } else {
+                    console.error('Failed to update profile picture');
+                    showMessage('Failed to update profile picture', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating profile picture:', error);
+                showMessage('Error updating profile picture', 'error');
+            }
+        }
+
+        // Show success/error messages
+        function showMessage(message, type) {
+            const container = document.getElementById('messageContainer');
+            const content = document.getElementById('messageContent');
+            
+            content.textContent = message;
+            content.className = `px-4 py-2 rounded shadow-lg text-white ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            }`;
+            
+            container.classList.remove('hidden');
+            setTimeout(() => {
+                container.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Handle logout button (if needed)
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutBtn = document.querySelector('button[title="Logout"]');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    localStorage.removeItem('jwtToken');
+                    localStorage.removeItem('userId');
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+
+        // Initialize database section
+        function initializeDatabaseSection() {
+            const totalActivitiesElem = document.getElementById('totalActivities');
+            const totalTimeElem = document.getElementById('totalTime');
+            const databaseSizeElem = document.getElementById('databaseSize');
+            const lastUpdatedElem = document.getElementById('lastUpdated');
+            const activitiesListElem = document.getElementById('activitiesList');
+
+            // Load initial data
+            updateDatabaseStats();
+            loadActivitiesList();
+
+            // Add activity button
+            document.getElementById('addActivityBtn').addEventListener('click', function() {
+                const title = document.getElementById('activityTitle').value.trim();
+                const type = document.getElementById('activityType').value;
+                const duration = parseInt(document.getElementById('activityDuration').value, 10);
+
+                if (title === '' || isNaN(duration) || duration <= 0) {
+                    showMessage('Please enter valid activity details', 'error');
+                    return;
+                }
+
+                // Create activity object
+                const activity = {
+                    id: Date.now(),
+                    title: title,
+                    type: type,
+                    duration: duration,
+                    date: new Date().toISOString()
+                };
+
+                // Save to localStorage
+                let activities = JSON.parse(localStorage.getItem('activities')) || [];
+                activities.push(activity);
+                localStorage.setItem('activities', JSON.stringify(activities));
+
+                showMessage('Activity added successfully!', 'success');
+                updateDatabaseStats();
+                loadActivitiesList();
+
+                // Clear form
+                document.getElementById('activityTitle').value = '';
+                document.getElementById('activityDuration').value = '';
+            });
+
+            // Clear database button
+            document.getElementById('clearDatabaseBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear all data?')) {
+                    localStorage.removeItem('activities');
+                    showMessage('All data cleared', 'success');
+                    updateDatabaseStats();
+                    loadActivitiesList();
+                }
+            });
+
+            // Export data button
+            document.getElementById('exportDataBtn').addEventListener('click', function() {
+                const activities = JSON.parse(localStorage.getItem('activities')) || [];
+                const blob = new Blob([JSON.stringify(activities, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'activities.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+
+            // Import data button
+            document.getElementById('importDataBtn').addEventListener('click', function() {
+                document.getElementById('importDataInput').click();
+            });
+
+            document.getElementById('importDataInput').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const activities = JSON.parse(e.target.result);
+                        localStorage.setItem('activities', JSON.stringify(activities));
+                        showMessage('Data imported successfully!', 'success');
+                        updateDatabaseStats();
+                        loadActivitiesList();
+                    } catch (error) {
+                        showMessage('Error importing data: ' + error.message, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        // Load activities list
+        function loadActivitiesList() {
+            const activitiesListElem = document.getElementById('activitiesList');
+            activitiesListElem.innerHTML = '';
+
+            const activities = JSON.parse(localStorage.getItem('activities')) || [];
+            activities.forEach(activity => {
+                const div = document.createElement('div');
+                div.className = 'p-4 bg-primary rounded-lg shadow-md';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-accent font-semibold">${activity.title}</h4>
+                        <span class="text-accent/70 text-sm">${new Date(activity.date).toLocaleString()}</span>
                     </div>
-                </div>
-            </div>
-    </main>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs px-2 py-1 rounded-full" style="background-color: rgba(255, 255, 255, 0.1)">
+                            ${activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}
+                        </span>
+                        <span class="text-xs px-2 py-1 rounded-full" style="background-color: rgba(255, 255, 255, 0.1)">
+                            ${activity.duration} min
+                        </span>
+                    </div>
+                `;
+                activitiesListElem.appendChild(div);
+            });
+
+            if (activities.length === 0) {
+                activitiesListElem.innerHTML = '<p class="text-accent/60 text-center py-4">No activities recorded yet</p>';
+            }
+        }
+
+        // Update database statistics
+        function updateDatabaseStats() {
+            const totalActivitiesElem = document.getElementById('totalActivities');
+            const totalTimeElem = document.getElementById('totalTime');
+            const databaseSizeElem = document.getElementById('databaseSize');
+            const lastUpdatedElem = document.getElementById('lastUpdated');
+
+            const activities = JSON.parse(localStorage.getItem('activities')) || [];
+            const totalTime = activities.reduce((sum, activity) => sum + activity.duration, 0);
+
+            totalActivitiesElem.textContent = activities.length;
+            totalTimeElem.textContent = `${totalTime} min`;
+            databaseSizeElem.textContent = `${(JSON.stringify(localStorage).length / 1024).toFixed(2)} KB`;
+            lastUpdatedElem.textContent = activities.length > 0 ? new Date(activities[activities.length - 1].date).toLocaleString() : 'Never';
+        }
+    </script>
+
 </body>
-<script src="../assets/script.js"></script>
 </html>
