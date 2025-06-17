@@ -664,3 +664,41 @@ document.getElementById('yearBtn').onclick = function() {
     document.getElementById('month-view').classList.add('hidden');
 };
 // Show week view by
+
+
+// Store quests in memory, with some example tasks
+let qs = [
+    {
+        type: "task",
+        title: "Math Homework",
+        desc: "Finish calculus exercises",
+        date: "2025-06-22", // Example: Sunday
+        startTime: "",
+        endTime: "",
+        deadlineTime: "09:00",
+        category: "Study",
+        categoryColor: "#4F8EF7"
+    },
+    {
+        type: "event",
+        title: "Morning Jog",
+        desc: "Jogging at the park",
+        date: "2025-06-23", // Example: Monday
+        startTime: "06:00",
+        endTime: "07:00",
+        deadlineTime: "",
+        category: "Health",
+        categoryColor: "#34A853"
+    },
+    {
+        type: "task",
+        title: "Project Meeting",
+        desc: "Discuss project with team",
+        date: "2025-06-25", // Example: Wednesday
+        startTime: "",
+        endTime: "",
+        deadlineTime: "14:00",
+        category: "Work",
+        categoryColor: "#FABB05"
+    }
+];
