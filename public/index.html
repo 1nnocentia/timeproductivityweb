@@ -154,6 +154,7 @@
 
                         <div class="mt-3">
                             <div id="todaySchedule" class="space-y-3 ">
+
                                 <!-- Schedule 1 -->
                                 <div class="bg-accent-950 flex-col border-[1px] p-3 rounded-[3px] border-accent/10">
                                     <div class="flex items-stretch">
@@ -161,17 +162,28 @@
                                         <div class="w-2  bg-gem_red rounded-l-md mr-4">
                                         </div>
 
-                                        <div>
-                                            <span class="text-accent font-bold lg:text-xl text-lg">
-                                                Olahraga Pagi
-                                            </span>
+                                        <div class="w-full">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-accent font-bold lg:text-xl text-lg">
+                                                    Olahraga Pagi
+                                                </span>
+
+                                                <button>
+                                                    <span class="text-sm font-body">
+                                                        Marks Done
+                                                    </span>  
+                                                </button>
+                                            </div>
+                                            
+                                            
+                                            
                                             <p class="lg:text-sm text-[12px]">Lorem ipsum</p>
                                             
                                             <div class="flex gap-2">
 
                                                 <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
                                                     <i class="fa-solid fa-clock text-accent"></i>
-                                                    <span class="text-accent lg:text-sm text-[12px] ">08.00</span>
+                                                    <span class="text-accent lg:text-sm text-[12px] ">06:00 - 7:30</span>
                                                 </div>
 
                                                 <div class="inline-flex gap-x-2 items-center mt-2 bg-accent_purple/50 rounded-full px-2 py-1">
@@ -341,7 +353,7 @@
 
                                         <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
                                             <i class="fa-solid fa-clock text-accent"></i>
-                                            <span class="text-accent lg:text-sm text-[12px] ">08.00</span>
+                                            <span class="text-accent lg:text-sm text-[12px] ">08:00 - 12:20</span>
                                         </div>
 
                                         <div class="inline-flex gap-x-2 items-center mt-2 bg-accent_blue/50 rounded-full px-2 py-1">
@@ -437,7 +449,7 @@
 
         <div class="flex items-center justify-center min-h-full">
             <!-- Kotak Popup -->
-            <form id="scheduleForm" class="bg-white rounded-lg p-6 max-w-sm w-full mx-4 mb-4">
+            <form id="scheduleForm" class="bg-white rounded-lg p-6 max-w-sm w-full mx-4 mb-4 overflow-y-auto max-h-[80vh]">
                 <div class="flex justify-between items-center">
                     <span class="text-accent font-heading text-2xl font-black">Add New Quest</span>
                 

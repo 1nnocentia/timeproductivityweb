@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Style Schedule baru 
         const newSchedule = document.createElement('div');
-        newSchedule.className = "bg-accent-950 flex-col border-[1px] p-3 rounded-[3px] border-accent/10";
+        newSchedule.className = "bg-white flex-col border-[1px] p-3 rounded-[3px] border-accent/10";
         newSchedule.innerHTML = `
             <div class="flex items-stretch">
                 <div class="w-2 ${flagColor} rounded-l-md mr-4"></div>
@@ -345,7 +345,7 @@ function showMonth(monthIdx) {
   const dateGrid = document.getElementById('dateGrid');
   dateGrid.classList.remove('hidden');
 
-  // Get current year (or set your own)
+  // Set year
   const year = 2025;
   const firstDay = new Date(year, monthIdx, 1).getDay();
   const lastDate = new Date(year, monthIdx + 1, 0).getDate();
