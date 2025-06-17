@@ -102,9 +102,17 @@ document.addEventListener('DOMContentLoaded', function() {
             if (taskTypeRadio.checked) {
                 taskTimeInput.classList.remove('hidden');
                 eventTimeInput.classList.add('hidden');
+                // Set required biar bisa submit 
+                document.getElementById('deadlineTime').required = true;
+                document.getElementById('startTime').required = false;
+                document.getElementById('endTime').required = false;
             } else {
                 taskTimeInput.classList.add('hidden');
                 eventTimeInput.classList.remove('hidden');
+                // Set required biar bisa submit
+                document.getElementById('deadlineTime').required = false;
+                document.getElementById('startTime').required = true;
+                document.getElementById('endTime').required = true;
             }
         }
     }
@@ -228,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <i class="fa-solid fa-clock text-accent"></i>
                             <span class="text-accent lg:text-sm text-[12px] ">${time}</span>
                         </div>
-                        <div class="inline-flex gap-x-2 items-center mt-2" style="background-color:${color}33; border-radius:9999px; padding:0.25rem 0.5rem;">
+                        <div class="inline-flex gap-x-2 items-center mt-2" style="background-color:${color}50; border-radius:9999px; padding:0.25rem 0.5rem;">
                             <span class="text-accent lg:text-sm text-[12px] font-semibold">${category}</span>
                         </div>
                     </div>
@@ -276,17 +284,18 @@ function closeQuestModal() {
   document.getElementById('addQuestModal').classList.add('hidden');
 }
 
-function toggleTimeInput(type) {
-  const taskInput = document.getElementById('taskTimeInput');
-  const eventInput = document.getElementById('eventTimeInput');
-  if (type === 'event') {
-    taskInput.classList.add('hidden');
-    eventInput.classList.remove('hidden');
-  } else {
-    taskInput.classList.remove('hidden');
-    eventInput.classList.add('hidden');
-  }
-}
+
+// function toggleTimeInput(type) {
+//   const taskInput = document.getElementById('taskTimeInput');
+//   const eventInput = document.getElementById('eventTimeInput');
+//   if (taskType === 'event') {
+//     taskInput.classList.add('hidden');
+//     eventInput.classList.remove('hidden');
+//   } else {
+//     taskInput.classList.remove('hidden');
+//     eventInput.classList.add('hidden');
+//   }
+// }
 
 // Show modal
 document.getElementById('addCategoryBtn').onclick = function() {
