@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sliderFill.style.width = `0%`;
             sliderFill.style.backgroundColor = 'transparent';
         }
+<<<<<<< HEAD
 
     
     // BUTTON MORE
@@ -296,6 +297,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function openModal() {
+=======
+    });
+
+    function openModal() {
+>>>>>>> eb8215278bfdd7c4c14e79a342bcd7047453e6ad
     document.getElementById('addActivityModal').classList.remove('hidden');
 }
 
