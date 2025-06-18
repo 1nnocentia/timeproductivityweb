@@ -14,10 +14,15 @@ module.exports = {
       },
 
       colors: {
+
+        // primary: 'var(--color-primary)',
+        // secondary: 'var(--color-secondary)',
+        // accent: 'var(--color-accent)',
+
         primary: '#F3EAE0', //bg
         secondary: '#FFFFFF', //card
         accent: '#2D2314', //button, text
-        // accent_2:'#EDE3D6',
+        // // accent_2:'#EDE3D6',
 
         gem_red:'#EC7980', //Emergency
         gem_purple:'#DC7BEB', //Urgent

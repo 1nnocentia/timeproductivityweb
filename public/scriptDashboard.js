@@ -128,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Global toggle function
     window.toggleDarkMode = toggleTheme;
-
     
     const openPopupBtn = document.getElementById('openPopup');
     const closePopupBtn = document.getElementById('closePopup');
@@ -290,8 +289,19 @@ document.addEventListener('DOMContentLoaded', function() {
         newSchedule.innerHTML = `
             <div class="flex items-stretch">
                 <div class="w-2 ${flagColor} rounded-l-md mr-4"></div>
-                <div>
-                    <span class="text-accent font-bold lg:text-xl text-lg">${title}</span>
+                <div class="w-full">
+                    <div class="flex items-center justify-between">
+                        <span class="text-accent font-bold lg:text-xl text-lg">${title}</span>
+
+                        <button class="bg-accent text-secondary rounded-full px-2 py-1 flex items-center gap-x-1">
+                            <i class="fa-solid fa-check text-sm"></i>
+                            <span class="text-sm font-body">
+                                Marks Done
+                            </span>  
+                        </button>
+                    </div>
+                    
+
                     <p class="lg:text-sm text-[12px]">${desc}</p>
                     <div class="flex gap-2">
                         <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
@@ -308,6 +318,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Tambahkan ke todaySchedule
         todaySchedule.appendChild(newSchedule);
+
+        //event listener untuk done button
+        const doneButton = newSchedule.querySelector('.marksDone');
+        if (doneButton){
+            marksDone.addEventListener('click', function() {
+                // Toggle done state
+                if (newSchedule.classList.contains('done')) {
+                    newSchedule.classList.remove('done');
+                    doneButton.innerHTML = '<i class="fa-solid fa-check"></i> Marks Done';
+                } else {
+                    newSchedule.classList.add('done');
+                    doneButton.innerHTML = '<i class="fa-solid fa-check"></i> Undone';
+                }
+            }
+        )}
 
         // Reset form & tutup popup
         scheduleForm.reset();
