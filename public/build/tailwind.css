@@ -810,7 +810,6 @@ video {
   --tw-border-spacing-y: 0px;
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
 }
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -1141,6 +1140,9 @@ video {
 .text-right {
   text-align: right;
 }
+.align-top {
+  vertical-align: top;
+}
 .font-body {
   font-family: inter, sans;
 }
@@ -1404,6 +1406,11 @@ video {
   }
 }
 @media (prefers-color-scheme: dark) {
+
+  .dark\:bg-gray-400 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(156 163 175 / var(--tw-bg-opacity, 1));
+  }
 
   .dark\:text-secondary {
     --tw-text-opacity: 1;
