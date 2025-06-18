@@ -1,10 +1,9 @@
 // permintaan HTTP fetch akan mengarah ke localhost 8080
-const Base_URL = 'http://localhost:8080/api';
-// ambil token JWT dan userId dari localStorage
-let jwtToken = localStorage.getItem('jwtToken') || null;
-let currentUserId = localStorage.getItem('currentUserId') || null;
+window.BASE_URL = 'http://localhost:8080/api';
+window.jwtToken = localStorage.getItem('jwtToken') || null;
+window.currentUserId = localStorage.getItem('currentUserId') || null;
 
-const responseDisplay = document.getElementById('response');
+const responseDisplayElement = document.getElementById('response');
 
 // response API
 function displayResponse(data, isError = false) {
