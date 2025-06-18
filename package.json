@@ -1,9 +1,9 @@
 {
   "name": "clockinwebsite",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "dev": "postcss ./src/css/tailwind.css -o ./public/build/tailwind.css --watch"
+  "main": "index.js",  "scripts": {
+    "dev": "postcss ./src/css/tailwind.css -o ./public/build/tailwind.css --watch",
+    "live": "python -m http.server 8000"
   },
   "keywords": [],
   "author": "",

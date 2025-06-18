@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="build/tailwind.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- google fonts here -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Clockin</title>
+    
+</head>
+<body class="font-body transition-color bg-primary dark:bg-gray-400 duration-300">
+    <!-- Header Section -->
+    <header class="fixed w-full top-0 z-50 text-text-100 backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+
+                <div class="flex items-center dark:text-primary">
+                    <span class="text-xl font-extrabold font-heading">CLOCKIN</span>
+                </div>
+
+                <div class="flex items-center">
+                    <button id="themeToggle" class="ml-auto text-text-100 dark:text-white hover:text-white transition-colors">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Landing Page Section -->
+    <section class="min-h-screen pt-20 bg-primary dark:bg-gray-700 transition-colors duration-300">
+        <!-- Hero Section -->
+        <div class="container mx-auto px-4 py-16">
+            <div class="flex flex-col-reverse lg:flex-row items-center justify-between">
+                <!-- Left Content -->
+                <div class="w-full lg:w-1/2 text-center lg:text-left mt-8 lg:mt-0">
+                    <h1 class="text-4xl lg:text-5xl font-bold font-heading text-accent dark:text-white mb-6">
+                    CLOCKIN
+                    </h1>
+                    <p class="text-xl lg:text-2xl text-gray-600 dark:text-gray-100 mb-8">
+                        Your personal<br>
+                        interactive time management
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                        <a href="login.html" 
+                            class="px-8 py-3 bg-accent dark:bg-accent hover:bg-accent/65 dark:hover:bg-accent/90 text-white dark:text-white font-medium rounded-full transition-all duration-300 text-center">
+                            Get Started
+                        </a>
+                        <a href="#features" 
+                            class="px-8 py-3 bg-white dark:bg-gray-200 hover:bg-gray-200 text-gray-900 dark:text-gray-800 dark:hover:bg-gray-600 font-medium rounded-full transition-all duration-300 text-center">
+                            Learn More
+                        </a>
+                    </div>
+                </div>
+                <!-- Right Content - Clock Image -->
+                <div class="w-full lg:w-1/2 flex justify-center">
+                    <img src="../assets/4.png" alt="Clockin Mascot" 
+                        class="w-64 md:w-96 animate-bounce-slow">
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div id="features" class="bg-white dark:bg-gray-900/5 py-16 transition-colors duration-300">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mb-12">
+                    Why Choose Clockin?
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Feature 1 -->
+                    <div class="feature-card bg-primary dark:bg-gray-800/30 p-6 rounded-xl backdrop-blur-sm transition-colors duration-300">
+                        <img src="../assets/Aset_Aplikasi_Dashboard-Icon.png" alt="Dashboard" class="w-12 h-12 mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Smart Dashboard</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Track your productivity with our intuitive dashboard</p>
+                    </div>
+                    <!-- Feature 2 -->
+                    <div class="feature-card bg-primary dark:bg-gray-800/30 p-6 rounded-xl backdrop-blur-sm transition-colors duration-300">
+                        <img src="../assets/Aset_Aplikasi_Calendar-Icon.png" alt="Calendar" class="w-12 h-12 mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Schedule Management</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Organize your time efficiently with our calendar features</p>
+                    </div>
+                    <!-- Feature 3 -->
+                    <div class="feature-card bg-primary dark:bg-gray-800/30 p-6 rounded-xl backdrop-blur-sm transition-colors duration-300">
+                        <img src="../assets/Aset_Aplikasi_Priority-1.png" alt="Priority" class="w-12 h-12 mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Priority Tasks</h3>
+                        <p class="text-gray-600 dark:text-gray-300">Never miss important deadlines with priority management</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add this to your existing CSS or style tag for the slow bounce animation -->
+    <style>
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .animate-bounce-slow {
+            animation: bounce-slow 3s infinite;
+        }          /* Feature cards animation */
+        .feature-card {
+            opacity: 0;
+            transform: scale(0.6) translateY(50px);
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            will-change: transform, opacity;
+        }
+        
+        .feature-card.show {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        
+        /* Add delay for each card */
+        .feature-card:nth-child(1) { transition-delay: 0.2s; }
+        .feature-card:nth-child(2) { transition-delay: 0.4s; }
+        .feature-card:nth-child(3) { transition-delay: 0.6s; }
+    </style>
+
+    <script>
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const icon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+
+            // Toggle theme
+            themeToggle.addEventListener('click', function() {
+                html.classList.toggle('dark');
+                
+                // Update icon
+                if (html.classList.contains('dark')) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.theme = 'dark';
+                } else {
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.theme = 'light';
+                }
+            });
+
+            themeToggle.addEventListener('mouseleave', function() {
+                icon.classList.remove(html.classList.contains('dark') ? 'fa-moon' : 'fa-sun');
+                icon.classList.add(html.classList.contains('dark') ? 'fa-sun' : 'fa-moon');
+            });
+        });
+
+        // Intersection Observer for feature cards
+        document.addEventListener('DOMContentLoaded', function() {            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, {
+                threshold: 0.5,
+                rootMargin: '-70px'
+            });
+
+            document.querySelectorAll('.feature-card').forEach((card) => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
