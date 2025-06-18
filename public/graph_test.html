@@ -1,0 +1,781 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="build/tailwind.css">
+
+    <!-- tailwind -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">    <!-- google fonts here -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Simple CSS for filter buttons -->
+    <style>
+        .filter-btn.active {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .filter-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    
+    <title>Clockin</title>
+</head>
+
+<body class="font-sans transition-color bg-primary dark:bg-gray-700 duration-300">
+    <!-- Header Section -->
+    <header class="fixed w-full top-0 z-50 text-text-100 bg-accent-900  backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+
+                <div class="flex items-center">
+                    <span class="text-xl text-text-100 font-extrabold font-heading 
+                    text-accent dark:text-primary transition-colors">
+                    CLOCKIN
+                </span>
+                </div>
+
+                <ul class="hidden md:flex space-x-8">
+                    <li>
+                        <a href="#dashboard" class="
+                        text-accent 
+                        dark:text-primary
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#schedule" class="
+                        text-accent 
+                        dark:text-primary
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Schedule</a>
+                    </li>
+                    <li>
+                        <a href="#friends" class="
+                        text-accent 
+                        dark:text-primary
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        
+                        transition-colors">Friends</a>
+                    </li>
+                </ul>
+
+                <!-- <button class="bg-accent p-2">
+                    <a href="#" class="text-primary">Login</a>
+                </button> -->
+
+
+                <div class="flex items-center space-x-4">
+                    <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
+                    <button title="Profile">
+                        <i class="fa-solid fa-user text-accent dark:text-primary hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+
+                    <!-- Settings Icon -->
+                    <button title="Settings">
+                        <i class="fa-solid fa-gear text-accent dark:text-primary hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+
+                    <!-- Logout Icon -->
+                    <button title="Logout">
+                        <i class="fa-solid fa-right-from-bracket text-accent dark:text-primary hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+                    
+                    <button id="themeToggle" class="">
+                        <i class="fa-solid fa-moon text-accent dark:text-primary"></i>
+                    </button>
+
+                    <button class="md:hidden p-2" id="menuToggle">
+                        <div class="w-6 h-5 flex flex-col justify-between">
+                            <span class="w-full h-0.5 bg-accent transition-all"></span>
+                        </div>
+                    </button>
+                </div>
+
+            </nav>
+        </div>
+    </header>
+    <!-- Profile Section -->
+    <div class="flex flex-col lg:mx-24 gap-6 mb-12">
+        <section class="pt-20 mx-3 lg:mx-16">
+            <div class="grid lg:grid-cols-3 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">
+                <!-- PROFILE -->
+                <div class="flex justify-between p-4 bg-primary dark:bg-gray-800 rounded-lg drop-shadow-default items-center cols-span-3 lg:col-span-2">
+                        <div class="flex items-center space-x-4">                            
+                            <div class="relative">
+                                <!-- Current profile picture display -->
+                                <div class="w-32 h-32 bg-gray-300 rounded-full flex items-center justify-center">
+                                    <img id="currentProfilePicture" class="w-28 h-28" src="../assets/Aset_Aplikasi_Personal_4.png" alt="Profile Picture">
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col">
+                                <span id="userName" class="text-accent dark:text-primary text-3xl font-black font-heading">Aristo</span>
+                                <span id="userUsername" class="text-accent dark:text-primary text-sm font-medium font-body">yuukiyuna</span>
+                                <!-- Edit Profile Button -->
+                                <button id="editProfileBtn" class="font-body font-semibold mt-2 px-2 py-1 bg-accent/75 text-primary rounded-lg hover:bg-accent transition-colors">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+                                </button>
+                            </div>
+                        </div>
+                </div>
+                <!-- STREAK -->
+                <div class="font-heading font-bold flex justify-between p-4 bg-secondary dark:bg-gray-800 
+                rounded-lg drop-shadow-default items-center">
+                    <div class="flex flex-col">
+                        <span class="text-accent dark:text-primary text-sm ">Current Streak</span>
+                        <span class="text-accent dark:text-primary text-2xl font-black">293 Days</span>
+                    </div>
+                    <img class="w-16 h-16" src="../assets/Aset_Aplikasi_Api.png" alt="">
+                    
+                </div>
+            </div>
+        </section>        <!-- Simple Analytics Section -->
+        <section class="mx-3 lg:mx-16 mb-8">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">Analytics Dashboard</h2>
+                
+                <!-- Filter Controls -->
+                <div class="mb-6 flex flex-wrap gap-3 justify-center">
+                    <button onclick="filterPriority('all')" id="filter-all" class="filter-btn active px-4 py-2 bg-blue-500 text-white rounded-lg text-sm font-medium transition-colors">
+                        All Tasks
+                    </button>
+                    <button onclick="filterPriority('high')" id="filter-high" class="filter-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition-colors hover:bg-red-500 hover:text-white">
+                        High Priority
+                    </button>
+                    <button onclick="filterPriority('medium')" id="filter-medium" class="filter-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition-colors hover:bg-yellow-500 hover:text-white">
+                        Medium Priority
+                    </button>
+                    <button onclick="filterPriority('low')" id="filter-low" class="filter-btn px-4 py-2 bg-gray-300 text-gray-700 rounded-lg text-sm font-medium transition-colors hover:bg-green-500 hover:text-white">
+                        Low Priority
+                    </button>
+                </div>
+
+                <div class="grid lg:grid-cols-2 grid-cols-1 gap-6">
+                    <!-- Tasks by Priority Chart -->
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Tasks by Priority</h3>
+                        <div class="relative h-64">
+                            <canvas id="priorityChart"></canvas>
+                        </div>
+                        
+                        <!-- Priority Filter Buttons -->
+                        <div class="mt-4 flex justify-center space-x-2">
+                            <button onclick="showOnlyHigh()" class="px-3 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-xs transition-colors">
+                                Show High
+                            </button>
+                            <button onclick="showOnlyMedium()" class="px-3 py-1 bg-yellow-500 hover:bg-yellow-600 text-white rounded text-xs transition-colors">
+                                Show Medium
+                            </button>
+                            <button onclick="showOnlyLow()" class="px-3 py-1 bg-green-500 hover:bg-green-600 text-white rounded text-xs transition-colors">
+                                Show Low
+                            </button>
+                            <button onclick="showAllPriorities()" class="px-3 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded text-xs transition-colors">
+                                Show All
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Events by Category Chart -->
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4 text-center">Events by Category</h3>
+                        <div class="relative h-64">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                        
+                        <!-- Category Filter Buttons -->
+                        <div class="mt-4 flex justify-center flex-wrap gap-1">
+                            <button onclick="showOnlyWork()" class="px-2 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded text-xs transition-colors">
+                                Work
+                            </button>
+                            <button onclick="showOnlyPersonal()" class="px-2 py-1 bg-purple-500 hover:bg-purple-600 text-white rounded text-xs transition-colors">
+                                Personal
+                            </button>
+                            <button onclick="showOnlyHealth()" class="px-2 py-1 bg-pink-500 hover:bg-pink-600 text-white rounded text-xs transition-colors">
+                                Health
+                            </button>
+                            <button onclick="showOnlyEducation()" class="px-2 py-1 bg-indigo-500 hover:bg-indigo-600 text-white rounded text-xs transition-colors">
+                                Education
+                            </button>
+                            <button onclick="showAllCategories()" class="px-2 py-1 bg-gray-500 hover:bg-gray-600 text-white rounded text-xs transition-colors">
+                                All
+                            </button>
+                        </div>                    </div>
+                </div>
+
+                <!-- Simple Summary Stats -->
+                <div class="mt-6 grid lg:grid-cols-4 grid-cols-2 gap-4">
+                    <div class="text-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                        <p class="text-2xl font-bold text-blue-600 dark:text-blue-400" id="totalTasks">0</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Total Tasks</p>
+                    </div>
+                    <div class="text-center p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+                        <p class="text-2xl font-bold text-green-600 dark:text-green-400" id="completedTasks">0</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Completed</p>
+                    </div>
+                    <div class="text-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg">
+                        <p class="text-2xl font-bold text-yellow-600 dark:text-yellow-400" id="pendingTasks">0</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Pending</p>
+                    </div>
+                    <div class="text-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
+                        <p class="text-2xl font-bold text-purple-600 dark:text-purple-400" id="totalEvents">0</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Total Events</p>
+                    </div>                </div>
+            </div>
+        </section>
+        
+    <!-- Script.js -->    
+    <script>
+        // Global variables
+        let currentUser = null;
+        let selectedProfilePictureId = null;
+
+        // Profile picture ID to file mapping
+        const profilePictureMap = {
+            'aset_aplikasi_personal_1': '../assets/Aset_Aplikasi_Personal_1.png',
+            'aset_aplikasi_personal_2': '../assets/Aset_Aplikasi_Personal_2.png',
+            'aset_aplikasi_personal_3': '../assets/Aset_Aplikasi_Personal_3.png',
+            'aset_aplikasi_personal_4': '../assets/Aset_Aplikasi_Personal_4.png',
+            'aset_aplikasi_personal_5': '../assets/Aset_Aplikasi_Personal_5.png',
+            'aset_aplikasi_personal_6': '../assets/Aset_Aplikasi_Personal_6.png'
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Theme toggle functionality
+            const themeToggle = document.getElementById('themeToggle');
+            const html = document.documentElement;
+            const icon = themeToggle.querySelector('i');
+
+            // Check for saved theme preference
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                html.classList.add('dark');
+                icon.classList.replace('fa-moon', 'fa-sun');
+            }
+
+            // Toggle theme
+            themeToggle.addEventListener('click', function() {
+                html.classList.toggle('dark');
+                
+                // Update icon
+                if (html.classList.contains('dark')) {
+                    icon.classList.replace('fa-moon', 'fa-sun');
+                    localStorage.theme = 'dark';
+                } else {
+                    icon.classList.replace('fa-sun', 'fa-moon');
+                    localStorage.theme = 'light';
+                }
+            });
+
+            themeToggle.addEventListener('mouseleave', function() {
+                icon.classList.remove(html.classList.contains('dark') ? 'fa-moon' : 'fa-sun');
+                icon.classList.add(html.classList.contains('dark') ? 'fa-sun' : 'fa-moon');
+            });            // Initialize profile functionality
+            initializeProfile();
+            initializeProfilePictureModal();
+            initializeDatabaseSection();
+            initializeCharts();
+        });
+
+        // Initialize profile data loading
+        function initializeProfile() {
+            // Check if user is logged in
+            const token = localStorage.getItem('jwtToken');
+            const userId = localStorage.getItem('userId');
+
+            if (!token || !userId) {
+                // Redirect to login if not authenticated
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Load user profile data
+            loadUserProfile(userId, token);
+        }
+
+        // Load user profile from backend
+        async function loadUserProfile(userId, token) {
+            try {
+                const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    currentUser = await response.json();
+                    updateProfileDisplay();
+                } else {
+                    console.error('Failed to load user profile');
+                    showMessage('Failed to load profile data', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                showMessage('Error loading profile data', 'error');
+            }
+        }
+
+        // Update profile display with user data
+        function updateProfileDisplay() {
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.nama || 'User';
+                document.getElementById('userUsername').textContent = currentUser.username || 'username';
+                
+                // Update profile picture
+                const profilePictureId = currentUser.profilePictureId || 'aset_aplikasi_personal_4';
+                const profilePictureSrc = profilePictureMap[profilePictureId] || '../assets/Aset_Aplikasi_Personal_4.png';
+                document.getElementById('currentProfilePicture').src = profilePictureSrc;
+            }
+        }
+
+        // Initialize profile picture modal functionality
+        function initializeProfilePictureModal() {
+            const modal = document.getElementById('profilePictureModal');
+            const changePictureBtn = document.getElementById('changePictureBtn');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const savePictureBtn = document.getElementById('savePictureBtn');
+            const profileOptions = document.querySelectorAll('.profile-option');
+
+            // Open modal
+            changePictureBtn.addEventListener('click', function() {
+                modal.style.display = 'flex';
+                selectedProfilePictureId = null;
+                savePictureBtn.disabled = true;
+                clearProfileOptionSelection();
+            });
+
+            // Close modal
+            [closeModalBtn, cancelBtn].forEach(btn => {
+                btn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            });
+
+            // Close modal when clicking outside
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+
+            // Handle profile option selection
+            profileOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    clearProfileOptionSelection();
+                    this.querySelector('div').classList.add('ring-2', 'ring-accent');
+                    selectedProfilePictureId = this.dataset.pictureId;
+                    savePictureBtn.disabled = false;
+                });
+            });
+
+            // Save profile picture
+            savePictureBtn.addEventListener('click', async function() {
+                if (selectedProfilePictureId && currentUser) {
+                    await updateProfilePicture(selectedProfilePictureId);
+                }
+            });
+        }
+
+        // Clear profile option selection
+        function clearProfileOptionSelection() {
+            document.querySelectorAll('.profile-option div').forEach(div => {
+                div.classList.remove('ring-2', 'ring-accent');
+            });
+        }
+
+        // Update profile picture via API
+        async function updateProfilePicture(profilePictureId) {
+            const token = localStorage.getItem('jwtToken');
+            const userId = localStorage.getItem('userId');
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        profilePictureId: profilePictureId
+                    })
+                });
+
+                if (response.ok) {
+                    const updatedUser = await response.json();
+                    currentUser = updatedUser;
+                    updateProfileDisplay();
+                    document.getElementById('profilePictureModal').style.display = 'none';
+                    showMessage('Profile picture updated successfully!', 'success');
+                } else {
+                    console.error('Failed to update profile picture');
+                    showMessage('Failed to update profile picture', 'error');
+                }
+            } catch (error) {
+                console.error('Error updating profile picture:', error);
+                showMessage('Error updating profile picture', 'error');
+            }
+        }
+
+        // Show success/error messages
+        function showMessage(message, type) {
+            const container = document.getElementById('messageContainer');
+            const content = document.getElementById('messageContent');
+            
+            content.textContent = message;
+            content.className = `px-4 py-2 rounded shadow-lg text-white ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            }`;
+            
+            container.classList.remove('hidden');
+            setTimeout(() => {
+                container.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Handle logout button (if needed)
+        document.addEventListener('DOMContentLoaded', function() {
+            const logoutBtn = document.querySelector('button[title="Logout"]');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    localStorage.removeItem('jwtToken');
+                    localStorage.removeItem('userId');
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+
+        // Initialize database section
+        function initializeDatabaseSection() {
+            const totalActivitiesElem = document.getElementById('totalActivities');
+            const totalTimeElem = document.getElementById('totalTime');
+            const databaseSizeElem = document.getElementById('databaseSize');
+            const lastUpdatedElem = document.getElementById('lastUpdated');
+            const activitiesListElem = document.getElementById('activitiesList');
+
+            // Load initial data
+            updateDatabaseStats();
+            loadActivitiesList();
+
+            // Add activity button
+            document.getElementById('addActivityBtn').addEventListener('click', function() {
+                const title = document.getElementById('activityTitle').value.trim();
+                const type = document.getElementById('activityType').value;
+                const duration = parseInt(document.getElementById('activityDuration').value, 10);
+
+                if (title === '' || isNaN(duration) || duration <= 0) {
+                    showMessage('Please enter valid activity details', 'error');
+                    return;
+                }
+
+                // Create activity object
+                const activity = {
+                    id: Date.now(),
+                    title: title,
+                    type: type,
+                    duration: duration,
+                    date: new Date().toISOString()
+                };
+
+                // Save to localStorage
+                let activities = JSON.parse(localStorage.getItem('activities')) || [];
+                activities.push(activity);
+                localStorage.setItem('activities', JSON.stringify(activities));
+
+                showMessage('Activity added successfully!', 'success');
+                updateDatabaseStats();
+                loadActivitiesList();
+
+                // Clear form
+                document.getElementById('activityTitle').value = '';
+                document.getElementById('activityDuration').value = '';
+            });
+
+            // Clear database button
+            document.getElementById('clearDatabaseBtn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to clear all data?')) {
+                    localStorage.removeItem('activities');
+                    showMessage('All data cleared', 'success');
+                    updateDatabaseStats();
+                    loadActivitiesList();
+                }
+            });
+
+            // Export data button
+            document.getElementById('exportDataBtn').addEventListener('click', function() {
+                const activities = JSON.parse(localStorage.getItem('activities')) || [];
+                const blob = new Blob([JSON.stringify(activities, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'activities.json';
+                a.click();
+                URL.revokeObjectURL(url);
+            });
+
+            // Import data button
+            document.getElementById('importDataBtn').addEventListener('click', function() {
+                document.getElementById('importDataInput').click();
+            });
+
+            document.getElementById('importDataInput').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const activities = JSON.parse(e.target.result);
+                        localStorage.setItem('activities', JSON.stringify(activities));
+                        showMessage('Data imported successfully!', 'success');
+                        updateDatabaseStats();
+                        loadActivitiesList();
+                    } catch (error) {
+                        showMessage('Error importing data: ' + error.message, 'error');
+                    }
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        // Load activities list
+        function loadActivitiesList() {
+            const activitiesListElem = document.getElementById('activitiesList');
+            activitiesListElem.innerHTML = '';
+
+            const activities = JSON.parse(localStorage.getItem('activities')) || [];
+            activities.forEach(activity => {
+                const div = document.createElement('div');
+                div.className = 'p-4 bg-primary rounded-lg shadow-md';
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-accent font-semibold">${activity.title}</h4>
+                        <span class="text-accent/70 text-sm">${new Date(activity.date).toLocaleString()}</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs px-2 py-1 rounded-full" style="background-color: rgba(255, 255, 255, 0.1)">
+                            ${activity.type.charAt(0).toUpperCase() + activity.type.slice(1)}
+                        </span>
+                        <span class="text-xs px-2 py-1 rounded-full" style="background-color: rgba(255, 255, 255, 0.1)">
+                            ${activity.duration} min
+                        </span>
+                    </div>
+                `;
+                activitiesListElem.appendChild(div);
+            });
+
+            if (activities.length === 0) {
+                activitiesListElem.innerHTML = '<p class="text-accent/60 text-center py-4">No activities recorded yet</p>';
+            }
+        }
+
+        // Update database statistics
+        function updateDatabaseStats() {
+            const totalActivitiesElem = document.getElementById('totalActivities');
+            const totalTimeElem = document.getElementById('totalTime');
+            const databaseSizeElem = document.getElementById('databaseSize');
+            const lastUpdatedElem = document.getElementById('lastUpdated');
+
+            const activities = JSON.parse(localStorage.getItem('activities')) || [];
+            const totalTime = activities.reduce((sum, activity) => sum + activity.duration, 0);
+
+            totalActivitiesElem.textContent = activities.length;
+            totalTimeElem.textContent = `${totalTime} min`;
+            databaseSizeElem.textContent = `${(JSON.stringify(localStorage).length / 1024).toFixed(2)} KB`;
+            lastUpdatedElem.textContent = activities.length > 0 ? new Date(activities[activities.length - 1].date).toLocaleString() : 'Never';        }        
+        
+        // Simple chart variables
+        let priorityChart = null;
+        let categoryChart = null;
+        
+        // Sample data
+        const sampleData = {
+            priority: { high: 15, medium: 25, low: 10 },
+            category: { work: 20, personal: 12, health: 8, education: 6, other: 4 }
+        };
+
+        // Initialize simple charts
+        function initializeCharts() {
+            createPriorityChart();
+            createCategoryChart();
+            updateStats();
+        }
+
+        // Create Priority Chart
+        function createPriorityChart() {
+            const canvas = document.getElementById('priorityChart');
+            if (!canvas) return;
+            
+            priorityChart = new Chart(canvas.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['High Priority', 'Medium Priority', 'Low Priority'],
+                    datasets: [{
+                        data: [sampleData.priority.high, sampleData.priority.medium, sampleData.priority.low],
+                        backgroundColor: ['#EF4444', '#F59E0B', '#10B981'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Create Category Chart
+        function createCategoryChart() {
+            const canvas = document.getElementById('categoryChart');
+            if (!canvas) return;
+            
+            categoryChart = new Chart(canvas.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Work', 'Personal', 'Health', 'Education', 'Other'],
+                    datasets: [{
+                        data: [sampleData.category.work, sampleData.category.personal, sampleData.category.health, sampleData.category.education, sampleData.category.other],
+                        backgroundColor: ['#3B82F6', '#8B5CF6', '#EC4899', '#6366F1', '#F97316'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // Update stats
+        function updateStats() {
+            const total = sampleData.priority.high + sampleData.priority.medium + sampleData.priority.low;
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = Math.floor(total * 0.7);
+            document.getElementById('pendingTasks').textContent = Math.floor(total * 0.3);
+            document.getElementById('totalEvents').textContent = sampleData.category.work + sampleData.category.personal + sampleData.category.health + sampleData.category.education + sampleData.category.other;
+        }
+
+        // Priority Filter Functions
+        function showOnlyHigh() {
+            if (priorityChart) {
+                priorityChart.data.datasets[0].data = [sampleData.priority.high, 0, 0];
+                priorityChart.update();
+            }
+        }
+
+        function showOnlyMedium() {
+            if (priorityChart) {
+                priorityChart.data.datasets[0].data = [0, sampleData.priority.medium, 0];
+                priorityChart.update();
+            }
+        }
+
+        function showOnlyLow() {
+            if (priorityChart) {
+                priorityChart.data.datasets[0].data = [0, 0, sampleData.priority.low];
+                priorityChart.update();
+            }
+        }
+
+        function showAllPriorities() {
+            if (priorityChart) {
+                priorityChart.data.datasets[0].data = [sampleData.priority.high, sampleData.priority.medium, sampleData.priority.low];
+                priorityChart.update();
+            }
+        }
+
+        // Category Filter Functions
+        function showOnlyWork() {
+            if (categoryChart) {
+                categoryChart.data.datasets[0].data = [sampleData.category.work, 0, 0, 0, 0];
+                categoryChart.update();
+            }
+        }
+
+        function showOnlyPersonal() {
+            if (categoryChart) {
+                categoryChart.data.datasets[0].data = [0, sampleData.category.personal, 0, 0, 0];
+                categoryChart.update();
+            }
+        }
+
+        function showOnlyHealth() {
+            if (categoryChart) {
+                categoryChart.data.datasets[0].data = [0, 0, sampleData.category.health, 0, 0];
+                categoryChart.update();
+            }
+        }
+
+        function showOnlyEducation() {
+            if (categoryChart) {
+                categoryChart.data.datasets[0].data = [0, 0, 0, sampleData.category.education, 0];
+                categoryChart.update();
+            }
+        }
+
+        function showAllCategories() {
+            if (categoryChart) {
+                categoryChart.data.datasets[0].data = [sampleData.category.work, sampleData.category.personal, sampleData.category.health, sampleData.category.education, sampleData.category.other];
+                categoryChart.update();
+            }
+        }
+
+        // Filter by priority (for the main filter buttons)
+        function filterPriority(level) {
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-blue-500', 'bg-red-500', 'bg-yellow-500', 'bg-green-500');
+                btn.classList.add('bg-gray-300', 'text-gray-700');
+            });
+            
+            const activeBtn = document.getElementById(`filter-${level}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-gray-300', 'text-gray-700');
+                activeBtn.classList.add('active', 'text-white');
+                
+                if (level === 'all') activeBtn.classList.add('bg-blue-500');
+                else if (level === 'high') activeBtn.classList.add('bg-red-500');
+                else if (level === 'medium') activeBtn.classList.add('bg-yellow-500');
+                else if (level === 'low') activeBtn.classList.add('bg-green-500');
+            }
+            
+            // Update charts based on filter
+            if (level === 'all') {
+                showAllPriorities();
+                showAllCategories();
+            } else if (level === 'high') {
+                showOnlyHigh();
+            } else if (level === 'medium') {
+                showOnlyMedium();
+            } else if (level === 'low') {
+                showOnlyLow();
+            }        }
+    </script>
+
+</body>
+</html>
