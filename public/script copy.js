@@ -29,10 +29,6 @@ const gemData = [
     }
 ];
 
-// --- State ---
-let quests = [];
-let currentPriorityLevel = 0;
-
 let currentLevel = -1;
 
 function setLevel(level) {
@@ -68,7 +64,6 @@ function setLevel(level) {
         info.style.color = gemData[level].color;
     }
     
-    currentPriorityLevel = level;
     currentLevel = level;
 }
 
@@ -229,34 +224,37 @@ function closeCategoryModal() {
 }
 
 // Add category
-let categories = [];
-
 function addCategory(event) {
-    event.preventDefault();
-    const name = document.getElementById('categoryNameInput').value.trim();
-    // This must be the color input from the Add Category modal!
-    const color = document.querySelector('#addCategoryModal #categoryColorInput').value;
-    if (!name) return;
-    categories.push({ name, color });
-    renderCategories();
-    document.getElementById('addCategoryModal').classList.add('hidden');
-    event.target.reset();
-}
+  event.preventDefault();
+  const name = document.getElementById('categoryNameInput').value;
+  const color = document.getElementById('categoryColorInput').value;
+  if (name.trim() === "") return;
 
-function renderCategories() {
-    const list = document.getElementById('categoryList');
-    list.innerHTML = '';
-    categories.forEach((cat, idx) => {
-        const div = document.createElement('div');
-        div.className = "flex items-center gap-2 px-3 py-2 rounded-lg mb-2";
-        div.style.background = cat.color;
-        div.style.minHeight = "40px";
-        div.innerHTML = `
-            <span class="text-white font-semibold">${cat.name}</span>
-            <button onclick="removeCategory(${idx})" class="ml-2 text-white font-bold text-lg leading-none" style="background:transparent;border:none;outline:none;cursor:pointer;">&times;</button>
-        `;
-        list.appendChild(div);
-    });
+  // Create category box
+  const box = document.createElement('div');
+  box.className = "relative flex items-center px-3 py-1 rounded-lg text-white text-sm font-semibold";
+  box.style.backgroundColor = color;
+
+  // Category name
+  const span = document.createElement('span');
+  span.textContent = name;
+
+  // Delete button
+  const delBtn = document.createElement('button');
+  delBtn.innerHTML = '&times;';
+  delBtn.className = "ml-2 text-white text-lg font-bold hover:text-red-400 focus:outline-none";
+  delBtn.onclick = function() {
+    box.remove();
+  };
+
+  box.appendChild(span);
+  box.appendChild(delBtn);
+
+  document.getElementById('categoryList').appendChild(box);
+
+  // Reset and close modal
+  document.getElementById('categoryForm').reset();
+  closeCategoryModal();
 }
 
 // Example: June 2025 has 5 weeks
@@ -349,10 +347,6 @@ function renderDateGrid(year, month) {
   // ...generate your date grid for the selected year and month...
 }
 
-// Initialize title on page load
-updateCalendarTitle();
-
-//////////////////////////////////////////////////////////////////////////////////
 
 function setView(view) {
   document.getElementById('week-view').classList.add('hidden');
@@ -667,7 +661,7 @@ document.getElementById('yearBtn').onclick = function() {
 
 
 // Store quests in memory, with some example tasks
-let qs = [
+let quests = [
     {
         type: "task",
         title: "Math Homework",
