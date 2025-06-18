@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="build/tailwind.css">
+    <!-- <link rel="stylesheet" href="build/custom.css"> -->
+
+    <!-- tailwind -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- google fonts here -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Clockin</title>
+</head>
+
+<body class="font-sans transition-color bg-primary duration-300">
+    <!-- Header Section -->
+    <header class="fixed w-full top-0 z-50 text-text-100 bg-accent-900  backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+
+                <div class="flex items-center">
+                    <span class="text-xl text-text-100 font-extrabold font-heading">CLOCKIN</span>
+                </div>
+
+                <ul class="hidden md:flex space-x-8">
+                    <li>
+                        <a href="#dashboard" class="text-accent
+                        
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#schedule" class="text-accent
+                        
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Schedule</a>
+                    </li>
+                    <li>
+                        <a href="#friends" class="text-accent
+                        
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        
+                        transition-colors">Friends</a>
+                    </li>
+                </ul>
+
+                <!-- <button class="bg-accent p-2">
+                    <a href="#" class="text-primary">Login</a>
+                </button> -->
+
+
+                <div class="flex items-center space-x-4">
+                    <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
+                    <button title="Profile">
+                        <i class="fa-solid fa-user text-accent hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+
+                     <!-- Settings Icon -->
+                    <button title="Settings">
+                        <i class="fa-solid fa-gear text-accent hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+
+                     <!-- Logout Icon -->
+                    <button title="Logout">
+                        <i class="fa-solid fa-right-from-bracket text-accent hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+                    
+                    <button id="themeToggle" class="">
+                        <i class="fa-solid fa-moon text-primary-200 "></i>
+                    </button>
+
+                    <button class="md:hidden p-2" id="menuToggle">
+                        <div class="w-6 h-5 flex flex-col justify-between">
+                            <span class="w-full h-0.5 bg-accent transition-all"></span>
+                        </div>
+                    </button>
+                </div>
+
+            </nav>
+        </div>
+    </header>
+
+    <div class="flex flex-col lg:mx-24 gap-6 mb-12">
+        <section class="pt-20 mx-3 lg:mx-16">
+            
+            <div class="grid lg:grid-cols-10 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">
+                <!-- STREAK -->
+                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center cols-span-10 lg:col-span-2">
+                    <div class="flex flex-col">
+                        <span class="text-accent font-body text-sm ">Your Streak</span>
+                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
+                    </div>
+                    <img class="w-16 h-16" src="/assets/Aset_Aplikasi_Api.png" alt="">
+                    
+                </div>
+
+                <div class="p-4 bg-secondary rounded-lg drop-shadow-default col-span-5">
+                    <span class="text-accent font-heading text-2xl lg:text-3xl font-black">Good Morning, User!</span>
+                    <p class="text-accent font-body text-sm">Coffee ☕ ready? Let's tackle the day!</p>
+                </div>
+
+                <div class="p-4 bg-secondary rounded-lg drop-shadow-default col-span-3">
+                    <span class="text-accent font-heading text-2xl font-black">Days</span>
+                    <div class="flex justify-between mt-2">
+                        <div class="w-8 h-8 bg-accent_green rounded-full"></div>
+                        <div class="w-8 h-8 bg-accent_green rounded-full"></div>
+                        <div class="w-8 h-8 bg-accent_green rounded-full"></div>
+
+                        <div class="w-8 h-8 bg-accent_red flex rounded-full items-center justify-center">
+                            <img src="/assets/Aset_Aplikasi_Api.png" alt="" class="w-9 h-9">
+                        </div>
+
+                        <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                        <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                        <div class="w-8 h-8 bg-gray-300 rounded-full"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mx-3 lg:mx-16">
+            <div class="grid lg:grid-cols-10 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6 items-start">
+                <!-- TODAY SCHEDULE -->
+                <div class="flex flex-col lg:col-span-7 col-span-10 gap-6">
+                    <div class="bg-secondary grid flex-row rounded-lg drop-shadow-default p-4 ">
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-heading text-2xl font-black">Today Schedule</span>
+
+                            <div class="space-x-2">
+
+                                <button id="openPopup" class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default">
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+
+                                <!-- <button class="px-3 ">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button> -->
+
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <div id="todaySchedule" class="space-y-3 ">
+                                <!-- Schedule 1 -->
+                                <div class="bg-accent-950 flex-col border-[1px] p-3 rounded-[3px] border-accent/10">
+                                    <div class="flex items-stretch">
+                                        <!-- Bendera -->
+                                        <div class="w-2  bg-gem_red rounded-l-md mr-4">
+                                        </div>
+
+                                        <div>
+                                            <span class="text-accent font-bold lg:text-xl text-lg">
+                                                Olahraga Pagi
+                                            </span>
+                                            <p class="lg:text-sm text-[12px]">Lorem ipsum</p>
+                                            
+                                            <div class="flex gap-2">
+
+                                                <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
+                                                    <i class="fa-solid fa-clock text-accent"></i>
+                                                    <span class="text-accent lg:text-sm text-[12px] ">08.00</span>
+                                                </div>
+
+                                                <div class="inline-flex gap-x-2 items-center mt-2 bg-accent_purple/50 rounded-full px-2 py-1">
+                                                    <span class="text-accent lg:text-sm text-[12px] font-semibold">Life</span>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- Schedule 2 -->
+                                <div class=" flex-col border-[1px] p-3 rounded-[3px] border-accent/10">
+                                    <div class="flex items-stretch">
+                                        <!-- Bendera -->
+                                        <div class="w-2  bg-gem_blue rounded-l-md mr-4">
+                                        </div>
+
+                                        <div>
+                                            <span class="text-accent font-bold lg:text-xl text-lg">
+                                                Project ALP 
+                                            </span>
+                                            <p class="lg:text-sm text-[12px]">Lorem ipsum</p>
+                                            
+                                            <div class="flex gap-2">
+
+                                                <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
+                                                    <i class="fa-solid fa-clock text-accent"></i>
+                                                    <span class="text-accent lg:text-sm text-[12px] ">08.00</span>
+                                                </div>
+
+                                                <div class="inline-flex gap-x-2 items-center mt-2 bg-accent_blue/50 rounded-full px-2 py-1">
+                                                    <span class="text-accent lg:text-sm text-[12px] font-semibold">Campus</span>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <button id="" class="moreButton mt-2 mx-3">
+                                <a class="text-accent/50 hover:text-accent/80 text-sm" href="#">More</a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- PROGRESS -->
+                    <div class="bg-secondary grid flex-row rounded-lg drop-shadow-default p-4 ">
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-heading text-2xl font-black">Progress</span>
+
+                            <button class="px-3">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+
+                        <div class="mt-3 space-y-3">
+                            
+                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="flex justify-between items-center w-full space-x-4">
+                                    <img class="w-10 h-10 lg:w-12 lg:h-12" src="/assets/Aset_Aplikasi_Emergency.png" alt="">
+                                    <div class="flex flex-col w-full">
+                                        <div class="flex justify-between  mb-1">
+                                            <span class="font-bold font-body lg:text-lg text-sm">
+                                                Emergency
+                                            </span>
+                                            <span class="font-semibold font-body lg:text-sm text-xs">23/43</span>
+                                        </div>
+
+                                        <div class="w-full bg-gem_red/20 rounded-full lg:h-4 h-3">
+                                            <div class="bg-gem_red lg:h-4 h-3 rounded-full" style="width: 30%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="flex justify-between items-center w-full space-x-4">
+                                    <img class="w-10 h-10 lg:w-12 lg:h-12" src="/assets/Aset_Aplikasi_Urgent.png" alt="">
+                                    <div class="flex flex-col w-full">
+                                        <div class="flex justify-between  mb-1">
+                                            <span class="font-bold font-body lg:text-lg text-sm">
+                                                Urgent
+                                            </span>
+                                            <span class="font-semibold font-body lg:text-sm text-xs">23/43</span>
+                                        </div>
+
+                                        <div class="w-full bg-gem_purple/20 rounded-full lg:h-4 h-3">
+                                            <div class="bg-gem_purple lg:h-4 h-3 rounded-full" style="width: 70%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="flex justify-between items-center w-full space-x-4">
+                                    <img class="w-10 h-10 lg:w-12 lg:h-12" src="/assets/Aset_Aplikasi_Perventive.png" alt="">
+                                    <div class="flex flex-col w-full">
+                                        <div class="flex justify-between  mb-1">
+                                            <span class="font-bold font-body lg:text-lg text-sm">
+                                                Perventive
+                                            </span>
+                                            <span class="font-semibold font-body lg:text-sm text-xs">23/43</span>
+                                        </div>
+
+                                        <div class="w-full bg-gem_blue/20 rounded-full lg:h-4 h-3">
+                                            <div class="bg-gem_blue lg:h-4 h-3 rounded-full" style="width: 30%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="flex justify-between items-center w-full space-x-4">
+                                    <img class="w-10 h-10 lg:w-12 lg:h-12" src="/assets/Aset_Aplikasi_Non_critical.png" alt="">
+                                    <div class="flex flex-col w-full">
+                                        <div class="flex justify-between  mb-1">
+                                            <span class="font-bold font-body lg:text-lg text-sm">
+                                                Non Critical
+                                            </span>
+                                            <span class="font-semibold font-body lg:text-sm text-xs">23/43</span>
+                                        </div>
+
+                                        <div class="w-full bg-gem_green/20 rounded-full lg:h-4 h-3">
+                                            <div class="bg-gem_green lg:h-4 h-3 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                
+                <div class="flex flex-col col-span-3 gap-6">
+                    <div class="bg-secondary grid flex-row rounded-lg drop-shadow-default p-4 ">
+                        <!-- ONGOING ACTIVITIES -->
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-heading text-2xl  font-black">Ongoing Activities</span>
+                            <button class=" px-3 ">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="mt-3 bg-accent-950 flex-col border-[1px] p-3 rounded-[3px] border-accent/10">
+                            <div class="flex items-stretch">
+
+                                <!-- Bendera -->
+                                <div class="w-2  bg-gem_red rounded-l-md mr-4">
+                                </div>
+
+                                <div>
+                                    <span class="text-accent font-bold lg:text-xl text-lg">
+                                        Project ALP 
+                                    </span>
+                                    <p class="lg:text-sm text-[12px]">Lorem ipsum</p>
+                                    
+                                    <div class="flex gap-2">
+
+                                        <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
+                                            <i class="fa-solid fa-clock text-accent"></i>
+                                            <span class="text-accent lg:text-sm text-[12px] ">08.00</span>
+                                        </div>
+
+                                        <div class="inline-flex gap-x-2 items-center mt-2 bg-accent_blue/50 rounded-full px-2 py-1">
+                                            <span class="text-accent lg:text-sm text-[12px] font-semibold">Campus</span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-secondary grid flex-row rounded-lg drop-shadow-default p-4 ">
+                        <!-- ONGOING ACTIVITIES -->
+                        <div class="flex justify-between items-center">
+                            <span class="text-accent font-heading text-2xl font-black">Leaderboard</span>
+
+                            <button class="px-3">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+
+                        <!-- Isi leaderboard -->
+                        <div class="mt-3 space-y-3">
+                            <!-- Juara 1 -->
+                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-lg text-accent font-bold w-5 text-center">1</span>
+                                    <img src="/assets/Aset_Aplikasi_forgy.png" alt="" class="w-10 h-10 rounded-full">
+                                    <h3 class="font-semibold text-accent ">Forgyy</h3>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <span class="font-body text-sm text-accent/80">421</span>
+                                    <img src="/assets/Aset_Aplikasi_Api.png" alt="" class="w-6 h-6">
+                                </div>
+                            </div>
+
+                            <!-- Juara 2 -->
+                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-lg text-accent font-bold w-5 text-center">2</span>
+                                    <img src="/assets/Aset_Aplikasi_Personal_4.png" alt="" class="w-10 h-10 rounded-full">
+                                    <h3 class="font-semibold text-accent ">Aristo</h3>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <span class="font-body text-sm text-accent/80">239</span>
+                                    <img src="/assets/Aset_Aplikasi_Api.png" alt="" class="w-6 h-6">
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-lg text-accent font-bold w-5 text-center">3</span>
+                                    <img src="/assets/Aset_Aplikasi_Personal_1.png" alt="" class="w-10 h-10 rounded-full">
+                                    <h3 class="font-semibold text-accent ">Stella & Vivi</h3>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <span class="font-body text-sm text-accent/80">20</span>
+                                    <img src="/assets/Aset_Aplikasi_Api.png" alt="" class="w-6 h-6">
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-lg text-accent font-bold w-5 text-center">4</span>
+                                    <img src="/assets/Aset_Aplikasi_Personal_2.png" alt="" class="w-10 h-10 rounded-full">
+                                    <h3 class="font-semibold text-accent ">Taima Gladys</h3>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <span class="font-body text-sm text-accent/80">1</span>
+                                    <img src="/assets/Aset_Aplikasi_Api.png" alt="" class="w-6 h-6">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <button id="" class=" moreButton mt-2 mx-3">
+                                <a class="text-accent/50 hover:text-accent/80 text-sm" href="#">More</a>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+        
+    </div>
+
+    <!-- POP UP ADD NEW FILE -->
+    <div id="popupOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+
+        <div class="flex items-center justify-center min-h-full">
+            <!-- Kotak Popup -->
+            <form id="scheduleForm" class="bg-white rounded-lg p-6 max-w-sm w-full mx-4 mb-4">
+                <div class="flex justify-between items-center">
+                    <span class="text-accent font-heading text-2xl font-black">Add New Quest</span>
+                
+                    <button id="closePopup">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div class="mt-4 space-y-4">
+                    <!-- Event or Task -->
+                     <div>
+                        <span class="block text-accent/90 mb-1 text-sm font-medium font-body">Choose Your Type Quest</span>
+
+                        <div class="flex gap-4">
+
+                            <label for="task" class="inline-flex items-center w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent">
+                                <input type="radio" name="scheduleType" value="task" checked class="form-radio text-accent" id="taskType">
+                                <span class="ml-2">Task</span>
+                            </label>
+
+                            <label for="Event" class="inline-flex items-center w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent">
+                                <input type="radio" name="scheduleType" value="event" class="form-radio text-accent" id="eventType">
+                                <span class="ml-2">Event</span>
+                            </label>
+
+                        </div>
+
+                     </div>
+                    
+                    <!-- Title -->
+                    <div>
+                        <span class="block text-accent/90 mb-1 text-sm font-medium font-body">Title</span>
+                        <input type="text" id="activityTitle" name="title" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
+                    </div>
+
+                    <!-- Desc -->
+                    <div>
+                        <span class="block text-accent/90 mb-1 text-sm font-medium font-body">Description</span>
+                        <input type="text" id="activityDescription" name="activityDesc" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
+                    </div>
+
+                    <!-- Date -->
+                    <div>
+                        <span class="block text-accent/90 mb-1 text-sm font-medium font-body">Date</span>
+                        <input type="date" id="activityDate" name="activityDate" class="w-full px-4 py-3 border border-accent/10 rounded-[3px]" required>
+                    </div>
+
+                    <!-- Input Time - Berubah Berdasarkan Jenis -->
+                    <div id="timeInput">
+                        
+                        <!-- Default: Task (deadline) -->
+                        <div id="taskTimeInput">
+                            <span class="block text-accent/90 mb-1 text-sm font-medium font-body">Deadline Time</span>
+
+                            <input type="time" id="deadlineTime" name="deadlineTime" class="w-full px-4 py-3 border border-accent/10 rounded-[3px]" required>
+                        </div>
+
+                        <!-- Event (time range) - awalnya hidden -->
+                        <div id="eventTimeInput" class="hidden">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <span class="block text-accent/90 mb-1 text-sm font-medium">Start Time</span>
+                                    <input type="time" id="startTime" name="startTime" class="w-full px-4 py-3 border border-accent/10 rounded-[3px]" required>
+                                </div>
+
+                                <div>
+                                    <label for="endTime" class="block text-accent/90 mb-1 text-sm font-medium">End Time</label>
+                                    <input type="time" id="endTime" name="endTime" class="w-full px-4 py-3 border border-accent/10 rounded-[3px]" required>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Category -->
+                    <div>
+                        <label for="category" class="block text-accent/90 mb-1 text-sm font-medium font-body">Category</label>
+
+                        <div class="flex space-x-1 m-1">
+                            <input type="text" id="categoryInput" name="category" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
+
+                            <!-- <label for="">Pick Color</label> -->
+                            <div class="relative flex items-center border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent">
+                                <button id="colorPickerBtn" class="w-5 h-5 rounded-full bg-accent_blue"></button>
+
+                                <div id="colorOptions" class="absolute z-10 mt-2 bg-white border p-2 rounded-md drop-shadow-default hidden">
+                                    <div class="flex gap-2">
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #E29B9C;" data-color="#E29B9C"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #B69BE2;" data-color="#B69BE2"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #9BBFE2;" data-color="#9BBFE2"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #B9E29B;" data-color="#B9E29B"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #9BDCE2;" data-color="#9BDCE2"></div>
+
+                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #F59FD9;" data-color="#F59FD9"></div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <!-- Slider Bar -->
+                    <div>
+                        <label for="Priority" class="block text-accent/90 mb-1 text-sm font-medium font-body">Priority</label>
+                    </div>
+                     
+                    <div class="relative h-2 bg-gray-200 rounded-full w-full mb-3 flex items-center">
+                        <!-- Progress -->
+                        <div id="slider-fill" class="absolute h-2 rounded-full left-0 w-[0%] transition-all duration-300"></div>
+
+                        <!-- Markers -->
+                        <div class="absolute left-[0%] cursor-pointer" onclick="setLevel(0)">
+                            <img id="gem-0" src="/assets/Aset_Aplikasi_Non_critical.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute left-[33%] cursor-pointer" onclick="setLevel(1)">
+                            <img id="gem-1" src="/assets/Aset_Aplikasi_Perventive.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute left-[66%] cursor-pointer" onclick="setLevel(2)">
+                            <img id="gem-2" src="/assets/Aset_Aplikasi_Urgent.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+
+                        <div class="absolute left-[94%] cursor-pointer" onclick="setLevel(3)">
+                            <img id="gem-3" src="/assets/Aset_Aplikasi_Emergency.png" class="w-5 h-5 transition-all duration-300" />
+                        </div>
+                    </div>
+
+                    <!-- Info Box -->
+                    <div id="gem-info" class="text-accent mt-2 text-sm font-body font-bold text-center">
+                        
+                    </div>
+
+                    <div>
+                        <button id="submitForm" type="submit" class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default">
+                            Add Quest
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Script.js -->
+    <script src="script.js"></script>
+
+    <script>
+
+    </script>
+
+</body>
+</html>
