@@ -25,26 +25,26 @@
             <nav class="flex justify-between items-center py-4">
 
                 <div class="flex items-center">
-                    <span class="text-xl text-text-100 font-extrabold font-heading">CLOCKIN</span>
+                    <span class="text-xl text-accent dark:text-secondary font-extrabold font-heading">CLOCKIN</span>
                 </div>
 
                 <ul class="hidden md:flex space-x-8">
                     <li>
-                        <a href="#dashboard" class="text-accent
+                        <a href="#dashboard" class="text-accent dark:text-secondary
                         
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
                         transition-colors">Dashboard</a>
                     </li>
                     <li>
-                        <a href="#schedule" class="text-accent
+                        <a href="#schedule" class="text-accent dark:text-secondary
                         
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
                         transition-colors">Schedule</a>
                     </li>
                     <li>
-                        <a href="#friends" class="text-accent
+                        <a href="#friends" class="moreButton text-accent dark:text-secondary
                         
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
@@ -61,24 +61,24 @@
                 <div class="flex items-center space-x-4">
                     <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
                     <button title="Profile">
-                        <i class="fa-solid fa-user text-accent hover:text-accent/80 
+                        <i class="fa-solid fa-user text-accent dark:text-secondary hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
 
                      <!-- Settings Icon -->
                     <button title="Settings">
-                        <i class="fa-solid fa-gear text-accent hover:text-accent/80 
+                        <i class="fa-solid fa-gear text-accent dark:text-secondary hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
 
                      <!-- Logout Icon -->
                     <button title="Logout">
-                        <i class="fa-solid fa-right-from-bracket text-accent hover:text-accent/80 
+                        <i class="fa-solid fa-right-from-bracket dark:text-secondary text-accent hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
                     
                     <button id="themeToggle" class="">
-                        <i class="fa-solid fa-moon text-primary-200 "></i>
+                        <i class="fa-solid fa-moon text-primary-200 dark:text-secondary"></i>
                     </button>
 
                     <button class="md:hidden p-2" id="menuToggle">
@@ -94,7 +94,7 @@
 
     <div class="flex flex-col lg:mx-24 gap-6 mb-12">
         <section class="pt-20 mx-3 lg:mx-16">
-            
+        
             <div class="grid lg:grid-cols-10 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">
                 <!-- STREAK -->
                 <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center cols-span-10 lg:col-span-2">
@@ -154,6 +154,7 @@
 
                         <div class="mt-3">
                             <div id="todaySchedule" class="space-y-3 ">
+
                                 <!-- Schedule 1 -->
                                 <div class="bg-accent-950 flex-col border-[1px] p-3 rounded-[3px] border-accent/10">
                                     <div class="flex items-stretch">
@@ -161,17 +162,28 @@
                                         <div class="w-2  bg-gem_red rounded-l-md mr-4">
                                         </div>
 
-                                        <div>
-                                            <span class="text-accent font-bold lg:text-xl text-lg">
-                                                Olahraga Pagi
-                                            </span>
+                                        <div class="w-full">
+                                            <div class="flex justify-between items-center">
+                                                <span class="text-accent font-bold lg:text-xl text-lg">
+                                                    Olahraga Pagi
+                                                </span>
+
+                                                <!-- <button>
+                                                    <span class="text-sm font-body">
+                                                        Marks Done
+                                                    </span>  
+                                                </button> -->
+                                            </div>
+                                            
+                                            
+                                            
                                             <p class="lg:text-sm text-[12px]">Lorem ipsum</p>
                                             
                                             <div class="flex gap-2">
 
                                                 <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
                                                     <i class="fa-solid fa-clock text-accent"></i>
-                                                    <span class="text-accent lg:text-sm text-[12px] ">08.00</span>
+                                                    <span class="text-accent lg:text-sm text-[12px] ">06:00 - 7:30</span>
                                                 </div>
 
                                                 <div class="inline-flex gap-x-2 items-center mt-2 bg-accent_purple/50 rounded-full px-2 py-1">
@@ -341,7 +353,7 @@
 
                                         <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
                                             <i class="fa-solid fa-clock text-accent"></i>
-                                            <span class="text-accent lg:text-sm text-[12px] ">08.00</span>
+                                            <span class="text-accent lg:text-sm text-[12px] ">08:00 - 12:20</span>
                                         </div>
 
                                         <div class="inline-flex gap-x-2 items-center mt-2 bg-accent_blue/50 rounded-full px-2 py-1">
@@ -437,7 +449,7 @@
 
         <div class="flex items-center justify-center min-h-full">
             <!-- Kotak Popup -->
-            <form id="scheduleForm" class="bg-white rounded-lg p-6 max-w-sm w-full mx-4 mb-4">
+            <form id="scheduleForm" class="bg-white rounded-lg p-6 max-w-sm w-full mx-4 mb-4 overflow-y-auto max-h-[80vh]">
                 <div class="flex justify-between items-center">
                     <span class="text-accent font-heading text-2xl font-black">Add New Quest</span>
                 
@@ -518,29 +530,14 @@
                         <label for="category" class="block text-accent/90 mb-1 text-sm font-medium font-body">Category</label>
 
                         <div class="flex space-x-1 m-1">
-                            <input type="text" id="categoryInput" name="category" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
+                            <input type="text" id="categoryInput" name="category" class="w-full border border-gray-300 rounded-[3px] px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent" required>
 
                             <!-- <label for="">Pick Color</label> -->
-                            <div class="relative flex items-center border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent">
-                                <button id="colorPickerBtn" class="w-5 h-5 rounded-full bg-accent_blue"></button>
+                            <div class="relative flex items-center border border-gray-300 rounded-[3px] px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-accent_blue focus:border-transparent">
+                                <!-- <button id="colorPickerBtn" class="w-5 h-5 rounded-full bg-accent_blue"></button> -->
 
-                                <div id="colorOptions" class="absolute z-10 mt-2 bg-white border p-2 rounded-md drop-shadow-default hidden">
-                                    <div class="flex gap-2">
+                                <input type="color" id="categoryColorInput" value="#E29B9C" class="w-10 h-10 p-0 border-0 bg-transparent cursor-pointer">
 
-                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #E29B9C;" data-color="#E29B9C"></div>
-
-                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #B69BE2;" data-color="#B69BE2"></div>
-
-                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #9BBFE2;" data-color="#9BBFE2"></div>
-
-                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #B9E29B;" data-color="#B9E29B"></div>
-
-                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #9BDCE2;" data-color="#9BDCE2"></div>
-
-                                        <div class="w-6 h-6 rounded-full cursor-pointer" style="background-color: #F59FD9;" data-color="#F59FD9"></div>
-
-                                    </div>
-                                </div>
                             </div>
                         </div> 
                     </div>
@@ -578,7 +575,7 @@
                     </div>
 
                     <div>
-                        <button id="submitForm" type="submit" class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default">
+                        <button id="submit" type="submit" class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default">
                             Add Quest
                         </button>
                     </div>
@@ -589,7 +586,7 @@
     </div>
 
     <!-- Script.js -->
-    <script src="script.js"></script>
+    <script src="scriptDashboard.js"></script>
 
     <script>
 

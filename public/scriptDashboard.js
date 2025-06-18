@@ -68,6 +68,33 @@ function setLevel(level) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Darkmode
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const icon = themeToggle.querySelector('i');
+
+    // Check for saved theme preference
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        html.classList.add('dark');
+        icon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    // Toggle theme
+    themeToggle.addEventListener('click', function() {
+        html.classList.toggle('dark');
+        
+        // Update icon
+        if (html.classList.contains('dark')) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.theme = 'dark';
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.theme = 'light';
+        }
+    });
+
+    
     const openPopupBtn = document.getElementById('openPopup');
     const closePopupBtn = document.getElementById('closePopup');
     const popupOverlay = document.getElementById('popupOverlay');
@@ -102,9 +129,17 @@ document.addEventListener('DOMContentLoaded', function() {
             if (taskTypeRadio.checked) {
                 taskTimeInput.classList.remove('hidden');
                 eventTimeInput.classList.add('hidden');
+                // Set required biar bisa submit 
+                document.getElementById('deadlineTime').required = true;
+                document.getElementById('startTime').required = false;
+                document.getElementById('endTime').required = false;
             } else {
                 taskTimeInput.classList.add('hidden');
                 eventTimeInput.classList.remove('hidden');
+                // Set required biar bisa submit
+                document.getElementById('deadlineTime').required = false;
+                document.getElementById('startTime').required = true;
+                document.getElementById('endTime').required = true;
             }
         }
     }
@@ -173,40 +208,132 @@ document.addEventListener('DOMContentLoaded', function() {
             sliderFill.style.width = `0%`;
             sliderFill.style.backgroundColor = 'transparent';
         }
+
+    
+    // BUTTON MORE
+    const moreButtons = document.querySelectorAll('.moreButton');
+
+    moreButtons.forEach(button => {
+        button.addEventListener('click', function (e) {
+        e.preventDefault();
+        alert('Coming Soon!');
+        });
     });
 
-    function openModal() {
+    // FORM SUBMIT
+    const scheduleForm = document.getElementById('scheduleForm');
+    const todaySchedule = document.getElementById('todaySchedule');
+
+    scheduleForm.addEventListener('submit', function(e){
+        e.preventDefault();
+
+        // Ambil data dari form
+        const type = document.querySelector('input[name="scheduleType"]:checked').value;
+        const title = document.getElementById('activityTitle').value;
+        const desc = document.getElementById('activityDescription').value;
+        const date = document.getElementById('activityDate').value;
+        const category = document.getElementById('categoryInput').value;
+        const color = document.getElementById('categoryColorInput').value;
+        let time = '';
+        if (type === 'task') {
+            time = document.getElementById('deadlineTime').value;
+        } else {
+            const start = document.getElementById('startTime').value;
+            const end = document.getElementById('endTime').value;
+            time = `${start} - ${end}`;
+        }
+
+        // Pilih warna bendera berdasarkan prioritas
+        let flagColor = 'bg-gem_green';
+        if (currentLevel === 1) flagColor = 'bg-gem_blue';
+        if (currentLevel === 2) flagColor = 'bg-gem_purple';
+        if (currentLevel === 3) flagColor = 'bg-gem_red';
+
+        // Style Schedule baru 
+        const newSchedule = document.createElement('div');
+        newSchedule.className = "bg-white flex-col border-[1px] p-3 rounded-[3px] border-accent/10";
+        newSchedule.innerHTML = `
+            <div class="flex items-stretch">
+                <div class="w-2 ${flagColor} rounded-l-md mr-4"></div>
+                <div>
+                    <span class="text-accent font-bold lg:text-xl text-lg">${title}</span>
+                    <p class="lg:text-sm text-[12px]">${desc}</p>
+                    <div class="flex gap-2">
+                        <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
+                            <i class="fa-solid fa-clock text-accent"></i>
+                            <span class="text-accent lg:text-sm text-[12px] ">${time}</span>
+                        </div>
+                        <div class="inline-flex gap-x-2 items-center mt-2" style="background-color:${color}50; border-radius:9999px; padding:0.25rem 0.5rem;">
+                            <span class="text-accent lg:text-sm text-[12px] font-semibold">${category}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Tambahkan ke todaySchedule
+        todaySchedule.appendChild(newSchedule);
+
+        // Reset form & tutup popup
+        scheduleForm.reset();
+        document.getElementById('popupOverlay').classList.add('hidden');
+        // Reset priority slider
+        for (let i = 0; i < gemData.length; i++) {
+            const gemImage = document.getElementById(`gem-${i}`);
+            if (gemImage) gemImage.src = gemData[i].inactive;
+        }
+        const sliderFill = document.getElementById("slider-fill");
+        if (sliderFill) {
+            sliderFill.style.width = `0%`;
+            sliderFill.style.backgroundColor = 'transparent';
+        }
+        currentLevel = -1;
+        document.getElementById("gem-info").innerText = "";
+    });
+    
+    
+});
+
+
+function openModal() {
     document.getElementById('addActivityModal').classList.remove('hidden');
 }
+
 function closeModal() {
     document.getElementById('addActivityModal').classList.add('hidden');
 }
+
 function openQuestModal() {
   document.getElementById('addQuestModal').classList.remove('hidden');
 }
+
 function closeQuestModal() {
   document.getElementById('addQuestModal').classList.add('hidden');
 }
-function toggleTimeInput(type) {
-  const taskInput = document.getElementById('taskTimeInput');
-  const eventInput = document.getElementById('eventTimeInput');
-  if (type === 'event') {
-    taskInput.classList.add('hidden');
-    eventInput.classList.remove('hidden');
-  } else {
-    taskInput.classList.remove('hidden');
-    eventInput.classList.add('hidden');
-  }
-}
+
+
+// function toggleTimeInput(type) {
+//   const taskInput = document.getElementById('taskTimeInput');
+//   const eventInput = document.getElementById('eventTimeInput');
+//   if (taskType === 'event') {
+//     taskInput.classList.add('hidden');
+//     eventInput.classList.remove('hidden');
+//   } else {
+//     taskInput.classList.remove('hidden');
+//     eventInput.classList.add('hidden');
+//   }
+// }
 
 // Show modal
 document.getElementById('addCategoryBtn').onclick = function() {
   document.getElementById('addCategoryModal').classList.remove('hidden');
 };
+
 // Hide modal
 function closeCategoryModal() {
   document.getElementById('addCategoryModal').classList.add('hidden');
 }
+
 // Add category
 function addCategory(event) {
   event.preventDefault();
@@ -254,7 +381,7 @@ function showMonth(monthIdx) {
   const dateGrid = document.getElementById('dateGrid');
   dateGrid.classList.remove('hidden');
 
-  // Get current year (or set your own)
+  // Set year
   const year = 2025;
   const firstDay = new Date(year, monthIdx, 1).getDay();
   const lastDate = new Date(year, monthIdx + 1, 0).getDate();
