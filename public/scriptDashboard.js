@@ -31,6 +31,7 @@ const gemData = [
 ];
 
 let currentLevel = -1;
+let schedules = []; // {title, desc, level, done, ...}
 
 function setLevel(level) {
     // if same level, do nothing
@@ -73,28 +74,62 @@ document.addEventListener('DOMContentLoaded', function() {
     // Darkmode
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
-    const icon = themeToggle.querySelector('i');
-
-    // Check for saved theme preference
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        html.classList.add('dark');
-        icon.classList.replace('fa-moon', 'fa-sun');
+    
+    if (!themeToggle) {
+        console.warn('Theme toggle button not found');
+        return;
     }
-
-    // Toggle theme
-    themeToggle.addEventListener('click', function() {
-        html.classList.toggle('dark');
-        
-        // Update icon
-        if (html.classList.contains('dark')) {
-            icon.classList.replace('fa-moon', 'fa-sun');
-            localStorage.theme = 'dark';
-        } else {
-            icon.classList.replace('fa-sun', 'fa-moon');
-            localStorage.theme = 'light';
+    
+    // Check for saved theme or default to light mode
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    // Set initial theme
+    if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+        html.classList.add('dark');
+        updateIcon(true);
+    } else {
+        html.classList.remove('dark');
+        updateIcon(false);
+    }
+    
+    // Update toggle button icon
+    function updateIcon(isDark) {
+        const icon = themeToggle.querySelector('i');
+        if (icon) {
+            if (isDark) {
+                icon.className = 'fas fa-sun text-white';
+            } else {
+                icon.className = 'fas fa-moon text-accent';
+            }
         }
+    }
+    
+    // Toggle function
+    function toggleTheme() {
+        const isDark = html.classList.contains('dark');
+        
+        if (isDark) {
+            html.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            updateIcon(false);
+        } else {
+            html.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            updateIcon(true);
+        }
+        
+        console.log('Theme toggled to:', isDark ? 'light' : 'dark');
+    }
+    
+    // Add click event to toggle button
+    themeToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleTheme();
     });
-
+    
+    // Global toggle function
+    window.toggleDarkMode = toggleTheme;
     
     const openPopupBtn = document.getElementById('openPopup');
     const closePopupBtn = document.getElementById('closePopup');
@@ -150,43 +185,43 @@ document.addEventListener('DOMContentLoaded', function() {
     if (eventTypeRadio) eventTypeRadio.addEventListener('change', toggleTimeInputs);
 
     // COLOR OPTION BG 
-    const colorPickerBtn = document.getElementById('colorPickerBtn');
-    const colorOptions = document.getElementById('colorOptions');
+    // const colorPickerBtn = document.getElementById('colorPickerBtn');
+    // const colorOptions = document.getElementById('colorOptions');
 
     // initial color
-    if (colorPickerBtn) {
-        colorPickerBtn.style.backgroundColor = '#E29B9C';
-    }
+    // if (colorPickerBtn) {
+    //     colorPickerBtn.style.backgroundColor = '#E29B9C';
+    // }
 
     // Tampilkan atau sembunyikan dropdown warna saat diklik
-    if (colorPickerBtn) {
-        colorPickerBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            if (colorOptions) {
-                colorOptions.classList.toggle('hidden');
-            }
-        });
-    }
+    // if (colorPickerBtn) {
+    //     colorPickerBtn.addEventListener('click', function (e) {
+    //         e.stopPropagation();
+    //         if (colorOptions) {
+    //             colorOptions.classList.toggle('hidden');
+    //         }
+    //     });
+    // }
 
-    if (colorOptions) {
-        colorOptions.addEventListener('click', function (e) {
-            if (e.target.dataset.color) {
-                const selectedColor = e.target.dataset.color;
-                if (colorPickerBtn) {
-                    colorPickerBtn.style.backgroundColor = selectedColor;
-                }
-                if (colorOptions) {
-                    colorOptions.classList.add('hidden');
-                }
-            }
-        });
-    }
+    // if (colorOptions) {
+    //     colorOptions.addEventListener('click', function (e) {
+    //         if (e.target.dataset.color) {
+    //             const selectedColor = e.target.dataset.color;
+    //             if (colorPickerBtn) {
+    //                 colorPickerBtn.style.backgroundColor = selectedColor;
+    //             }
+    //             if (colorOptions) {
+    //                 colorOptions.classList.add('hidden');
+    //             }
+    //         }
+    //     });
+    // }
 
-    document.addEventListener('click', function () {
-        if (colorOptions) {
-            colorOptions.classList.add('hidden');
-        }
-    });
+    // document.addEventListener('click', function () {
+    //     if (colorOptions) {
+    //         colorOptions.classList.add('hidden');
+    //     }
+    // });
 
     // PRIORITY CUSTOM
     //  awal load, belum ada level yang dipilih
@@ -235,6 +270,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const date = document.getElementById('activityDate').value;
         const category = document.getElementById('categoryInput').value;
         const color = document.getElementById('categoryColorInput').value;
+        
+        // Ambil waktu berdasarkan jenisnya
         let time = '';
         if (type === 'task') {
             time = document.getElementById('deadlineTime').value;
@@ -243,6 +280,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const end = document.getElementById('endTime').value;
             time = `${start} - ${end}`;
         }
+
+        // simpan ke array
+        schedules.push({
+            title,
+            desc,
+            date,
+            category,
+            color,
+            time,
+            type,
+            level: currentLevel,
+            done: false
+        });
+
+        renderScheduleList();
+        updateProgress();
 
         // Pilih warna bendera berdasarkan prioritas
         let flagColor = 'bg-gem_green';
@@ -253,17 +306,30 @@ document.addEventListener('DOMContentLoaded', function() {
         // Style Schedule baru 
         const newSchedule = document.createElement('div');
         newSchedule.className = "bg-white flex-col border-[1px] p-3 rounded-[3px] border-accent/10";
+        const scheduleIdx = schedules.length - 1;
         newSchedule.innerHTML = `
             <div class="flex items-stretch">
                 <div class="w-2 ${flagColor} rounded-l-md mr-4"></div>
-                <div>
-                    <span class="text-accent font-bold lg:text-xl text-lg">${title}</span>
+                <div class="w-full">
+                    <div class="flex items-center justify-between">
+                        <span class="text-accent font-bold lg:text-xl text-lg">${title}</span>
+                        <button class="markDoneBtn bg-accent text-secondary rounded-full px-2 py-1 flex items-center gap-x-1" data-idx="${scheduleIdx}">
+                            <i class="fa-solid fa-check text-sm"></i>
+                            <span class="text-sm font-body">Marks Done</span>  
+                        </button>
+                    </div>
                     <p class="lg:text-sm text-[12px]">${desc}</p>
                     <div class="flex gap-2">
                         <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
                             <i class="fa-solid fa-clock text-accent"></i>
                             <span class="text-accent lg:text-sm text-[12px] ">${time}</span>
                         </div>
+
+                        <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
+                            <i class="fa-solid fa-calendar text-accent"></i>
+                            <span class="text-accent lg:text-sm text-[12px] ">${date}</span>
+                        </div>
+
                         <div class="inline-flex gap-x-2 items-center mt-2" style="background-color:${color}50; border-radius:9999px; padding:0.25rem 0.5rem;">
                             <span class="text-accent lg:text-sm text-[12px] font-semibold">${category}</span>
                         </div>
@@ -273,7 +339,19 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
 
         // Tambahkan ke todaySchedule
-        todaySchedule.appendChild(newSchedule);
+        // todaySchedule.appendChild(newSchedule);
+
+        // Tambahkan event listener untuk tombol Marks Done
+        const markBtn = newSchedule.querySelector('.markDoneBtn');
+        if (markBtn) {
+            markBtn.addEventListener('click', function() {
+                const idx = parseInt(this.dataset.idx);
+                schedules[idx].done = true;
+                this.disabled = true;
+                this.classList.add('opacity-50');
+                updateProgress();
+            });
+        }
 
         // Reset form & tutup popup
         scheduleForm.reset();
@@ -288,6 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sliderFill.style.width = `0%`;
             sliderFill.style.backgroundColor = 'transparent';
         }
+
         currentLevel = -1;
         document.getElementById("gem-info").innerText = "";
     });
@@ -324,6 +403,8 @@ function closeQuestModal() {
 //     eventInput.classList.add('hidden');
 //   }
 // }
+
+// SCHEDULE PUNYAA
 
 // Show modal
 document.getElementById('addCategoryBtn').onclick = function() {
@@ -461,3 +542,90 @@ function renderDateGrid(year, month) {
 
 // Initialize title on page load
 updateCalendarTitle();
+
+function updateProgress() {
+    // Priority: 0=Non Critical, 1=Perventive, 2=Urgent, 3=Emergency
+    const priorities = [
+        { id: 3, bar: 'bg-gem_red', selector: 'progress-emergency' },
+        { id: 2, bar: 'bg-gem_purple', selector: 'progress-urgent' },
+        { id: 1, bar: 'bg-gem_blue', selector: 'progress-perventive' },
+        { id: 0, bar: 'bg-gem_green', selector: 'progress-noncritical' }
+    ];
+    priorities.forEach(prio => {
+        const total = schedules.filter(s => s.level === prio.id).length;
+        const done = schedules.filter(s => s.level === prio.id && s.done).length;
+        const percent = total === 0 ? 0 : Math.round((done / total) * 100);
+
+        // Update bar width
+        const bar = document.querySelector(`.${prio.selector} .progress-bar`);
+        if (bar) bar.style.width = percent + '%';
+
+        // Update text
+        const text = document.querySelector(`.${prio.selector} .progress-text`);
+        if (text) text.textContent = percent + '%';
+    });
+}
+
+function renderScheduleList() {
+    // Urutkan berdasarkan tanggal dan waktu terdekat
+    schedules.sort((a, b) => {
+        // Gabungkan date dan time jadi satu Date object
+        const aDate = new Date(`${a.date}T${a.time.split(' - ')[0] || a.time}`);
+        const bDate = new Date(`${b.date}T${b.time.split(' - ')[0] || b.time}`);
+        return aDate - bDate;
+    });
+
+    // Kosongkan container
+    todaySchedule.innerHTML = '';
+
+    // Render ulang semua schedule
+    schedules.forEach((item, idx) => {
+        // Pilih warna bendera berdasarkan prioritas
+        let flagColor = 'bg-gem_green';
+        if (item.level === 1) flagColor = 'bg-gem_blue';
+        if (item.level === 2) flagColor = 'bg-gem_purple';
+        if (item.level === 3) flagColor = 'bg-gem_red';
+
+        const newSchedule = document.createElement('div');
+        newSchedule.className = "bg-white flex-col border-[1px] p-3 rounded-[3px] border-accent/10";
+        newSchedule.innerHTML = `
+            <div class="flex items-stretch">
+                <div class="w-2 ${flagColor} rounded-l-md mr-4"></div>
+                <div class="w-full">
+                    <div class="flex items-center justify-between">
+                        <span class="text-accent font-bold lg:text-xl text-lg">${item.title}</span>
+                        <button class="markDoneBtn bg-accent text-secondary rounded-full px-2 py-1 flex items-center gap-x-1" data-idx="${idx}" ${item.done ? 'disabled style="opacity:0.5;"' : ''}>
+                            <i class="fa-solid fa-check text-sm"></i>
+                            <span class="text-sm font-body">Marks Done</span>  
+                        </button>
+                    </div>
+                    <p class="lg:text-sm text-[12px]">${item.desc}</p>
+                    <div class="flex gap-2">
+                        <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
+                            <i class="fa-solid fa-clock text-accent"></i>
+                            <span class="text-accent lg:text-sm text-[12px] ">${item.time}</span>
+                        </div>
+                        <div class="inline-flex gap-x-2 items-center mt-2 bg-primary rounded-full px-2 py-1">
+                            <i class="fa-solid fa-calendar text-accent"></i>
+                            <span class="text-accent lg:text-sm text-[12px] ">${item.date}</span>
+                        </div>
+                        <div class="inline-flex gap-x-2 items-center mt-2" style="background-color:${item.color}50; border-radius:9999px; padding:0.25rem 0.5rem;">
+                            <span class="text-accent lg:text-sm text-[12px] font-semibold">${item.category}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        todaySchedule.appendChild(newSchedule);
+
+        // Event listener untuk Marks Done
+        const markBtn = newSchedule.querySelector('.markDoneBtn');
+        if (markBtn && !item.done) {
+            markBtn.addEventListener('click', function() {
+                schedules[idx].done = true;
+                renderScheduleList();
+                updateProgress();
+            });
+        }
+    });
+}
