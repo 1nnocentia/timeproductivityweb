@@ -1,4 +1,5 @@
 // js/script.js
+
 const gemData = [
     {
         active: "/assets/Aset_Aplikasi_Non_critical.png",
