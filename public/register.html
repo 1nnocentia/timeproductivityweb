@@ -101,7 +101,7 @@
                         <div class="flex flex-col sm:flex-row justify-between mb-6 space-y-2 sm:space-y-0">
                             <label class="flex items-center">
                                 <div class="relative inline-block w-8 h-4 mr-2 align-middle select-none">
-                                    <input type="checkbox" name="terms" required
+                                    <input type="checkbox" name="terms" id="termsCheckbox" required
                                         class="toggle-checkbox absolute block w-4 h-4 rounded-full 
                                         bg-white border-2 border-gray-300 dark:border-gray-600 appearance-none cursor-pointer transition-transform duration-200 ease-in-out left-0 top-0"
                                     />
@@ -157,75 +157,7 @@
         </div>
     </div>
     
-    <script src="db.js"></script>
-    <!-- Database utilities script -->
-    <script>
-        // Global variables for form validation
-        let isFormValid = false;
-        let passwordValidation = {
-            length: false,
-            uppercase: false,
-            number: false,
-            special: false
-        };
-
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeThemeToggle();
-            initializePasswordToggle();
-            initializeFormValidation();
-            initializeRegistrationForm();
-        });
-
-        // Theme toggle functionality
-        function initializeThemeToggle() {
-            const themeToggle = document.getElementById('themeToggle');
-            const html = document.documentElement;
-            const icon = themeToggle.querySelector('i');
-
-            // Check for saved theme preference
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                html.classList.add('dark');
-                icon.classList.replace('fa-moon', 'fa-sun');
-            }
-
-            // Toggle theme
-            themeToggle.addEventListener('click', function() {
-                html.classList.toggle('dark');
-                
-                // Update icon
-                if (html.classList.contains('dark')) {
-                    icon.classList.replace('fa-moon', 'fa-sun');
-                    localStorage.theme = 'dark';
-                } else {
-                    icon.classList.replace('fa-sun', 'fa-moon');
-                    localStorage.theme = 'light';
-                }
-            });
-
-            themeToggle.addEventListener('mouseleave', function() {
-                icon.classList.remove(html.classList.contains('dark') ? 'fa-moon' : 'fa-sun');
-                icon.classList.add(html.classList.contains('dark') ? 'fa-sun' : 'fa-moon');
-            });
-        }
-
-        // Password visibility toggle
-        function initializePasswordToggle() {
-            document.getElementById('togglePassword').addEventListener('click', function() {
-                const password = document.getElementById('password');
-                const icon = this.querySelector('i');
-                
-                // Toggle password visibility
-                if (password.type === 'password') {
-                    password.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    password.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            });
-        }
-    </script>
+    <script src="auth.js"></script>
+    <script src="register.js"></script>
 </body>
 </html>
