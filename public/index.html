@@ -67,7 +67,7 @@
 
                      <!-- Settings Icon -->
                     <button title="Settings">
-                        <i class="fa-solid fa-gear text-accent dark:text-secondary hover:text-accent/80 
+                        <i class="fa-solid fa-gear text-accent  hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
 
@@ -78,7 +78,7 @@
                     </button>
                     
                     <button id="themeToggle" class="">
-                        <i class="fa-solid fa-moon text-primary-200 dark:text-secondary"></i>
+                        <i class="fa-solid fa-moon text-primary-200 "></i>
                     </button>
 
                     <button class="md:hidden p-2" id="menuToggle">
@@ -241,81 +241,67 @@
                     <div class="bg-secondary grid flex-row rounded-lg drop-shadow-default p-4 ">
                         <div class="flex justify-between items-center">
                             <span class="text-accent font-heading text-2xl font-black">Progress</span>
-
-                            <button class="px-3">
+                            <!-- <button class="px-3">
                                 <i class="fa-solid fa-ellipsis-vertical"></i>
-                            </button>
+                            </button> -->
                         </div>
 
                         <div class="mt-3 space-y-3">
-                            
-                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                            <div class="progress-emergency flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
                                 <div class="flex justify-between items-center w-full space-x-4">
                                     <img class="w-10 h-10 lg:w-12 lg:h-12" src="/assets/Aset_Aplikasi_Emergency.png" alt="">
                                     <div class="flex flex-col w-full">
                                         <div class="flex justify-between  mb-1">
-                                            <span class="font-bold font-body lg:text-lg text-sm">
-                                                Emergency
-                                            </span>
-                                            <span class="font-semibold font-body lg:text-sm text-xs">23/43</span>
+                                            <span class="font-bold font-body lg:text-lg text-sm">Emergency</span>
+                                            <span class="progress-text font-semibold font-body lg:text-sm text-xs">0%</span>
                                         </div>
-
                                         <div class="w-full bg-gem_red/20 rounded-full lg:h-4 h-3">
-                                            <div class="bg-gem_red lg:h-4 h-3 rounded-full" style="width: 30%"></div>
+                                            <div class="progress-bar bg-gem_red lg:h-4 h-3 rounded-full" style="width: 0%"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                            <div class="progress-urgent flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
                                 <div class="flex justify-between items-center w-full space-x-4">
                                     <img class="w-10 h-10 lg:w-12 lg:h-12" src="/assets/Aset_Aplikasi_Urgent.png" alt="">
                                     <div class="flex flex-col w-full">
                                         <div class="flex justify-between  mb-1">
-                                            <span class="font-bold font-body lg:text-lg text-sm">
-                                                Urgent
-                                            </span>
-                                            <span class="font-semibold font-body lg:text-sm text-xs">23/43</span>
+                                            <span class="font-bold font-body lg:text-lg text-sm">Urgent</span>
+                                            <span class="progress-text font-semibold font-body lg:text-sm text-xs">0%</span>
                                         </div>
-
                                         <div class="w-full bg-gem_purple/20 rounded-full lg:h-4 h-3">
-                                            <div class="bg-gem_purple lg:h-4 h-3 rounded-full" style="width: 70%"></div>
+                                            <div class="progress-bar bg-gem_purple lg:h-4 h-3 rounded-full" style="width: 0%"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                            <div class="progress-perventive flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
                                 <div class="flex justify-between items-center w-full space-x-4">
                                     <img class="w-10 h-10 lg:w-12 lg:h-12" src="/assets/Aset_Aplikasi_Perventive.png" alt="">
                                     <div class="flex flex-col w-full">
                                         <div class="flex justify-between  mb-1">
-                                            <span class="font-bold font-body lg:text-lg text-sm">
-                                                Perventive
-                                            </span>
-                                            <span class="font-semibold font-body lg:text-sm text-xs">23/43</span>
+                                            <span class="font-bold font-body lg:text-lg text-sm">Perventive</span>
+                                            <span class="progress-text font-semibold font-body lg:text-sm text-xs">0%</span>
                                         </div>
-
                                         <div class="w-full bg-gem_blue/20 rounded-full lg:h-4 h-3">
-                                            <div class="bg-gem_blue lg:h-4 h-3 rounded-full" style="width: 30%"></div>
+                                            <div class="progress-bar bg-gem_blue lg:h-4 h-3 rounded-full" style="width: 0%"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
+                            <div class="progress-noncritical flex justify-between bg-accent-950 border-[1px] p-3 rounded-[3px] border-accent/10">
                                 <div class="flex justify-between items-center w-full space-x-4">
                                     <img class="w-10 h-10 lg:w-12 lg:h-12" src="/assets/Aset_Aplikasi_Non_critical.png" alt="">
                                     <div class="flex flex-col w-full">
                                         <div class="flex justify-between  mb-1">
-                                            <span class="font-bold font-body lg:text-lg text-sm">
-                                                Non Critical
-                                            </span>
-                                            <span class="font-semibold font-body lg:text-sm text-xs">23/43</span>
+                                            <span class="font-bold font-body lg:text-lg text-sm">Non Critical</span>
+                                            <span class="progress-text font-semibold font-body lg:text-sm text-xs">0%</span>
                                         </div>
-
                                         <div class="w-full bg-gem_green/20 rounded-full lg:h-4 h-3">
-                                            <div class="bg-gem_green lg:h-4 h-3 rounded-full" style="width: 90%"></div>
+                                            <div class="progress-bar bg-gem_green lg:h-4 h-3 rounded-full" style="width: 0%"></div>
                                         </div>
                                     </div>
                                 </div>
