@@ -15,6 +15,7 @@
     <!-- google fonts here -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    
     <title>Clockin</title>
 </head>
 
@@ -100,7 +101,7 @@
                 <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center cols-span-10 lg:col-span-2">
                     <div class="flex flex-col">
                         <span class="text-accent font-body text-sm ">Your Streak</span>
-                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
+                        <span id="currentStreakDisplay" class="text-accent font-heading text-2xl font-black">0 Days</span>
                     </div>
                     <img class="w-16 h-16" src="/assets/Aset_Aplikasi_Api.png" alt="">
                     
@@ -587,7 +588,8 @@
 
     <!-- Script.js -->
     <script src="scriptDashboard.js"></script>
-
+    <script src="schedule_db.js"></script>
+    
     <script>
 
     </script>

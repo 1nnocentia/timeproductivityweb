@@ -76,24 +76,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const icon = themeToggle.querySelector('i');
 
     // Check for saved theme preference
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        html.classList.add('dark');
-        icon.classList.replace('fa-moon', 'fa-sun');
-    }
-
-    // Toggle theme
-    themeToggle.addEventListener('click', function() {
-        html.classList.toggle('dark');
-        
-        // Update icon
-        if (html.classList.contains('dark')) {
+    if (themeToggle && html && icon) {
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
             icon.classList.replace('fa-moon', 'fa-sun');
-            localStorage.theme = 'dark';
-        } else {
-            icon.classList.replace('fa-sun', 'fa-moon');
-            localStorage.theme = 'light';
         }
-    });
+
+        themeToggle.addEventListener('click', function() {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.theme = 'dark';
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.theme = 'light';
+            }
+        });
+
+        themeToggle.addEventListener('mouseleave', function() {
+        });
+    }
 
     
     const openPopupBtn = document.getElementById('openPopup');
@@ -104,11 +106,16 @@ document.addEventListener('DOMContentLoaded', function() {
         openPopupBtn.addEventListener('click', function() {
             if (popupOverlay) popupOverlay.classList.remove('hidden');
         });
+    } else {
+        console.warn("Element with ID 'openPopup' not found.");
     }
+
     if (closePopupBtn) {
         closePopupBtn.addEventListener('click', function() {
             if (popupOverlay) popupOverlay.classList.add('hidden');
         });
+    } else {
+        console.warn("Element with ID 'closePopup' not found.");
     }
 
     if (popupOverlay) {
@@ -117,6 +124,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 popupOverlay.classList.add('hidden');
             }
         });
+    } else {
+        console.warn("Element with ID 'popupOverlay' not found.");
     }
 
     // EVENT OR TASK : TIME OPTION
@@ -124,6 +133,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const eventTypeRadio = document.getElementById('eventType');
     const taskTimeInput = document.getElementById('taskTimeInput');
     const eventTimeInput = document.getElementById('eventTimeInput');
+    const deadlineTimeInput = document.getElementById('deadlineTime');
+    const startTimeInput = document.getElementById('startTime');
+    const endTimeInput = document.getElementById('endTime');
 
     function toggleTimeInputs() {
     if (taskTypeRadio && eventTypeRadio && taskTimeInput && eventTimeInput) {
@@ -131,17 +143,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 taskTimeInput.classList.remove('hidden');
                 eventTimeInput.classList.add('hidden');
                 // Set required biar bisa submit 
-                document.getElementById('deadlineTime').required = true;
-                document.getElementById('startTime').required = false;
-                document.getElementById('endTime').required = false;
+                deadlineTimeInput.required = true; 
+                startTimeInput.required = false;
+                endTimeInput.required = false;
             } else {
                 taskTimeInput.classList.add('hidden');
                 eventTimeInput.classList.remove('hidden');
                 // Set required biar bisa submit
-                document.getElementById('deadlineTime').required = false;
-                document.getElementById('startTime').required = true;
-                document.getElementById('endTime').required = true;
+                deadlineTimeInput.required = false;
+                startTimeInput.required = true;
+                endTimeInput.required = true;
             }
+        } else {
+            console.warn("One or more time input elements for toggleTimeInputs not found.");
         }
     }
 
@@ -149,50 +163,52 @@ document.addEventListener('DOMContentLoaded', function() {
     if (taskTypeRadio) taskTypeRadio.addEventListener('change', toggleTimeInputs);
     if (eventTypeRadio) eventTypeRadio.addEventListener('change', toggleTimeInputs);
 
-    // COLOR OPTION BG 
-    const colorPickerBtn = document.getElementById('colorPickerBtn');
-    const colorOptions = document.getElementById('colorOptions');
+    // // COLOR OPTION BG 
+    // const colorPickerBtn = document.getElementById('colorPickerBtn');
+    // const colorOptions = document.getElementById('colorOptions');
 
-    // initial color
-    if (colorPickerBtn) {
-        colorPickerBtn.style.backgroundColor = '#E29B9C';
-    }
+    // // initial color
+    // if (colorPickerBtn) {
+    //     colorPickerBtn.style.backgroundColor = '#E29B9C';
+    // }
 
-    // Tampilkan atau sembunyikan dropdown warna saat diklik
-    if (colorPickerBtn) {
-        colorPickerBtn.addEventListener('click', function (e) {
-            e.stopPropagation();
-            if (colorOptions) {
-                colorOptions.classList.toggle('hidden');
-            }
-        });
-    }
+    // // Tampilkan atau sembunyikan dropdown warna saat diklik
+    // if (colorPickerBtn) {
+    //     colorPickerBtn.addEventListener('click', function (e) {
+    //         e.stopPropagation();
+    //         if (colorOptions) {
+    //             colorOptions.classList.toggle('hidden');
+    //         }
+    //     });
+    // }
 
-    if (colorOptions) {
-        colorOptions.addEventListener('click', function (e) {
-            if (e.target.dataset.color) {
-                const selectedColor = e.target.dataset.color;
-                if (colorPickerBtn) {
-                    colorPickerBtn.style.backgroundColor = selectedColor;
-                }
-                if (colorOptions) {
-                    colorOptions.classList.add('hidden');
-                }
-            }
-        });
-    }
+    // if (colorOptions) {
+    //     colorOptions.addEventListener('click', function (e) {
+    //         if (e.target.dataset.color) {
+    //             const selectedColor = e.target.dataset.color;
+    //             if (colorPickerBtn) {
+    //                 colorPickerBtn.style.backgroundColor = selectedColor;
+    //             }
+    //             if (colorOptions) {
+    //                 colorOptions.classList.add('hidden');
+    //             }
+    //         }
+    //     });
+    // }
 
-    document.addEventListener('click', function () {
-        if (colorOptions) {
-            colorOptions.classList.add('hidden');
-        }
-    });
+    // document.addEventListener('click', function () {
+    //     if (colorOptions) {
+    //         colorOptions.classList.add('hidden');
+    //     }
+    // });
 
     // PRIORITY CUSTOM
     //  awal load, belum ada level yang dipilih
     const info = document.getElementById("gem-info");
     if (info) {
         info.innerText = "";
+    } else {
+        console.warn("Element with ID 'gem-info' not found.");
     }
 
     // pastikan dlu semua gems nya inactive
@@ -200,6 +216,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const gemImage = document.getElementById(`gem-${i}`);
         if (gemImage) {
             gemImage.src = gemData[i].inactive;
+        } else {
+             console.warn(`Element with ID 'gem-${i}' not found.`);
         }
     }
 
@@ -208,6 +226,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sliderFill) {
             sliderFill.style.width = `0%`;
             sliderFill.style.backgroundColor = 'transparent';
+        } else {
+            console.warn("Element with ID 'slider-fill' not found.");
         }
 
     
@@ -224,6 +244,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // FORM SUBMIT
     const scheduleForm = document.getElementById('scheduleForm');
     const todaySchedule = document.getElementById('todaySchedule');
+    const categoryColorInput = document.getElementById('categoryColorInput');
+    const activityTitle = document.getElementById('activityTitle');
+    const activityDescription = document.getElementById('activityDescription');
+    const activityDate = document.getElementById('activityDate');
+    const categoryInput = document.getElementById('categoryInput');
 
     scheduleForm.addEventListener('submit', function(e){
         e.preventDefault();

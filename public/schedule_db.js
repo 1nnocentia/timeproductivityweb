@@ -335,6 +335,27 @@ async function handleGetTaskCountsByPeriod() {
     }
 }
 
+// Endpoint untuk streak
+async function recordUserInteraction() {
+    if (!window.currentUserId) {
+        displayResponse({ message: 'User ID tidak ditemukan. Harap login.' }, true);
+        return;
+    }
+    
+    try {
+        const response = await fetchProtected(`${BASE_URL}/users/${window.currentUserId}/record-interaction`, {
+            method: 'POST'
+        });
+        if (response) {
+            const data = await response.json();
+            displayResponse({ message: "Interaksi streak dicatat!", streak: data });
+        }
+    } catch (error) {
+        console.error('Error recording user interaction:', error);
+        displayResponse({ message: 'Gagal mencatat interaksi streak.' }, true);
+    }
+}
+
 // Fungsi `createQuest` yang dipanggil dari `scriptDashboard.js`
 async function createQuest(type, title, desc, date, jamMulai, jamAkhir, jamDeadline, status, categoryName, categoryColor, currentLevel, gemData) {
     let kategoriId = null;
@@ -375,7 +396,12 @@ async function createQuest(type, title, desc, date, jamMulai, jamAkhir, jamDeadl
         if (((type === 'event' && eventId) || (type === 'task' && taskId)) && kategoriId && prioritasId) {
             const newDataJadwal = await createDataJadwalBackend(title, desc, eventId, taskId, kategoriId, prioritasId);
             if (newDataJadwal) {
-                return { newDataJadwal }; 
+                if (window.currentUserId) {
+                    await recordUserInteraction(); // Panggil fungsi untuk mencatat streak
+                } else {
+                    console.warn("User not logged in, skipping streak recording.");
+                }
+                return { newDataJadwal };
             }
         }
         return null;
