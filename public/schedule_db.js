@@ -1,4 +1,4 @@
-async function getKategoriByName(name) {
+window.getKategoriByName = async function(name) {
     try {
         const response = await fetchProtected(`${BASE_URL}/kategori`);
         if (response) {
