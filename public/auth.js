@@ -1,7 +1,8 @@
 // permintaan HTTP fetch akan mengarah ke localhost 8080
 window.BASE_URL = 'http://localhost:8080/api';
 window.jwtToken = localStorage.getItem('jwtToken') || null;
-window.currentUserId = localStorage.getItem('currentUserId') || null;
+window.userId = localStorage.getItem('userId') || null;
+
 
 window.displayResponse = function(data, isError = false) {
     const targetElement = document.getElementById('response'); // Coba temukan #response div
@@ -21,7 +22,7 @@ window.displayResponse = function(data, isError = false) {
 
 // Helper untuk permintaan API yang memerlukan JWT
 window.fetchProtected = async function(url, options = {}) {
-    if (!window.jwtToken || !window.currentUserId) {
+    if (!window.jwtToken || !window.userId) {
         console.warn('Anda belum login atau sesi kadaluarsa. Silakan login kembali.');
         alert('Sesi Anda telah berakhir. Silakan login kembali.');
         window.location.href = '../public/login.html';
@@ -47,9 +48,9 @@ window.fetchProtected = async function(url, options = {}) {
             if (response.status === 401 || response.status === 403) {
                 alert('Akses ditolak atau sesi kadaluarsa. Silakan login kembali.');
                 localStorage.removeItem('jwtToken');
-                localStorage.removeItem('currentUserId');
+                localStorage.removeItem('userId');
                 window.jwtToken = null;
-                window.currentUserId = null;
+                window.userId = null;
                 window.location.href = '../public/login.html';
             }
             throw new Error(`HTTP Error: ${response.status}`);
@@ -79,6 +80,7 @@ window.handleSignup = async function(nama, username, email, password) {
 }
 
 window.handleLogin = async function() {
+    console.log("handleLogin called");
     const usernameOrEmailInput = document.getElementById('loginUsernameOrEmail');
     const passwordInput = document.getElementById('loginPassword');
 
@@ -101,11 +103,14 @@ window.handleLogin = async function() {
         const data = await response.json();
         if (response.ok) {
             window.jwtToken = data.token;
-            window.currentUserId = data.userId;
+            window.userId = data.userId;
             localStorage.setItem('jwtToken', window.jwtToken);
-            localStorage.setItem('currentUserId', window.currentUserId);
+            localStorage.setItem('userId', window.userId);
             window.displayResponse(data);
             
+            console.log("Set jwtToken (inside handleLogin):", data.token);
+            console.log("Set userId (inside handleLogin):", data.userId);
+            window.displayResponse(data);
             // Jika login berhasil, redirect ke dashboard (index.html)
             window.location.href = '../public/index.html'; // Sesuaikan dengan path dashboard Anda
         } else {
@@ -125,11 +130,11 @@ window.handleLogout = async function() {
             alert(data || 'Anda telah logout.'); // Notifikasi ke pengguna
 
             localStorage.removeItem('jwtToken');
-            localStorage.removeItem('currentUserId');
+            localStorage.removeItem('userId');
             window.jwtToken = null;
-            window.currentUserId = null;
+            window.userId = null;
 
-            window.location.href = '../public/landingpage.html'; // Redirect ke halaman login
+            window.location.href = '../public/landingpage.html'; // Redirect ke halaman landingpage
         }
     } catch (error) {
         console.error('Error during logout:', error);

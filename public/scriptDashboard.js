@@ -56,6 +56,16 @@
 //         return null;
 //     }
 // }
+console.log("Debug: jwtToken =", window.jwtToken);
+console.log("Debug: currentUserId =", window.userId);
+console.log("Cek localStorage jwtToken =", localStorage.getItem('jwtToken'));
+console.log("Cek localStorage currentUserId =", localStorage.getItem('userId'));
+
+if (!window.jwtToken || !window.userId) {
+    console.warn("⚠️ Token tidak ditemukan. User dianggap belum login.");
+} else {
+    console.log("✅ Token ditemukan. User dianggap sudah login.");
+}
 
 const gemData = [
     {
@@ -91,6 +101,7 @@ const gemData = [
     }
 ];
 
+let currentLevel = -1;
 
 window.setLevel = function(level) {
     if (currentLevel === level) {
@@ -124,7 +135,6 @@ window.setLevel = function(level) {
     currentLevel = level;
 }
 
-// --- FUNGSI API untuk Data Dashboard (Dipanggil dari DOMContentLoaded) ---
 
 // Fungsi untuk mendapatkan data streak dari backend dan menampilkan di UI
 async function fetchAndDisplayStreak() {
@@ -134,13 +144,13 @@ async function fetchAndDisplayStreak() {
         return;
     }
     // Menggunakan window.currentUserId dari auth.js
-    if (!window.currentUserId) { 
+    if (!window.userId) { 
         streakDisplayElement.innerText = 'Login untuk melihat streak';
         return;
     }
     try {
         // Menggunakan window.fetchProtected dari auth.js
-        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.currentUserId}/streak`);
+        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.userId}/streak`);
         if (response) {
             const data = await response.json();
             if (data && data.currentStreak !== undefined) {
@@ -163,7 +173,7 @@ async function fetchAndDisplayPrioritasProgress() {
         return;
     }
     // Menggunakan window.currentUserId dari auth.js
-    if (!window.currentUserId) {
+    if (!window.userId) {
         // Inisialisasi progress bar ke 0/0 jika belum login
         gemData.forEach(prio => {
             const selectorClass = `progress-${prio.name.toLowerCase().replace(' ', '')}`; // progress-emergency, progress-urgent, etc.
@@ -234,7 +244,7 @@ async function fetchAndDisplayTodaySchedule() {
         console.warn("Element 'todaySchedule' not found.");
         return;
     }
-    if (!window.currentUserId) {
+    if (!window.userId) {
         todayScheduleContainer.innerHTML = '<div class="text-accent/50 text-center">Silakan login untuk melihat jadwal Anda.</div>';
         return;
     }
@@ -348,7 +358,7 @@ async function fetchAndDisplayTodaySchedule() {
 
 // Fungsi untuk menandai Task Selesai
 async function handleMarkTaskDone(jadwalId, taskId) {
-    if (!window.currentUserId || !jadwalId || !taskId) {
+    if (!window.userId || !jadwalId || !taskId) {
         alert('Informasi task/user tidak lengkap untuk menandai selesai.');
         return;
     }
@@ -379,12 +389,12 @@ async function handleMarkTaskDone(jadwalId, taskId) {
 
 // Fungsi untuk mencatat interaksi streak
 async function recordUserInteraction() {
-    if (!window.currentUserId) {
+    if (!window.userId) {
         console.warn('User ID tidak ditemukan. Streak tidak dicatat.');
         return;
     }
     try {
-        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.currentUserId}/record-interaction`, {
+        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.userId}/record-interaction`, {
             method: 'POST'
         });
         if (response) {
@@ -567,6 +577,9 @@ async function createQuest(type, title, desc, date, jamMulai, jamAkhir, jamDeadl
 // --- DOMContentLoaded Event Listener ---
 document.addEventListener('DOMContentLoaded', function() {
     // Inisialisasi awal UI
+    console.log("Debug DOMContentLoaded: jwtToken =", window.jwtToken);
+    console.log("Debug DOMContentLoaded: userId =", window.userId);
+
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
     if (themeToggle) {
@@ -810,7 +823,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Panggilan Fungsi Inisialisasi Data dari Backend ---
     // Panggil saat DOMContentLoaded untuk memuat data awal
     // Menggunakan window.jwtToken dan window.currentUserId dari auth.js
-    if (window.jwtToken && window.currentUserId) { 
+    if (window.jwtToken && window.userId) { 
+        recordUserInteraction();
         fetchAndDisplayStreak();
         fetchAndDisplayPrioritasProgress();
         fetchAndDisplayTodaySchedule();
