@@ -56,10 +56,8 @@
 //         return null;
 //     }
 // }
-console.log("Debug: jwtToken =", window.jwtToken);
-console.log("Debug: currentUserId =", window.userId);
 console.log("Cek localStorage jwtToken =", localStorage.getItem('jwtToken'));
-console.log("Cek localStorage currentUserId =", localStorage.getItem('userId'));
+console.log("Cek localStorage userId =", localStorage.getItem('userId'));
 
 if (!window.jwtToken || !window.userId) {
     console.warn("⚠️ Token tidak ditemukan. User dianggap belum login.");
@@ -577,8 +575,6 @@ async function createQuest(type, title, desc, date, jamMulai, jamAkhir, jamDeadl
 // --- DOMContentLoaded Event Listener ---
 document.addEventListener('DOMContentLoaded', function() {
     // Inisialisasi awal UI
-    console.log("Debug DOMContentLoaded: jwtToken =", window.jwtToken);
-    console.log("Debug DOMContentLoaded: userId =", window.userId);
 
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
