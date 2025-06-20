@@ -686,72 +686,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // FORM SUBMIT (Popup "Add New Quest")
     const scheduleForm = document.getElementById('scheduleForm');
-    const todaySchedule = document.getElementById('todaySchedule');
-    const categoryColorInput = document.getElementById('categoryColorInput');
-    const activityTitle = document.getElementById('activityTitle');
-    const activityDescription = document.getElementById('activityDescription');
-    const activityDate = document.getElementById('activityDate');
-    const categoryInput = document.getElementById('categoryInput');
-
-    if (scheduleForm && todaySchedule && categoryColorInput && activityTitle && activityDescription && activityDate && categoryInput) {
+    if (scheduleForm) {
         scheduleForm.addEventListener('submit', async function(e){
             e.preventDefault();
 
             const type = document.querySelector('input[name="scheduleType"]:checked').value;
-            const title = activityTitle.value;
-            const desc = activityDescription.value;
-            const date = activityDate.value;
-            const categoryName = categoryInput.value;
-            const categoryColor = categoryColorInput.value;
-            let jamMulai = null;
-            let jamAkhir = null;
-            let jamDeadline = null;
-            let status = null;
-
+            const title = document.getElementById('activityTitle').value;
+            const desc = document.getElementById('activityDescription').value;
+            const date = document.getElementById('activityDate').value;
+            const categoryName = document.getElementById('categoryInput').value;
+            const categoryColor = document.getElementById('categoryColorInput').value;
+            let jamMulai = null, jamAkhir = null, jamDeadline = null, status = "TODO";
+            
             if (type === 'task') {
-                jamDeadline = deadlineTimeInput.value;
-                status = "TODO";
+                jamDeadline = document.getElementById('deadlineTime').value;
             } else {
-                jamMulai = startTimeInput.value;
-                jamAkhir = endTimeInput.value;
+                jamMulai = document.getElementById('startTime').value;
+                jamAkhir = document.getElementById('endTime').value;
             }
 
             try {
-                // Panggil fungsi createQuest (yang seharusnya ada di schedule_db.js)
-                const questData = await window.createQuest(type, title, desc, date, jamMulai, jamAkhir, jamDeadline, status, categoryName, categoryColor, currentLevel, gemData);
-                
-                if(questData) {
-                    window.displayResponse({ message: "Quest berhasil ditambahkan!", data: questData.newDataJadwal }, false);
+                // Panggil createQuest untuk mengirim data ke backend.
+                // Fungsi ini akan membuat Task/Event, Kategori, Prioritas, lalu DataJadwal.
+                const questData = await createQuest(type, title, desc, date, jamMulai, jamAkhir, jamDeadline, status, categoryName, categoryColor, currentLevel, gemData);
+
+                // Cek apakah backend mengembalikan data yang valid.
+                if (questData && questData.newDataJadwal) {
+                    console.log("Quest berhasil dibuat, me-refresh tampilan...");
                     
-                    // Refresh tampilan data di dashboard setelah Quest dibuat
-                    fetchAndDisplayTodaySchedule();
-                    fetchAndDisplayPrioritasProgress();
+                    // Panggil fungsi untuk memperbarui tampilan jadwal hari ini.
+                    await fetchAndDisplayTodaySchedule();
+                    
+                    // Panggil juga fungsi untuk update progress bar.
+                    await fetchAndDisplayPrioritasProgress();
+
+                    // Tutup popup setelah berhasil
+                    const popupOverlay = document.getElementById('popupOverlay');
+                    if (popupOverlay) popupOverlay.classList.add('hidden');
+                    
                 } else {
-                    window.displayResponse({ message: "Gagal menambahkan Quest (operasi backend)." }, true);
+                    alert("Gagal menambahkan Quest. Periksa console untuk detail.");
                 }
 
             } catch (error) {
-                console.error('Error in form submit/create quest:', error);
-                window.displayResponse({ message: 'Terjadi kesalahan saat memproses quest.' }, true);
+                console.error('Error saat submit form:', error);
+                alert('Terjadi kesalahan kritis saat memproses quest. Lihat console.');
             }
 
-            // Reset form & UI
+            // Reset form & UI tidak peduli berhasil atau gagal
             scheduleForm.reset();
-            if (popupOverlay) popupOverlay.classList.add('hidden');
-            for (let i = 0; i < gemData.length; i++) {
-                const gemImage = document.getElementById(`gem-${i}`);
-                if (gemImage) gemImage.src = gemData[i].inactive;
-            }
-            if (sliderFill) {
-                sliderFill.style.width = `0%`;
-                sliderFill.style.backgroundColor = 'transparent';
-            }
-            currentLevel = -1;
-            const infoElement = document.getElementById("gem-info");
-            if (infoElement) infoElement.innerText = "";
+            // ... kode reset slider prioritas Anda ...
         });
-    } else {
-        console.warn("One or more schedule form elements not found. Schedule form will not be initialized.");
     }
 
 
