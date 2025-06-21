@@ -165,11 +165,6 @@ async function fetchAndDisplayStreak() {
 
 // Fungsi untuk mendapatkan data prioritas progres dari backend dan menampilkan di UI
 async function fetchAndDisplayPrioritasProgress() {
-    const prioritasProgressList = document.getElementById('prioritas-progress-list'); // Ini adalah div parent
-    if (!prioritasProgressList) {
-        console.warn("Element 'prioritas-progress-list' not found.");
-        return;
-    }
     // Menggunakan window.currentUserId dari auth.js
     if (!window.userId) {
         // Inisialisasi progress bar ke 0/0 jika belum login
@@ -179,7 +174,7 @@ async function fetchAndDisplayPrioritasProgress() {
             const barElement = document.querySelector(`.${selectorClass} .progress-bar`);
             const barContainerElement = document.querySelector(`.${selectorClass} div[class*='bg-gem_']`); 
 
-            if (textElement) textElement.textContent = `0/0`;
+            if (textElement) textElement.textContent = `0/0 (0%)`; // Tampilan awal jika belum login
             if (barElement) barElement.style.width = '0%';
             if (barContainerElement && prio.color) { // Set initial background color of the container
                 barContainerElement.style.backgroundColor = `${prio.color}20`; // Opacity in hex
@@ -205,10 +200,9 @@ async function fetchAndDisplayPrioritasProgress() {
                 const barElement = document.querySelector(`.${selectorClass} .progress-bar`);
                 const barBackgroundElement = document.querySelector(`.${selectorClass} div[class*='bg-gem_']`); 
                 const imageElement = document.querySelector(`.${selectorClass} img`);
-
-
-                // Update text
-                if (textElement) textElement.textContent = `${completed}/${total}`;
+                
+                if (textElement) textElement.textContent = `${completed}/${total} (${percent}%)`;
+                
                 // Update bar width
                 if (barElement) {
                     barElement.style.width = `${percent}%`;
@@ -223,7 +217,6 @@ async function fetchAndDisplayPrioritasProgress() {
                     // Terapkan warna baru dengan opasitas
                     barBackgroundElement.style.backgroundColor = `${prioBackend.color}20`; 
                 }
-                // Update gambar prioritas (opsional, jika Anda ingin gambar berubah dinamis)
                 if (imageElement && prioBackend.namaPrioritas) {
                     const priorityNameNormalized = prioBackend.namaPrioritas.toLowerCase().replace(' ', '_');
                     imageElement.src = `/assets/Aset_Aplikasi_${priorityNameNormalized}.png`; // Asumsi nama file gambar sesuai
