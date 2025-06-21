@@ -100,7 +100,8 @@ window.createDataJadwalBackend = async function(judulJadwal, deskripsiJadwal, ev
                 eventId,
                 taskId,
                 kategoriId,
-                prioritasId
+                prioritasId,
+                userId: window.userId 
             })
         });
         if (response) {
@@ -379,12 +380,12 @@ window.handleGetTaskCountsByPeriod = async function() {
 
 // Fungsi untuk mencatat interaksi streak
 window.recordUserInteraction = async function() {
-    if (!window.currentUserId) {
+    if (!window.userId) {
         console.warn('User ID tidak ditemukan. Streak tidak dicatat.');
         return;
     }
     try {
-        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.currentUserId}/record-interaction`, {
+        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.userId}/record-interaction`, {
             method: 'POST'
         });
         if (response) {

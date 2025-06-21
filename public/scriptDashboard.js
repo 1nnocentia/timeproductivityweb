@@ -133,6 +133,39 @@ window.setLevel = function(level) {
     currentLevel = level;
 }
 
+// Fungsi untuk mendapatkan nama
+async function fetchAndDisplayGreeting() {
+    const greetingElement = document.getElementById('greetingText');
+    if (!greetingElement) {
+        console.warn("Element 'greetingText' not found.");
+        return;
+    }
+
+    if (!window.userId) {
+        greetingElement.textContent = 'Good Morning, User!';
+        return;
+    }
+
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.userId}`);
+        if (response) {
+            const userData = await response.json();
+            console.log("Data user yang diterima dari server:", userData);
+            const displayName = userData.nama || userData.username;
+
+            if (userData && displayName) {
+                greetingElement.textContent = `Good Morning, ${displayName}!`;
+            } else {
+                // Fallback terakhir jika tidak ada nama atau username
+                greetingElement.textContent = 'Good Morning, User!';
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching user data for greeting:', error);
+        // Fallback jika terjadi error
+        greetingElement.textContent = 'Good Morning, User!';
+    }
+}
 
 // Fungsi untuk mendapatkan data streak dari backend dan menampilkan di UI
 async function fetchAndDisplayStreak() {
@@ -200,7 +233,7 @@ async function fetchAndDisplayPrioritasProgress() {
                 const barElement = document.querySelector(`.${selectorClass} .progress-bar`);
                 const barBackgroundElement = document.querySelector(`.${selectorClass} div[class*='bg-gem_']`); 
                 const imageElement = document.querySelector(`.${selectorClass} img`);
-                
+
                 if (textElement) textElement.textContent = `${completed}/${total} (${percent}%)`;
                 
                 // Update bar width
