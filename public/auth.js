@@ -1,7 +1,9 @@
 // permintaan HTTP fetch akan mengarah ke localhost 8080
 window.BASE_URL = 'http://localhost:8080/api';
 window.jwtToken = localStorage.getItem('jwtToken') || null;
-window.userId = localStorage.getItem('userId') || null;
+// window.userId = localStorage.getItem('userId') || null;
+let storedUserId = localStorage.getItem('userId');
+window.userId = (storedUserId && storedUserId !== 'null' && storedUserId !== 'undefined') ? storedUserId : null;
 
 
 window.displayResponse = function(data, isError = false) {
@@ -36,15 +38,28 @@ window.fetchProtected = async function(url, options = {}) {
     };
 
     try {
-        const response = await fetch(url, { ...options, headers });
+        const response = await fetch(url, { ...options,
+            headers
+        });
 
         if (response.ok) {
             return response;
         } else {
-            const errorData = await response.json().catch(() => response.text());
+            const errorText = await response.text();
+            let errorData;
+
+            try {
+                // Coba parse teks tersebut sebagai JSON.
+                errorData = JSON.parse(errorText);
+            } catch (e) {
+                errorData = {
+                    message: errorText || `HTTP Error: ${response.status}`
+                };
+            }
+
             console.error(`HTTP Error ${response.status} from ${url}:`, errorData);
-            window.displayResponse(errorData, true); // Gunakan window.displayResponse
-            
+            window.displayResponse(errorData, true);
+
             if (response.status === 401 || response.status === 403) {
                 alert('Akses ditolak atau sesi kadaluarsa. Silakan login kembali.');
                 localStorage.removeItem('jwtToken');
@@ -57,8 +72,12 @@ window.fetchProtected = async function(url, options = {}) {
         }
     } catch (error) {
         console.error('Network or unexpected error:', error);
-        alert('Error jaringan atau server tidak merespons.');
-        return null;
+        // Cek apakah ini error yang sudah kita lempar dari blok 'else'
+        if (!error.message.includes('HTTP Error')) {
+             alert('Error jaringan atau server tidak merespons.');
+        }
+        // Mengembalikan null atau melempar error lagi agar pemanggil tahu ada masalah
+        throw error;
     }
 }
 
@@ -86,7 +105,9 @@ window.handleLogin = async function() {
 
     if (!usernameOrEmailInput || !passwordInput) {
         console.warn("Login input elements not found in this page.");
-        window.displayResponse({ message: "Elemen input login tidak ditemukan." }, true);
+        window.displayResponse({
+            message: "Elemen input login tidak ditemukan."
+        }, true);
         return;
     }
 
@@ -96,29 +117,44 @@ window.handleLogin = async function() {
     try {
         const response = await fetch(`${window.BASE_URL}/login`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ usernameOrEmail, password })
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                usernameOrEmail,
+                password
+            })
         });
 
         const data = await response.json();
+
         if (response.ok) {
-            window.jwtToken = data.token;
-            window.userId = data.userId;
-            localStorage.setItem('jwtToken', window.jwtToken);
-            localStorage.setItem('userId', window.userId);
-            window.displayResponse(data);
-            
-            console.log("Set jwtToken (inside handleLogin):", data.token);
-            console.log("Set userId (inside handleLogin):", data.userId);
-            window.displayResponse(data);
-            // Jika login berhasil, redirect ke dashboard (index.html)
-            window.location.href = '../public/index.html'; // Sesuaikan dengan path dashboard Anda
+            // Validasi bahwa token dan userId ada sebelum menyimpannya.
+            if (data.token && data.userId) {
+                window.jwtToken = data.token;
+                window.userId = data.userId;
+                localStorage.setItem('jwtToken', window.jwtToken);
+                localStorage.setItem('userId', String(window.userId)); // Pastikan userId disimpan sebagai string
+
+                console.log("Set jwtToken (inside handleLogin):", data.token);
+                console.log("Set userId (inside handleLogin):", data.userId);
+                window.displayResponse(data);
+                
+                // Jika login berhasil, redirect ke dashboard (index.html)
+                window.location.href = '../public/index.html';
+            } else {
+                // Jika token atau userId tidak ada dalam respons, anggap login gagal.
+                console.error('Login response missing token or userId:', data);
+                window.displayResponse({ message: 'Login gagal: Respons dari server tidak lengkap.' }, true);
+            }
         } else {
             window.displayResponse(data, true);
         }
     } catch (error) {
         console.error('Error during login:', error);
-        window.displayResponse({ message: 'Error jaringan atau server.' }, true);
+        window.displayResponse({
+            message: 'Error jaringan atau server.'
+        }, true);
     }
 }
 
