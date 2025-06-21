@@ -1,4 +1,4 @@
-async function getKategoriByName(name) {
+window.getKategoriByName = async function(name) {
     try {
         const response = await fetchProtected(`${BASE_URL}/kategori`);
         if (response) {
@@ -12,7 +12,7 @@ async function getKategoriByName(name) {
     }
 }
 
-async function createKategoriBackend(namaKategori, color) {
+window.createKategoriBackend = async function(namaKategori, color) {
     try {
         const response = await fetchProtected(`${BASE_URL}/kategori`, {
             method: 'POST',
@@ -28,7 +28,7 @@ async function createKategoriBackend(namaKategori, color) {
     }
 }
 
-async function getPrioritasByName(name) {
+window.getPrioritasByName = async function(name) {
     try {
         const response = await fetchProtected(`${BASE_URL}/prioritas`);
         if (response) {
@@ -42,7 +42,7 @@ async function getPrioritasByName(name) {
     }
 }
 
-async function createPrioritasBackend(namaPrioritas, color) {
+window.createPrioritasBackend = async function(namaPrioritas, color) {
     try {
         const response = await fetchProtected(`${BASE_URL}/prioritas`, {
             method: 'POST',
@@ -58,77 +58,9 @@ async function createPrioritasBackend(namaPrioritas, color) {
     }
 }
 
-
-// endpoint untuk mendapatkan semua kategori
-async function handleCreateKategori() {
-    const namaKategori = document.getElementById('kategoriNama').value;
-    const color = document.getElementById('kategoriColor').value;
-
+window.createEventBackend = async function(tanggal, jamMulai, jamAkhir) {
     try {
-        const response = await fetchProtected(`${BASE_URL}/kategori`, {
-            method: 'POST',
-            body: JSON.stringify({ namaKategori, color })
-        });
-        if (response) {
-            const data = await response.json();
-            displayResponse(data);
-        }
-    } catch (error) {
-        console.error('Error creating kategori:', error);
-        displayResponse({ message: 'Error jaringan atau server.' }, true);
-    }
-}
-
-async function handleGetAllKategori() {
-    try {
-        const response = await fetchProtected(`${BASE_URL}/kategori`);
-        if (response) {
-            const data = await response.json();
-            displayResponse(data);
-        }
-    } catch (error) {
-        console.error('Error getting kategori:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
-    }
-}
-
-// prioritas
-async function handleCreatePrioritas() {
-    const namaPrioritas = document.getElementById('prioritasNama').value;
-    const color = document.getElementById('prioritasColor').value;
-
-    try {
-        const response = await fetchProtected(`${BASE_URL}/prioritas`, {
-            method: 'POST',
-            body: JSON.stringify({ namaPrioritas, color })
-        });
-        if (response) {
-            const data = await response.json();
-            displayResponse(data);
-        }
-    } catch (error) {
-        console.error('Error creating prioritas:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
-    }
-}
-
-async function handleGetAllPrioritas() {
-    try {
-        const response = await fetchProtected(`${BASE_URL}/prioritas`);
-        if (response) {
-            const data = await response.json();
-            displayResponse(data);
-        }
-    } catch (error) {
-        console.error('Error getting prioritas:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
-    }
-}
-
-// events
-async function createEventBackend(tanggal, jamMulai, jamAkhir) {
-    try {
-        const response = await fetchProtected(`${BASE_URL}/events`, {
+        const response = await window.fetchProtected(`${window.BASE_URL}/events`, {
             method: 'POST',
             body: JSON.stringify({ tanggal, jamMulai, jamAkhir })
         });
@@ -142,39 +74,9 @@ async function createEventBackend(tanggal, jamMulai, jamAkhir) {
     }
 }
 
-async function handleCreateEvent() {
-    const tanggal = document.getElementById('eventTanggal').value;
-    const jamMulai = document.getElementById('eventJamMulai').value;
-    const jamAkhir = document.getElementById('eventJamAkhir').value;
-
+window.createTaskBackend = async function(tanggal, jamDeadline, status) {
     try {
-        const newEvent = await createEventBackend(tanggal, jamMulai, jamAkhir);
-        if (newEvent) {
-            displayResponse(newEvent);
-        }
-    } catch (error) {
-        console.error('Error creating event:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
-    }
-}
-
-async function handleGetAllEvents() {
-    try {
-        const response = await fetchProtected(`${BASE_URL}/events`);
-        if (response) {
-            const data = await response.json();
-            displayResponse(data);
-        }
-    } catch (error) {
-        console.error('Error getting events:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
-    }
-}
-
-// task
-async function createTaskBackend(tanggal, jamDeadline, status) {
-    try {
-        const response = await fetchProtected(`${BASE_URL}/tasks`, {
+        const response = await window.fetchProtected(`${window.BASE_URL}/tasks`, {
             method: 'POST',
             body: JSON.stringify({ tanggal, jamDeadline, status })
         });
@@ -188,39 +90,9 @@ async function createTaskBackend(tanggal, jamDeadline, status) {
     }
 }
 
-async function handleCreateTask() {
-    const tanggal = document.getElementById('taskTanggal').value;
-    const jamDeadline = document.getElementById('taskJamDeadline').value;
-    const status = document.getElementById('taskStatus').value;
-
+window.createDataJadwalBackend = async function(judulJadwal, deskripsiJadwal, eventId, taskId, kategoriId, prioritasId) {
     try {
-        const newTask = await createTaskBackend(tanggal, jamDeadline, status);
-        if (newTask) {
-            displayResponse(newTask);
-        }
-    } catch (error) {
-        console.error('Error creating task:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
-    }
-}
-
-async function handleGetAllTasks() {
-    try {
-        const response = await fetchProtected(`${BASE_URL}/tasks`);
-        if (response) {
-            const data = await response.json();
-            displayResponse(data);
-        }
-    } catch (error) {
-        console.error('Error getting tasks:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
-    }
-}
-
-// data jadwal
-async function createDataJadwalBackend(judulJadwal, deskripsiJadwal, eventId, taskId, kategoriId, prioritasId) {
-    try {
-        const response = await fetchProtected(`${BASE_URL}/data-jadwal`, {
+        const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`, {
             method: 'POST',
             body: JSON.stringify({
                 judulJadwal,
@@ -228,7 +100,8 @@ async function createDataJadwalBackend(judulJadwal, deskripsiJadwal, eventId, ta
                 eventId,
                 taskId,
                 kategoriId,
-                prioritasId
+                prioritasId,
+                userId: window.userId 
             })
         });
         if (response) {
@@ -241,7 +114,177 @@ async function createDataJadwalBackend(judulJadwal, deskripsiJadwal, eventId, ta
     }
 }
 
-async function handleCreateDataJadwal() {
+window.createQuest = async function(type, title, desc, date, jamMulai, jamAkhir, jamDeadline, status, categoryName, categoryColor, currentLevel, gemData) {
+    let kategoriId = null;
+    let prioritasId = null;
+    let eventId = null;
+    let taskId = null;
+
+    try {
+        // Panggilan ke helper functions menggunakan window.
+        let existingKategori = await window.getKategoriByName(categoryName);
+        if (existingKategori) {
+            kategoriId = existingKategori.id;
+        } else {
+            const newKategori = await window.createKategoriBackend(categoryName, categoryColor);
+            if (newKategori) kategoriId = newKategori.id;
+        }
+
+        const priorityName = gemData[currentLevel].name; // Menggunakan 'name' dari gemData
+        let existingPrioritas = await window.getPrioritasByName(priorityName);
+        if (existingPrioritas) {
+            prioritasId = existingPrioritas.id;
+        } else if (currentLevel !== -1) {
+            const newPrioritas = await window.createPrioritasBackend(priorityName, gemData[currentLevel].color);
+            if (newPrioritas) prioritasId = newPrioritas.id;
+        }
+
+        if (type === 'event') {
+            const newEvent = await window.createEventBackend(date, jamMulai, jamAkhir);
+            if (newEvent) eventId = newEvent.id;
+        } else if (type === 'task') {
+            const newTask = await window.createTaskBackend(date, jamDeadline, status);
+            if (newTask) taskId = newTask.id;
+        }
+
+        if (((type === 'event' && eventId) || (type === 'task' && taskId)) && kategoriId && prioritasId) {
+            const newDataJadwal = await window.createDataJadwalBackend(title, desc, eventId, taskId, kategoriId, prioritasId);
+            if (newDataJadwal) {
+                await window.recordUserInteraction(); // Panggil fungsi untuk mencatat streak
+                return { newDataJadwal }; 
+            }
+        }
+        return null;
+    } catch (error) {
+        console.error('Error in createQuest logic:', error);
+        throw error;
+    }
+}
+
+
+window.handleCreateKategori = async function() {
+    const namaKategori = document.getElementById('kategoriNama').value;
+    const color = document.getElementById('kategoriColor').value;
+
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/kategori`, {
+            method: 'POST',
+            body: JSON.stringify({ namaKategori, color })
+        });
+        if (response) {
+            const data = await response.json();
+            window.displayResponse(data);
+        }
+    } catch (error) {
+        console.error('Error creating kategori:', error);
+        window.displayResponse({ message: 'Error jaringan atau server.' }, true);
+    }
+}
+
+window.handleGetAllKategori = async function() {
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/kategori`);
+        if (response) {
+            const data = await response.json();
+            window.displayResponse(data);
+        }
+    } catch (error) {
+        console.error('Error getting kategori:', error);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
+    }
+}
+
+window.handleCreatePrioritas = async function() {
+    const namaPrioritas = document.getElementById('prioritasNama').value;
+    const color = document.getElementById('prioritasColor').value;
+
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/prioritas`, {
+            method: 'POST',
+            body: JSON.stringify({ namaPrioritas, color })
+        });
+        if (response) {
+            const data = await response.json();
+            window.displayResponse(data);
+        }
+    } catch (error) {
+        console.error('Error creating prioritas:', error);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
+    }
+}
+
+window.handleGetAllPrioritas = async function() {
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/prioritas`);
+        if (response) {
+            const data = await response.json();
+            window.displayResponse(data);
+        }
+    } catch (error) {
+        console.error('Error getting prioritas:', error);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
+    }
+}
+
+window.handleCreateEvent = async function() {
+    const tanggal = document.getElementById('eventTanggal').value;
+    const jamMulai = document.getElementById('eventJamMulai').value;
+    const jamAkhir = document.getElementById('eventJamAkhir').value;
+
+    try {
+        const newEvent = await window.createEventBackend(tanggal, jamMulai, jamAkhir);
+        if (newEvent) {
+            window.displayResponse(newEvent);
+        }
+    } catch (error) {
+        console.error('Error creating event:', error);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
+    }
+}
+
+window.handleGetAllEvents = async function() {
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/events`);
+        if (response) {
+            const data = await response.json();
+            window.displayResponse(data);
+        }
+    } catch (error) {
+        console.error('Error getting events:', error);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
+    }
+}
+
+window.handleCreateTask = async function() {
+    const tanggal = document.getElementById('taskTanggal').value;
+    const jamDeadline = document.getElementById('taskJamDeadline').value;
+    const status = document.getElementById('taskStatus').value;
+
+    try {
+        const newTask = await window.createTaskBackend(tanggal, jamDeadline, status);
+        if (newTask) {
+            window.displayResponse(newTask);
+        }
+    } catch (error) {
+        console.error('Error creating task:', error);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
+    }
+}
+
+window.handleGetAllTasks = async function() {
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/tasks`);
+        if (response) {
+            const data = await response.json();
+            window.displayResponse(data);
+        }
+    } catch (error) {
+        console.error('Error getting tasks:', error);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
+    }
+}
+
+window.handleCreateDataJadwal = async function() {
     const judulJadwal = document.getElementById('jadwalJudul').value;
     const deskripsiJadwal = document.getElementById('jadwalDeskripsi').value;
     const eventId = document.getElementById('jadwalEventId').value;
@@ -250,7 +293,7 @@ async function handleCreateDataJadwal() {
     const prioritasId = document.getElementById('jadwalPrioritasId').value;
 
     try {
-        const newDataJadwal = await createDataJadwalBackend(
+        const newDataJadwal = await window.createDataJadwalBackend(
             judulJadwal,
             deskripsiJadwal,
             eventId ? parseInt(eventId) : null,
@@ -259,128 +302,103 @@ async function handleCreateDataJadwal() {
             prioritasId ? parseInt(prioritasId) : null
         );
         if (newDataJadwal) {
-            displayResponse(newDataJadwal);
+            window.displayResponse(newDataJadwal);
         }
     } catch (error) {
         console.error('Error creating Data Jadwal:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
     }
 }
 
-async function handleGetAllDataJadwal() {
+window.handleGetAllDataJadwal = async function() {
     try {
-        const response = await fetchProtected(`${BASE_URL}/data-jadwal`);
+        const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`);
         if (response) {
             const data = await response.json();
-            displayResponse(data);
+            window.displayResponse(data);
         }
     } catch (error) {
         console.error('Error getting Data Jadwal:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
     }
 }
 
-// grafik laporan
-async function handleGetReportsByPrioritas() {
+// Reports
+window.handleGetReportsByPrioritas = async function() {
     try {
-        const response = await fetchProtected(`${BASE_URL}/data-jadwal/reports/by-prioritas`);
+        const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal/reports/by-prioritas`);
         if (response) {
             const data = await response.json();
-            displayResponse(data);
+            window.displayResponse(data);
         }
     } catch (error) {
         console.error('Error getting reports by prioritas:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
     }
 }
 
-async function handleGetReportsByKategori() {
+window.handleGetReportsByKategori = async function() {
     try {
-        const response = await fetchProtected(`${BASE_URL}/data-jadwal/reports/by-kategori`);
+        const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal/reports/by-kategori`);
         if (response) {
             const data = await response.json();
-            displayResponse(data);
+            window.displayResponse(data);
         }
     } catch (error) {
         console.error('Error getting reports by kategori:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
     }
 }
 
-async function handleGetEventCountsByPeriod() {
+window.handleGetEventCountsByPeriod = async function() {
     const periodType = document.getElementById('reportPeriodType').value;
     try {
-        const response = await fetchProtected(`${BASE_URL}/data-jadwal/reports/events-by-period?periodType=${periodType}`);
+        const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal/reports/events-by-period?periodType=${periodType}`);
         if (response) {
             const data = await response.json();
-            displayResponse(data);
+            window.displayResponse(data);
         }
     } catch (error) {
         console.error('Error getting event counts by period:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
     }
 }
 
-async function handleGetTaskCountsByPeriod() {
+window.handleGetTaskCountsByPeriod = async function() {
     const periodType = document.getElementById('reportPeriodType').value;
     try {
-        const response = await fetchProtected(`${BASE_URL}/data-jadwal/reports/tasks-by-period?periodType=${periodType}`);
+        const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal/reports/tasks-by-period?periodType=${periodType}`);
         if (response) {
             const data = await response.json();
-            displayResponse(data);
+            window.displayResponse(data);
         }
     } catch (error) {
         console.error('Error getting task counts by period:', error);
-        displayResponse({ message: 'Network or Server Error.' }, true);
+        window.displayResponse({ message: 'Network or Server Error.' }, true);
     }
 }
 
-// Fungsi `createQuest` yang dipanggil dari `scriptDashboard.js`
-async function createQuest(type, title, desc, date, jamMulai, jamAkhir, jamDeadline, status, categoryName, categoryColor, currentLevel, gemData) {
-    let kategoriId = null;
-    let prioritasId = null;
-    let eventId = null;
-    let taskId = null;
-
+// Fungsi untuk mencatat interaksi streak
+window.recordUserInteraction = async function() {
+    if (!window.userId) {
+        console.warn('User ID tidak ditemukan. Streak tidak dicatat.');
+        return;
+    }
     try {
-        // 1. create atau get Kategori
-        let existingKategori = await getKategoriByName(categoryName);
-        if (existingKategori) {
-            kategoriId = existingKategori.id;
-        } else {
-            const newKategori = await createKategoriBackend(categoryName, categoryColor);
-            if (newKategori) kategoriId = newKategori.id;
-        }
-
-        // 2. create atau get Prioritas
-        const priorityDescription = gemData[currentLevel].description.split(' ')[0];
-        let existingPrioritas = await getPrioritasByName(priorityDescription);
-        if (existingPrioritas) {
-            prioritasId = existingPrioritas.id;
-        } else if (currentLevel !== -1) {
-            const newPrioritas = await createPrioritasBackend(priorityDescription, gemData[currentLevel].color);
-            if (newPrioritas) prioritasId = newPrioritas.id;
-        }
-
-        // 3. create Event atau Task
-        if (type === 'event') {
-            const newEvent = await createEventBackend(date, jamMulai, jamAkhir);
-            if (newEvent) eventId = newEvent.id;
-        } else if (type === 'task') {
-            const newTask = await createTaskBackend(date, jamDeadline, status);
-            if (newTask) taskId = newTask.id;
-        }
-
-        // 4. create DataJadwal
-        if (((type === 'event' && eventId) || (type === 'task' && taskId)) && kategoriId && prioritasId) {
-            const newDataJadwal = await createDataJadwalBackend(title, desc, eventId, taskId, kategoriId, prioritasId);
-            if (newDataJadwal) {
-                return { newDataJadwal }; 
+        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.userId}/record-interaction`, {
+            method: 'POST'
+        });
+        if (response) {
+            const data = await response.json();
+            console.log("Interaksi streak dicatat!", data);
+            // Panggil fungsi di scriptDashboard.js untuk me-refresh tampilan streak
+            if (typeof fetchAndDisplayStreak === 'function') { // Check if the function exists
+                fetchAndDisplayStreak();
+            } else {
+                console.warn("fetchAndDisplayStreak function not found. Streak UI will not refresh automatically.");
             }
         }
-        return null;
     } catch (error) {
-        console.error('Error in createQuest logic:', error);
-        throw error;
+        console.error('Error recording user interaction:', error);
     }
 }
