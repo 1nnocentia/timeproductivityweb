@@ -24,7 +24,7 @@ const gemData = [
         inactive: "/assets/Aset_Aplikasi_Gem_Gray.png",
         color: '#7BD6EB',
         description: 'Tugas rutin yang dilakukan untuk menghindari masalah lebih besar di masa depan.',
-        name: 'Preventive' // Nama diperbaiki dari Perventive -> Preventive
+        name: 'Perventive'
     },
     {
         active: "/assets/Aset_Aplikasi_Urgent.png",
