@@ -480,137 +480,188 @@
     </form>
   </div>
 </div>
-  
+  <script src="auth.js"></script>
   <script src="script copy.js"></script>
+  <script src="schedule_db.js"></script>
   <script>
-    // Store all events
-let events = [];
+    /**
+     * Mengambil semua data jadwal (tasks dan events) untuk pengguna yang login.
+     * @returns {Promise<Array>} - Array berisi objek jadwal.
+     */
+    async function fetchAllSchedules() {
+        const container = document.getElementById('calendarGrid');
+        if (!window.userId) {
+            console.warn("User belum login. Tidak dapat mengambil jadwal.");
+            return [];
+        }
 
-// Store categories
-let categories = [];
+        try {
+            const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`);
+            if (response) {
+                const allDataJadwal = await response.json();
+                return allDataJadwal;
+            }
+            return [];
+        } catch (error) {
+            console.error("Error fetching all schedules:", error);
+            // Anda bisa menampilkan pesan error di UI jika perlu
+            if (container) {
+                 container.innerHTML = '<p class="text-red-500 text-center col-span-7">Gagal memuat jadwal.</p>';
+            }
+            return [];
+        }
+    }
 
-// Helper: get day index (0=Sun, 1=Mon, ...)
-function getDayIdx(dateStr) {
-    const date = new Date(dateStr);
-    return date.getDay();
-}
-
-// Helper: get hour index (0=6AM, 1=7AM, ..., 16=10PM)
-function getHourIdx(timeStr) {
-    if (!timeStr) return 0;
-    const [h] = timeStr.split(':').map(Number);
-    return h + 1;
-}
-
-// Render events as colored blocks
-function renderEvents() {
-    document.querySelectorAll('.event-block').forEach(e => e.remove());
-    events.forEach(ev => {
+    /**
+     * Merender (menampilkan) semua jadwal ke dalam grid kalender.
+     * @param {Array} schedules - Array objek jadwal yang akan ditampilkan.
+     */
+    function renderSchedulesToCalendar(schedules) {
         const grid = document.getElementById('calendarGrid');
         if (!grid) return;
-        const day = getDayIdx(ev.date);
-        let start;
-        if (ev.startTime) {
-            start = getHourIdx(ev.startTime);
-        } else if (ev.deadlineTime) {
-            start = getHourIdx(ev.deadlineTime);
-        } else {
-            return; // Skip events without time
+
+        // Kosongkan event block yang sudah ada sebelum merender ulang
+        document.querySelectorAll('.event-block').forEach(e => e.remove());
+
+        schedules.forEach(item => {
+            const dateStr = item.event?.tanggal || item.task?.tanggal;
+            const startTimeStr = item.event?.jamMulai || item.task?.jamDeadline;
+            const endTimeStr = item.event?.jamAkhir; // Hanya event yang punya jam akhir
+
+            if (!dateStr || !startTimeStr) {
+                console.warn("Jadwal dilewati karena tidak punya tanggal atau waktu mulai/deadline:", item);
+                return; // Lewati item jika tidak ada tanggal atau waktu
+            }
+
+            const eventDate = new Date(dateStr);
+            const dayIndex = eventDate.getDay(); // 0 untuk Minggu, 1 untuk Senin, dst.
+
+            const startHour = parseInt(startTimeStr.split(':')[0], 10);
+            
+            // Tentukan durasi. Task default 1 jam, Event sesuai jam mulai-akhir.
+            let durationInHours = 1;
+            if (endTimeStr) {
+                const endHour = parseInt(endTimeStr.split(':')[0], 10);
+                durationInHours = endHour - startHour > 0 ? endHour - startHour : 1;
+            }
+
+            // Jangan tampilkan jadwal yang mulai sebelum jam 6 pagi di grid ini
+            if (startHour < 6) return;
+
+            // --- Kalkulasi Posisi ---
+            const rowHeight = 40; // Tinggi satu baris jam (40px)
+            const topOffset = 40; // Tinggi header hari (Sun, Mon, etc.)
+            const top = (startHour - 6) * rowHeight + topOffset; // Mulai dari 6 AM
+            const height = durationInHours * rowHeight - 4; // -4px untuk padding
+
+            const block = document.createElement('div');
+            block.className = "event-block absolute rounded-lg px-2 py-1 text-xs font-semibold text-white flex flex-col justify-start overflow-hidden";
+            block.style.position = "absolute";
+            block.style.backgroundColor = item.kategori?.color || "#9BDCE2";
+            block.style.left = `calc((${dayIndex} * 100%) / 7 + 4px)`;
+            block.style.width = "calc(100% / 7 - 8px)";
+            block.style.top = `${top}px`;
+            block.style.height = `${height}px`;
+            block.style.zIndex = 10;
+            
+            const gemAssets = {
+                'Non Critical': "/assets/Aset_Aplikasi_Non_critical.png",
+                'Perventive': "/assets/Aset_Aplikasi_Perventive.png",
+                'Urgent': "/assets/Aset_Aplikasi_Urgent.png",
+                'Emergency': "/assets/Aset_Aplikasi_Emergency.png"
+            };
+            const priorityName = item.prioritas?.namaPrioritas || 'Non Critical';
+            const gemSrc = gemAssets[priorityName];
+            
+            block.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+                    <span class="font-bold">${startTimeStr}</span>
+                    ${gemSrc ? `<img src="${gemSrc}" alt="${priorityName}" style="width:16px; height:16px;">` : ''}
+                </div>
+                <span class="font-normal whitespace-nowrap overflow-hidden text-ellipsis">${item.judulJadwal}</span>
+            `;
+            
+            grid.appendChild(block);
+        });
+    }
+
+    /**
+     * Mengambil dan menampilkan semua kategori di sidebar.
+     */
+    async function fetchAndDisplayCategories() {
+        const listContainer = document.getElementById('categoryList');
+        if (!listContainer || !window.userId) return;
+
+        try {
+            const response = await window.fetchProtected(`${window.BASE_URL}/kategori`);
+            if (response) {
+                const categories = await response.json();
+                
+                // Filter kategori yang dimiliki oleh user (berdasarkan jadwal yang ada)
+                const scheduleResponse = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`);
+                const userSchedules = await scheduleResponse.json();
+                const usedCategoryIds = new Set(userSchedules.map(s => s.kategori?.id));
+                const userCategories = categories.filter(cat => usedCategoryIds.has(cat.id));
+
+                listContainer.innerHTML = ''; // Kosongkan list
+                userCategories.forEach(cat => {
+                    const div = document.createElement('div');
+                    div.className = "rounded-lg px-4 py-2 mb-2 text-white font-semibold text-center";
+                    div.style.backgroundColor = cat.color;
+                    div.textContent = cat.namaKategori;
+                    listContainer.appendChild(div);
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching categories:", error);
+            listContainer.innerHTML = '<p class="text-red-500 text-xs">Gagal memuat kategori.</p>';
         }
-        const end = getHourIdx(ev.endTime || ev.deadlineTime) || start + 1;
-        if (start < 6) return; // Only show events from 6 AM
-        const rowHeight = 40; // match your grid row height
-        const top = (start - 6) * rowHeight;
-        const height = (end - start) * rowHeight - 4;
-        const block = document.createElement('div');
-        block.className = "event-block absolute rounded-xl px-2 py-1 text-xs font-semibold text-white flex flex-col justify-center";
-        block.style.position = "absolute";   // For grid placement
-        block.style.background = ev.categoryColor || "#9BDCE2";
-        block.style.left = `calc(${day} * 100% / 7 + 2px)`;
-        block.style.top = `${top}px`;
-        block.style.width = "calc(100% / 7 - 8px)";
-        block.style.height = `${height}px`;
-        block.style.zIndex = 2;
-
-        // Make the block itself relative so the gem is positioned inside it
-        block.style.position = "absolute";
-        block.style.display = "flex";
-        block.style.flexDirection = "column";
-        block.style.justifyContent = "flex-start";
-        block.style.alignItems = "flex-start";
-        block.style.overflow = "hidden";
-        block.style.boxSizing = "border-box";
-        block.classList.add("relative"); // For Tailwind users
-
-        // Priority gem asset map (replace with your actual asset paths)
-        const gemAssets = {
-            "1": "/assets/Aset_Aplikasi_Non_critical.png",   // Green gem
-            "2": "/assets/Aset_Aplikasi_Perventive.png",   // Blue gem
-            "3": "/assets/Aset_Aplikasi_Urgent.png",   // Purple gem
-            "4": "/assets/Aset_Aplikasi_Emergency.png"    // Red gem
-        };
-        const gemSrc = gemAssets[ev.priority] || gemAssets["1"];
-
-        block.innerHTML = `
-            <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                <span class="text-xs font-bold">${ev.startTime || ev.deadlineTime}</span>
-                <img src="${gemSrc}" alt="priority gem" style="width:20px; height:20px; margin-left:auto;">
-            </div>
-            <span>${ev.title}</span>
-        `;
-
-        grid.appendChild(block);
-    });
-}
-
-// Render categories in the right box
-function renderCategories() {
-    const list = document.getElementById('categoryList');
-    list.innerHTML = '';
-    categories.forEach(cat => {
-        const div = document.createElement('div');
-        div.className = "rounded-lg px-4 py-2 mb-2 text-white font-semibold text-center";
-        div.style.background = cat.color;
-        div.textContent = cat.name;
-        list.appendChild(div);
-    });
-}
-
-// On form submit, add event and render
-document.getElementById('scheduleForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const title = document.getElementById('activityTitle').value.trim();
-    const date = document.getElementById('activityDate').value;
-    const startTime = document.getElementById('startTime')?.value || "";
-    const endTime = document.getElementById('endTime')?.value || "";
-    const deadlineTime = document.getElementById('deadlineTime')?.value || "";
-    const categoryColor = document.getElementById('categoryColorInput').value;
-    if (!title || !date || (!startTime && !deadlineTime)) {
-        alert("Please fill all required fields.");
-        return;
     }
-    events.push({
-        title,
-        date,
-        startTime,
-        endTime,
-        deadlineTime,
-        categoryColor
-    });
-    // Add category if not exists
-    const categoryName = document.getElementById('categoryInput').value.trim();
-    if (categoryName && !categories.some(cat => cat.name === categoryName)) {
-        categories.push({ name: categoryName, color: categoryColor });
-    }
-    renderEvents();
-    renderCategories();
-    // Optionally close modal or reset form here
-});
 
-// Call this once on page load to show existing categories
-document.addEventListener('DOMContentLoaded', function() {
-    renderCategories();
-});
+
+    // --- EVENT LISTENER SAAT DOKUMEN SIAP ---
+    document.addEventListener('DOMContentLoaded', async function() {
+        // Cek jika pengguna sudah login
+        if (window.jwtToken && window.userId) {
+            const allSchedules = await fetchAllSchedules();
+            renderSchedulesToCalendar(allSchedules);
+            fetchAndDisplayCategories();
+        } else {
+            // Tampilkan pesan untuk login di kalender
+            const grid = document.getElementById('calendarGrid');
+            if(grid) {
+                grid.innerHTML = `<p class="text-center col-span-7 mt-10 text-accent/50">Silakan login untuk melihat jadwal Anda.</p>`;
+            }
+            console.warn("Pengguna belum login. Halaman schedule tidak akan menampilkan data.");
+        }
+
+        // --- Handler untuk Popup "Add New Quest" ---
+        // Kode ini diduplikat dari dashboard.js, karena dibutuhkan di halaman ini juga.
+        const openPopupBtn = document.getElementById('openPopup');
+        const closePopupBtn = document.getElementById('closePopup');
+        const popupOverlay = document.getElementById('popupOverlay');
+
+        if (openPopupBtn) openPopupBtn.addEventListener('click', () => popupOverlay.classList.remove('hidden'));
+        if (closePopupBtn) closePopupBtn.addEventListener('click', () => popupOverlay.classList.add('hidden'));
+        if (popupOverlay) popupOverlay.addEventListener('click', (e) => {
+            if (e.target === popupOverlay) popupOverlay.classList.add('hidden');
+        });
+        
+        // Event Listener untuk form submit
+        const scheduleForm = document.getElementById('scheduleForm');
+        if (scheduleForm) {
+            scheduleForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                // (Logika submit form dari dashboard.js bisa ditempatkan di sini jika diperlukan)
+                // Untuk sekarang, kita fokus pada menampilkan data. Setelah submit, idealnya data di-refresh.
+                 alert("Fitur tambah jadwal dari halaman ini belum diimplementasikan sepenuhnya. Silakan refresh halaman untuk melihat perubahan.");
+                 // Idealnya, setelah submit, panggil lagi:
+                 // const allSchedules = await fetchAllSchedules();
+                 // renderSchedulesToCalendar(allSchedules);
+                 // popupOverlay.classList.add('hidden');
+            });
+        }
+    });
   </script>
 </body>
 </html>
