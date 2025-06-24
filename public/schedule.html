@@ -615,7 +615,7 @@
             const endTimeStr = item.event?.jamAkhir;
 
             const eventDate = new Date(dateStr + 'T00:00:00');
-            const dayIndex = eventDate.getDay(); 
+            const dayIndex = (eventDate.getDay() + 6) % 7; 
             const startHour = parseInt(startTimeStr.split(':')[0], 10);
             
             let durationInHours = 1;
@@ -624,8 +624,8 @@
                 durationInHours = Math.max(1, endHour - startHour);
             }
 
-            const rowHeight = 40; // 10 * 4px (h-10)
-            const topOffset = 40; // Tinggi header hari
+            const rowHeight = 40;
+            const topOffset = 40; 
             const top = (startHour * rowHeight) + topOffset;
             const height = durationInHours * rowHeight - 4;
 
@@ -663,6 +663,53 @@
         return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
     }
 
+    // --- Category Card --- //
+    async function displayCategories() {
+        const categoryListContainer = document.getElementById('categoryList');
+        if (!categoryListContainer) return;
+
+        categoryListContainer.innerHTML = '<p class="text-xs text-gray-400">Memuat kategori...</p>';
+
+        try {
+            // Ambil data kategori dari endpoint API
+            const response = await window.fetchProtected(`${window.BASE_URL}/kategori`);
+            if (!response) {
+                categoryListContainer.innerHTML = '<p class="text-xs text-red-500">Gagal mengambil data.</p>';
+                return;
+            }
+
+            const categories = await response.json();
+
+            // Kosongkan kontainer sebelum menambahkan data baru
+            categoryListContainer.innerHTML = '';
+
+            if (categories.length === 0) {
+                categoryListContainer.innerHTML = '<p class="text-xs text-gray-400">Belum ada kategori.</p>';
+                return;
+            }
+
+            // Loop setiap kategori dan buat elemen HTML untuknya
+            categories.forEach(category => {
+                const categoryElement = document.createElement('div');
+                // Anda bisa menambahkan class dari Tailwind CSS untuk styling
+                categoryElement.className = 'flex items-center p-2 mb-2 bg-gray-50 dark:bg-accent-950/50 rounded-lg';
+
+                // Isi konten elemen dengan nama dan warna kategori
+                categoryElement.innerHTML = `
+                    <span class="w-3 h-3 rounded-full mr-3 border border-gray-300" style="background-color: ${category.color};"></span>
+                    <span class="text-sm font-medium text-accent dark:text-text-100">${category.namaKategori}</span>
+                `;
+
+                // Tambahkan elemen kategori ke dalam kontainer
+                categoryListContainer.appendChild(categoryElement);
+            });
+
+        } catch (error) {
+            console.error('Error displaying categories:', error);
+            categoryListContainer.innerHTML = '<p class="text-xs text-red-500">Terjadi kesalahan saat memuat kategori.</p>';
+        }
+    }
+
     // --- DOMContentLoaded ---
     document.addEventListener('DOMContentLoaded', async function() {
         generateFullDayGrid();
@@ -675,6 +722,8 @@
             grid.appendChild(placeholder);
             return;
         }
+
+        await displayCategories();
 
         document.getElementById('prevWeekBtn').addEventListener('click', () => {
             currentDate.setDate(currentDate.getDate() - 7);
