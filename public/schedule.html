@@ -21,8 +21,9 @@
         </div>
 
         <ul class="hidden md:flex space-x-8">
-          <li><a href="index.html" class="text-accent hover:text-accent/80 transition-colors">Dashboard</a></li>
+          <li><a href="user_dashboard.html" class="text-accent hover:text-accent/80 transition-colors">Dashboard</a></li>
           <li><a href="schedule.html" class="text-accent hover:text-accent/80 transition-colors">Schedule</a></li>
+          <li><a href="achievements.html" class="text-accent hover:text-accent/80 transition-colors">Achievement</a></li>
           <li><a href="#friends" class="text-accent hover:text-accent/80 transition-colors">Friends</a></li>
         </ul>
 
@@ -52,10 +53,14 @@
     <div class="flex justify-between items-center mb-2">
       <div class="flex items-center gap-2">
         <span class="font-heading text-2xl text-primary-400 font-bold">CALENDAR</span>
-        <!-- Calendar Title (no onclick, no year/month switching) -->
-        <span class="ml-6 text-base text-primary-400 font-semibold" id="calendar-title">
-          June 2025
-        </span>
+        <!-- Tombol Navigasi -->
+            <div class="flex items-center gap-2">
+                <button id="todayBtn" class="py-1 px-3 bg-gray-200 text-accent-500 text-xs font-semibold rounded-lg hover:bg-gray-300">Today</button>
+                <button id="prevWeekBtn" title="Previous Week" class="p-2 text-accent-500 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-chevron-left"></i></button>
+                <button id="nextWeekBtn" title="Next Week" class="p-2 text-accent-500 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-chevron-right"></i></button>
+            <!-- </div> -->
+            <span class="ml-4 text-lg text-primary-400 font-bold" id="calendar-title"></span>
+        </div>
       </div>
       <!-- Calendar Controls
       <div class="flex items-center gap-2">
@@ -70,18 +75,19 @@
       <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Category</button>
       <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Date</button>
       </div>
-
     </div>
+    
     <!-- Calendar Views -->
     <div class="relative flex-1 overflow-x-hidden calendar-scroll h-full">
       <div class="w-full h-full overflow-y-auto">
         <!-- WEEK VIEW -->
         <div id="week-view" class="flex h-full">
           <!-- Time Labels -->
-          <div class="flex flex-col w-16 border-r border-gray-200">
-            <div class="h-8"></div>
+          <div id="time-labels-container" lass="flex flex-col w-16 border-r border-gray-200">
+            <!-- <div class="h-8"> -->
+            </div>
             <!-- Generated Time Labels -->
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">06:00</div>
+            <!-- <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">06:00</div>
             <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">07:00</div>
             <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">08:00</div>
             <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">09:00</div>
@@ -94,218 +100,218 @@
             <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">16:00</div>
             <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">17:00</div>
             <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">18:00</div>
-          </div>
+          </div> -->
           <!-- Week Grid --> 
           <div class="flex-1" style="height:700px;">
-            <div class="grid grid-cols-7 border-t border-l border-gray-200 bg-white rounded-xl h-full min-w-full relative" id="calendarGrid" style="position:relative; height:672px;">
+            <div class="grid grid-cols-7 border-t border-l border-gray-200 bg-white rounded-xl h-full min-w-full relative text=sm" id="calendarGrid" style="position:relative; height:672px;">
               <!-- Header Row -->
-              <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Sun</div>
+              <!-- <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Sun</div>
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Mon</div>
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Tue</div>
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Wed</div>
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Thu</div>
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Fri</div>
-              <div class="border-b border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Sat</div>
+              <div class="border-b border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Sat</div> -->
               <!-- 24 rows for 12 AM to 11 PM -->
 
               <!-- 12 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 1 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 2 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-r border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
+              <!-- 3 AM
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
-              <!-- 3 AM -->
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 4 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 5 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 6 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 7 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 8 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 9 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 10 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 11 AM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div> -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 12 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 1 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 2 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 3 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 4 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 5 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 6 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 7 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 8 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 9 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 10 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
               <!-- 11 PM -->
+              <!-- <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
               <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-r border-gray-200 h-10"></div>
-              <div class="border-b border-gray-200 h-10"></div>
+              <div class="border-b border-gray-200 h-10"></div> -->
 
             </div>
           </div>
         </div>
         <!-- MONTH VIEW -->
-        <div id="month-view" class="hidden h-full grid grid-cols-4 grid-rows-3 gap-6 p-8">
+        <!-- <div id="month-view" class="hidden h-full grid grid-cols-4 grid-rows-3 gap-6 p-8">
           <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">January</button>
           <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">February</button>
           <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">March</button>
@@ -318,9 +324,9 @@
           <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">October</button>
           <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">November</button>
           <button class="month-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">December</button>
-        </div>
+        </div> -->
         <!-- YEAR VIEW -->
-        <div id="year-view" class="hidden h-full grid grid-cols-4 grid-rows-3 gap-6 p-8">
+        <!-- <div id="year-view" class="hidden h-full grid grid-cols-4 grid-rows-3 gap-6 p-8">
           <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2022</button>
           <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2023</button>
           <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2024</button>
@@ -333,7 +339,7 @@
           <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2031</button>
           <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2032</button>
           <button class="year-btn flex items-center justify-center bg-gray-100 rounded-xl text-lg font-heading font-bold text-accent h-24 hover:bg-accent-100 transition">2033</button>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- Plus Button -->
@@ -481,186 +487,214 @@
   </div>
 </div>
   <script src="auth.js"></script>
-  <script src="script copy.js"></script>
+  <!-- <script src="script copy.js"></script> -->
+   <script src="dashboard.js"></script>
   <script src="schedule_db.js"></script>
   <script>
+    // --- STATE & KONFIGURASI KALENDER ---
+    let currentDate = new Date(); 
+    let allUserSchedules = [];
+
     /**
-     * Mengambil semua data jadwal (tasks dan events) untuk pengguna yang login.
-     * @returns {Promise<Array>} - Array berisi objek jadwal.
+     * Menggenerate grid 24 jam dan label waktu.
      */
-    async function fetchAllSchedules() {
-        const container = document.getElementById('calendarGrid');
-        if (!window.userId) {
-            console.warn("User belum login. Tidak dapat mengambil jadwal.");
-            return [];
+    function generateFullDayGrid() {
+        const grid = document.getElementById('calendarGrid');
+        const timeLabelsContainer = document.getElementById('time-labels-container');
+        if (!grid || !timeLabelsContainer) return;
+
+        grid.innerHTML = ''; // Kosongkan grid
+        timeLabelsContainer.innerHTML = ''; // Kosongkan label
+
+        // Spacer untuk header hari
+        const headerSpacer = document.createElement('div');
+        headerSpacer.className = "h-10"; // Sesuaikan dengan tinggi header hari
+        timeLabelsContainer.appendChild(headerSpacer);
+        
+        for (let hour = 0; hour < 24; hour++) {
+            // Buat label waktu (00:00, 01:00, dst.)
+            const timeLabel = document.createElement('div');
+            timeLabel.className = "h-10 flex items-start justify-end pr-2 text-xs text-gray-400";
+            timeLabel.textContent = `${String(hour).padStart(2, '0')}:00`;
+            timeLabelsContainer.appendChild(timeLabel);
+
+            // Buat baris sel grid untuk setiap jam
+            for (let day = 0; day < 7; day++) {
+                const cell = document.createElement('div');
+                cell.className = 'border-b border-r border-gray-200 h-10';
+                grid.appendChild(cell);
+            }
+        }
+    }
+
+
+    /**
+     * Fungsi utama untuk mengupdate seluruh tampilan kalender.
+     */
+    async function updateCalendarView() {
+        const calendarTitle = document.getElementById('calendar-title');
+        if (calendarTitle) {
+            calendarTitle.textContent = currentDate.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
         }
 
+        generateWeekHeaders();
+
+        if (allUserSchedules.length === 0 && window.userId) {
+            allUserSchedules = await fetchAllSchedules();
+        }
+        renderSchedulesToCalendar(allUserSchedules);
+    }
+    
+    /**
+     * Membuat header untuk setiap hari dalam seminggu.
+     */
+    function generateWeekHeaders() {
+        const grid = document.getElementById('calendarGrid');
+        if (!grid) return;
+
+        const oldHeaders = grid.querySelectorAll('.week-day-header');
+        oldHeaders.forEach(header => header.remove());
+
+        const startOfWeek = getStartOfWeek(currentDate);
+
+        for (let i = 0; i < 7; i++) {
+            const day = new Date(startOfWeek);
+            day.setDate(day.getDate() + i);
+            const isToday = isSameDay(day, new Date());
+            
+            const headerCell = document.createElement('div');
+            headerCell.className = `week-day-header sticky top-0 bg-white z-20 border-b-2 border-r border-gray-200 h-10 flex flex-col items-center justify-center font-heading text-accent-500`;
+            headerCell.style.gridColumn = `${i + 1}`;
+            headerCell.style.gridRow = `1`;
+
+            const dayName = document.createElement('span');
+            dayName.className = 'text-xs font-bold';
+            dayName.textContent = day.toLocaleDateString('id-ID', { weekday: 'short' }).toUpperCase();
+
+            const dayNumber = document.createElement('span');
+            dayNumber.className = `text-lg font-bold ${isToday ? 'bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center' : ''}`;
+            dayNumber.textContent = day.getDate();
+
+            headerCell.appendChild(dayName);
+            headerCell.appendChild(dayNumber);
+            grid.appendChild(headerCell);
+        }
+    }
+
+    async function fetchAllSchedules() {
+        if (!window.userId) return [];
         try {
             const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`);
-            if (response) {
-                const allDataJadwal = await response.json();
-                return allDataJadwal;
-            }
-            return [];
+            return response ? await response.json() : [];
         } catch (error) {
             console.error("Error fetching all schedules:", error);
-            // Anda bisa menampilkan pesan error di UI jika perlu
-            if (container) {
-                 container.innerHTML = '<p class="text-red-500 text-center col-span-7">Gagal memuat jadwal.</p>';
-            }
             return [];
         }
     }
 
-    /**
-     * Merender (menampilkan) semua jadwal ke dalam grid kalender.
-     * @param {Array} schedules - Array objek jadwal yang akan ditampilkan.
-     */
     function renderSchedulesToCalendar(schedules) {
         const grid = document.getElementById('calendarGrid');
         if (!grid) return;
 
-        // Kosongkan event block yang sudah ada sebelum merender ulang
         document.querySelectorAll('.event-block').forEach(e => e.remove());
+        
+        const startOfWeek = getStartOfWeek(currentDate);
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
 
-        schedules.forEach(item => {
+        const weeklySchedules = schedules.filter(item => {
+            const itemDateStr = item.event?.tanggal || item.task?.tanggal;
+            if (!itemDateStr) return false;
+            const itemDate = new Date(itemDateStr + 'T00:00:00');
+            return itemDate >= startOfWeek && itemDate <= endOfWeek;
+        });
+
+        weeklySchedules.forEach(item => {
             const dateStr = item.event?.tanggal || item.task?.tanggal;
             const startTimeStr = item.event?.jamMulai || item.task?.jamDeadline;
-            const endTimeStr = item.event?.jamAkhir; // Hanya event yang punya jam akhir
+            const endTimeStr = item.event?.jamAkhir;
 
-            if (!dateStr || !startTimeStr) {
-                console.warn("Jadwal dilewati karena tidak punya tanggal atau waktu mulai/deadline:", item);
-                return; // Lewati item jika tidak ada tanggal atau waktu
-            }
-
-            const eventDate = new Date(dateStr);
-            const dayIndex = eventDate.getDay(); // 0 untuk Minggu, 1 untuk Senin, dst.
-
+            const eventDate = new Date(dateStr + 'T00:00:00');
+            const dayIndex = eventDate.getDay(); 
             const startHour = parseInt(startTimeStr.split(':')[0], 10);
             
-            // Tentukan durasi. Task default 1 jam, Event sesuai jam mulai-akhir.
             let durationInHours = 1;
             if (endTimeStr) {
                 const endHour = parseInt(endTimeStr.split(':')[0], 10);
-                durationInHours = endHour - startHour > 0 ? endHour - startHour : 1;
+                durationInHours = Math.max(1, endHour - startHour);
             }
 
-            // Jangan tampilkan jadwal yang mulai sebelum jam 6 pagi di grid ini
-            if (startHour < 6) return;
-
-            // --- Kalkulasi Posisi ---
-            const rowHeight = 40; // Tinggi satu baris jam (40px)
-            const topOffset = 40; // Tinggi header hari (Sun, Mon, etc.)
-            const top = (startHour - 6) * rowHeight + topOffset; // Mulai dari 6 AM
-            const height = durationInHours * rowHeight - 4; // -4px untuk padding
+            const rowHeight = 40; // 10 * 4px (h-10)
+            const topOffset = 40; // Tinggi header hari
+            const top = (startHour * rowHeight) + topOffset;
+            const height = durationInHours * rowHeight - 4;
 
             const block = document.createElement('div');
             block.className = "event-block absolute rounded-lg px-2 py-1 text-xs font-semibold text-white flex flex-col justify-start overflow-hidden";
-            block.style.position = "absolute";
-            block.style.backgroundColor = item.kategori?.color || "#9BDCE2";
-            block.style.left = `calc((${dayIndex} * 100%) / 7 + 4px)`;
-            block.style.width = "calc(100% / 7 - 8px)";
-            block.style.top = `${top}px`;
-            block.style.height = `${height}px`;
-            block.style.zIndex = 10;
+            block.style.cssText = `
+                position: absolute;
+                background-color: ${item.kategori?.color || "#9BDCE2"};
+                left: calc((${dayIndex} * 100%) / 7 + 4px);
+                width: calc(100% / 7 - 8px);
+                top: ${top}px;
+                height: ${height}px;
+                z-index: 10;
+            `;
             
-            const gemAssets = {
-                'Non Critical': "/assets/Aset_Aplikasi_Non_critical.png",
-                'Perventive': "/assets/Aset_Aplikasi_Perventive.png",
-                'Urgent': "/assets/Aset_Aplikasi_Urgent.png",
-                'Emergency': "/assets/Aset_Aplikasi_Emergency.png"
-            };
+            const gemAssets = { 'Non Critical': "/assets/Aset_Aplikasi_Non_critical.png", 'Perventive': "/assets/Aset_Aplikasi_Perventive.png", 'Urgent': "/assets/Aset_Aplikasi_Urgent.png", 'Emergency': "/assets/Aset_Aplikasi_Emergency.png" };
             const priorityName = item.prioritas?.namaPrioritas || 'Non Critical';
             const gemSrc = gemAssets[priorityName];
             
-            block.innerHTML = `
-                <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-                    <span class="font-bold">${startTimeStr}</span>
-                    ${gemSrc ? `<img src="${gemSrc}" alt="${priorityName}" style="width:16px; height:16px;">` : ''}
-                </div>
-                <span class="font-normal whitespace-nowrap overflow-hidden text-ellipsis">${item.judulJadwal}</span>
-            `;
+            block.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center; width:100%;"><span class="font-bold">${startTimeStr}</span>${gemSrc ? `<img src="${gemSrc}" alt="${priorityName}" style="width:16px; height:16px;">` : ''}</div><span class="font-normal whitespace-nowrap overflow-hidden text-ellipsis">${item.judulJadwal}</span>`;
             
             grid.appendChild(block);
         });
     }
 
-    /**
-     * Mengambil dan menampilkan semua kategori di sidebar.
-     */
-    async function fetchAndDisplayCategories() {
-        const listContainer = document.getElementById('categoryList');
-        if (!listContainer || !window.userId) return;
-
-        try {
-            const response = await window.fetchProtected(`${window.BASE_URL}/kategori`);
-            if (response) {
-                const categories = await response.json();
-                
-                // Filter kategori yang dimiliki oleh user (berdasarkan jadwal yang ada)
-                const scheduleResponse = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`);
-                const userSchedules = await scheduleResponse.json();
-                const usedCategoryIds = new Set(userSchedules.map(s => s.kategori?.id));
-                const userCategories = categories.filter(cat => usedCategoryIds.has(cat.id));
-
-                listContainer.innerHTML = ''; // Kosongkan list
-                userCategories.forEach(cat => {
-                    const div = document.createElement('div');
-                    div.className = "rounded-lg px-4 py-2 mb-2 text-white font-semibold text-center";
-                    div.style.backgroundColor = cat.color;
-                    div.textContent = cat.namaKategori;
-                    listContainer.appendChild(div);
-                });
-            }
-        } catch (error) {
-            console.error("Error fetching categories:", error);
-            listContainer.innerHTML = '<p class="text-red-500 text-xs">Gagal memuat kategori.</p>';
-        }
+    // --- HELPER FUNCTIONS ---
+    function getStartOfWeek(date) {
+        const d = new Date(date);
+        const day = d.getDay();
+        const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Minggu = 0, atur agar Senin = awal minggu
+        return new Date(d.setDate(diff));
+    }
+    
+    function isSameDay(d1, d2) {
+        return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
     }
 
-
-    // --- EVENT LISTENER SAAT DOKUMEN SIAP ---
+    // --- DOMContentLoaded ---
     document.addEventListener('DOMContentLoaded', async function() {
-        // Cek jika pengguna sudah login
-        if (window.jwtToken && window.userId) {
-            const allSchedules = await fetchAllSchedules();
-            renderSchedulesToCalendar(allSchedules);
-            fetchAndDisplayCategories();
-        } else {
-            // Tampilkan pesan untuk login di kalender
+        generateFullDayGrid();
+
+        if (!window.userId) {
             const grid = document.getElementById('calendarGrid');
-            if(grid) {
-                grid.innerHTML = `<p class="text-center col-span-7 mt-10 text-accent/50">Silakan login untuk melihat jadwal Anda.</p>`;
-            }
-            console.warn("Pengguna belum login. Halaman schedule tidak akan menampilkan data.");
+            const placeholder = document.createElement('div');
+            placeholder.className = "col-span-7 text-center py-20 text-gray-400";
+            placeholder.textContent = "Silakan login untuk melihat jadwal Anda.";
+            grid.appendChild(placeholder);
+            return;
         }
 
-        // --- Handler untuk Popup "Add New Quest" ---
-        // Kode ini diduplikat dari dashboard.js, karena dibutuhkan di halaman ini juga.
-        const openPopupBtn = document.getElementById('openPopup');
-        const closePopupBtn = document.getElementById('closePopup');
-        const popupOverlay = document.getElementById('popupOverlay');
+        document.getElementById('prevWeekBtn').addEventListener('click', () => {
+            currentDate.setDate(currentDate.getDate() - 7);
+            updateCalendarView();
+        });
 
-        if (openPopupBtn) openPopupBtn.addEventListener('click', () => popupOverlay.classList.remove('hidden'));
-        if (closePopupBtn) closePopupBtn.addEventListener('click', () => popupOverlay.classList.add('hidden'));
-        if (popupOverlay) popupOverlay.addEventListener('click', (e) => {
-            if (e.target === popupOverlay) popupOverlay.classList.add('hidden');
+        document.getElementById('nextWeekBtn').addEventListener('click', () => {
+            currentDate.setDate(currentDate.getDate() + 7);
+            updateCalendarView();
+        });
+
+        document.getElementById('todayBtn').addEventListener('click', () => {
+            currentDate = new Date();
+            updateCalendarView();
         });
         
-        // Event Listener untuk form submit
-        const scheduleForm = document.getElementById('scheduleForm');
-        if (scheduleForm) {
-            scheduleForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-                // (Logika submit form dari dashboard.js bisa ditempatkan di sini jika diperlukan)
-                // Untuk sekarang, kita fokus pada menampilkan data. Setelah submit, idealnya data di-refresh.
-                 alert("Fitur tambah jadwal dari halaman ini belum diimplementasikan sepenuhnya. Silakan refresh halaman untuk melihat perubahan.");
-                 // Idealnya, setelah submit, panggil lagi:
-                 // const allSchedules = await fetchAllSchedules();
-                 // renderSchedulesToCalendar(allSchedules);
-                 // popupOverlay.classList.add('hidden');
-            });
-        }
+        const logoutButton = document.getElementById('logoutButton');
+        if(logoutButton) logoutButton.addEventListener('click', window.handleLogout);
+
+        await updateCalendarView();
     });
   </script>
 </body>
