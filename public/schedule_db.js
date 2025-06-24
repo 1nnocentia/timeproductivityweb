@@ -1,3 +1,8 @@
+/**
+ * Mendapatkan kategori berdasarkan nama.
+ * @param {string} name - Nama kategori.
+ * @returns {Promise<Object|null>}
+ */
 window.getKategoriByName = async function(name) {
     try {
         const response = await fetchProtected(`${BASE_URL}/kategori`);
@@ -12,6 +17,12 @@ window.getKategoriByName = async function(name) {
     }
 }
 
+/**
+ * Membuat kategori baru di backend.
+ * @param {string} namaKategori - Nama kategori baru.
+ * @param {string} color - Kode warna hex untuk kategori.
+ * @returns {Promise<Object|null>}
+ */
 window.createKategoriBackend = async function(namaKategori, color) {
     try {
         const response = await fetchProtected(`${BASE_URL}/kategori`, {
@@ -28,6 +39,11 @@ window.createKategoriBackend = async function(namaKategori, color) {
     }
 }
 
+/**
+ * Mendapatkan prioritas berdasarkan nama.
+ * @param {string} name - Nama prioritas.
+ * @returns {Promise<Object|null>}
+ */
 window.getPrioritasByName = async function(name) {
     try {
         const response = await fetchProtected(`${BASE_URL}/prioritas`);
@@ -42,6 +58,12 @@ window.getPrioritasByName = async function(name) {
     }
 }
 
+/**
+ * Membuat prioritas baru di backend.
+ * @param {string} namaPrioritas - Nama prioritas baru.
+ * @param {string} color - Kode warna hex untuk prioritas.
+ * @returns {Promise<Object|null>}
+ */
 window.createPrioritasBackend = async function(namaPrioritas, color) {
     try {
         const response = await fetchProtected(`${BASE_URL}/prioritas`, {
@@ -58,6 +80,13 @@ window.createPrioritasBackend = async function(namaPrioritas, color) {
     }
 }
 
+/**
+ * Membuat event baru di backend.
+ * @param {string} tanggal - Tanggal event.
+ * @param {string} jamMulai - Waktu mulai event.
+ * @param {string} jamAkhir - Waktu akhir event.
+ * @returns {Promise<Object|null>}
+ */
 window.createEventBackend = async function(tanggal, jamMulai, jamAkhir) {
     try {
         const response = await window.fetchProtected(`${window.BASE_URL}/events`, {
@@ -150,7 +179,7 @@ window.createQuest = async function(type, title, desc, date, jamMulai, jamAkhir,
         if (((type === 'event' && eventId) || (type === 'task' && taskId)) && kategoriId && prioritasId) {
             const newDataJadwal = await window.createDataJadwalBackend(title, desc, eventId, taskId, kategoriId, prioritasId);
             if (newDataJadwal) {
-                await window.recordUserInteraction(); // Panggil fungsi untuk mencatat streak
+                // await window.recordUserInteraction();
                 return { newDataJadwal }; 
             }
         }
@@ -379,26 +408,26 @@ window.handleGetTaskCountsByPeriod = async function() {
 }
 
 // Fungsi untuk mencatat interaksi streak
-window.recordUserInteraction = async function() {
-    if (!window.userId) {
-        console.warn('User ID tidak ditemukan. Streak tidak dicatat.');
-        return;
-    }
-    try {
-        const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.userId}/record-interaction`, {
-            method: 'POST'
-        });
-        if (response) {
-            const data = await response.json();
-            console.log("Interaksi streak dicatat!", data);
-            // Panggil fungsi di scriptDashboard.js untuk me-refresh tampilan streak
-            if (typeof fetchAndDisplayStreak === 'function') { // Check if the function exists
-                fetchAndDisplayStreak();
-            } else {
-                console.warn("fetchAndDisplayStreak function not found. Streak UI will not refresh automatically.");
-            }
-        }
-    } catch (error) {
-        console.error('Error recording user interaction:', error);
-    }
-}
+// window.recordUserInteraction = async function() {
+//     if (!window.userId) {
+//         console.warn('User ID tidak ditemukan. Streak tidak dicatat.');
+//         return;
+//     }
+//     try {
+//         const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.userId}/record-interaction`, {
+//             method: 'POST'
+//         });
+//         if (response) {
+//             const data = await response.json();
+//             console.log("Interaksi streak dicatat!", data);
+//             // Panggil fungsi di scriptDashboard.js untuk me-refresh tampilan streak
+//             if (typeof fetchAndDisplayStreak === 'function') { // Check if the function exists
+//                 fetchAndDisplayStreak();
+//             } else {
+//                 console.warn("fetchAndDisplayStreak function not found. Streak UI will not refresh automatically.");
+//             }
+//         }
+//     } catch (error) {
+//         console.error('Error recording user interaction:', error);
+//     }
+// }
