@@ -179,7 +179,7 @@ window.createQuest = async function(type, title, desc, date, jamMulai, jamAkhir,
         if (((type === 'event' && eventId) || (type === 'task' && taskId)) && kategoriId && prioritasId) {
             const newDataJadwal = await window.createDataJadwalBackend(title, desc, eventId, taskId, kategoriId, prioritasId);
             if (newDataJadwal) {
-                await window.recordUserInteraction(); // Panggil fungsi untuk mencatat streak
+                // await window.recordUserInteraction();
                 return { newDataJadwal }; 
             }
         }
