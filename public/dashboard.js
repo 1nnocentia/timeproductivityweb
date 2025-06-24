@@ -219,7 +219,7 @@ async function fetchAndDisplayTodaySchedule() {
 
             container.innerHTML = ''; // Kosongkan container
             if (dailySchedules.length === 0) {
-                container.innerHTML = '<div class="text-accent/50 text-center">Tidak ada jadwal untuk hari ini.</div>';
+                container.innerHTML = '<div class="text-accent/50 text-center">There is NO Schedule for Today.</div>';
             } else {
                 dailySchedules.forEach(item => container.appendChild(createScheduleElement(item)));
             }
@@ -229,6 +229,55 @@ async function fetchAndDisplayTodaySchedule() {
         container.innerHTML = '<div class="text-red-500 text-center">Gagal memuat jadwal.</div>';
     }
 }
+
+/**
+ * Mengambil dan menampilkan aktivitas (event) yang sedang berlangsung saat ini.
+ */
+async function fetchAndDisplayOngoingActivities() {
+    const container = document.getElementById('ongoingActivitiesContainer');
+    if (!container) return;
+
+    if (!window.userId) {
+        container.innerHTML = '<div class="text-accent/50 text-center">There is NO Ongoing Activities.</div>';
+        return;
+    }
+
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`);
+        if (response) {
+            const allDataJadwal = await response.json();
+            
+            // Dapatkan waktu dan tanggal saat ini
+            const now = new Date();
+            const todayString = now.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            const currentTime = now.toTimeString().split(' ')[0]; // Format: HH:MM:SS
+
+            const ongoingEvents = allDataJadwal.filter(item => {
+                // Pastikan item adalah 'event' dan memiliki data yang diperlukan
+                if (!item.event || !item.event.tanggal || !item.event.jamMulai || !item.event.jamAkhir) {
+                    return false;
+                }
+
+                // Cek apakah event berlangsung hari ini dan sedang dalam rentang waktu
+                const isToday = item.event.tanggal === todayString;
+                const isTimeCorrect = item.event.jamMulai <= currentTime && item.event.jamAkhir >= currentTime;
+
+                return isToday && isTimeCorrect;
+            });
+
+            container.innerHTML = ''; // Kosongkan kontainer
+            if (ongoingEvents.length === 0) {
+                container.innerHTML = '<div class="text-accent/50 text-center">There is NO Ongoing Activities.</div>';
+            } else {
+                ongoingEvents.forEach(item => container.appendChild(createScheduleElement(item)));
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching ongoing activities:", error);
+        container.innerHTML = '<div class="text-red-500 text-center">Failed to Load Activities.</div>';
+    }
+}
+
 
 
 // --- FUNGSI-FUNGSI HANDLER INTERAKSI PENGGUNA ---
@@ -288,6 +337,93 @@ async function recordUserInteraction() {
     }
 }
 
+/**
+ * Mengisi widget "Days" dengan bulan, tahun, dan kalender mingguan yang dinamis.
+ * Versi ini juga menampilkan ikon api pada hari-hari dengan aktivitas streak.
+ */
+async function displayDaysWidget() {
+    const monthYearElement = document.getElementById('monthYearDisplay');
+    const weekContainer = document.getElementById('weekViewContainer');
+
+    if (!monthYearElement || !weekContainer) return;
+
+    const today = new Date();
+
+    // 1. Tampilkan Bulan dan Tahun
+    const monthYearOptions = { month: 'long', year: 'numeric' };
+    monthYearElement.textContent = today.toLocaleDateString('en-EN', monthYearOptions);
+    
+    // 2. Siapkan wadah untuk data streak dan kalender
+    weekContainer.innerHTML = ''; // Kosongkan kontainer
+    let completedDatesSet = new Set();
+
+    // 3. Ambil data aktivitas HANYA jika user sudah login
+    if (window.userId) {
+        try {
+            const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`);
+            if (response) {
+                const allDataJadwal = await response.json();
+                // Buat Set berisi semua tanggal unik di mana tugas selesai
+                completedDatesSet = new Set(
+                    allDataJadwal
+                        .filter(item => item.task && item.task.status === 'SELESAI')
+                        .map(item => item.task.tanggal)
+                );
+            }
+        } catch (error) {
+            console.error("Failed to get Streak schedule data:", error);
+            // Biarkan completedDatesSet kosong jika gagal
+        }
+    }
+
+    // 4. Buat Tampilan Kalender Mingguan
+    const dayOfWeek = today.getDay();
+    const startDayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
+    const firstDayOfWeek = new Date(today);
+    firstDayOfWeek.setDate(today.getDate() + startDayOffset);
+
+    const dayInitials = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+
+    for (let i = 0; i < 7; i++) {
+        const day = new Date(firstDayOfWeek);
+        day.setDate(firstDayOfWeek.getDate() + i);
+
+        const dayElement = document.createElement('div');
+        dayElement.className = 'flex flex-col items-center justify-center space-y-1';
+
+        // Cek kondisi hari
+        const isToday = day.toDateString() === today.toDateString();
+        // Format tanggal ke YYYY-MM-DD untuk perbandingan
+        const formattedDate = day.toISOString().split('T')[0];
+        const isStreakDay = completedDatesSet.has(formattedDate);
+
+        // Tentukan style
+        const dayInitialClass = isToday ? 'text-accent font-bold' : 'text-accent/50';
+        const dateCircleBgClass = isToday ? 'bg-accent' : 'bg-primary';
+        const dateCircleTextClass = isToday ? 'text-secondary' : 'text-accent';
+        const initialIndex = (day.getDay() + 6) % 7;
+
+        // Tentukan konten di dalam bulatan: API atau ANGKA
+        let circleContent;
+        if (isStreakDay) {
+            // Jika ini adalah hari streak, tampilkan gambar api
+            circleContent = `<img src="/assets/Aset_Aplikasi_Api.png" alt="Streak" class="w-9 h-9 -mt-0.5">`;
+        } else {
+            // Jika bukan, tampilkan angka tanggal
+            circleContent = `<span class="font-bold ${dateCircleTextClass}">${day.getDate()}</span>`;
+        }
+
+        // Gabungkan semua menjadi HTML
+        dayElement.innerHTML = `
+            <span class="text-sm font-semibold ${dayInitialClass}">${dayInitials[initialIndex]}</span>
+            <div class="w-8 h-8 rounded-full flex items-center justify-center ${dateCircleBgClass}">
+                ${circleContent}
+            </div>
+        `;
+
+        weekContainer.appendChild(dayElement);
+    }
+}
 
 // --- FUNGSI-FUNGSI PEMBANTU (HELPERS) ---
 
@@ -476,15 +612,22 @@ document.addEventListener('DOMContentLoaded', function() {
         recordUserInteraction(); // Ini akan memanggil fetchAndDisplayStreak di dalamnya
         fetchAndDisplayPrioritasProgress();
         fetchAndDisplayTodaySchedule();
+        fetchAndDisplayOngoingActivities();
+        displayDaysWidget();
     } else {
         // Tampilkan state default jika belum login
         fetchAndDisplayGreeting(); // Tampilkan sapaan default
         fetchAndDisplayStreak(); // Tampilkan pesan login
         fetchAndDisplayPrioritasProgress(); // Tampilkan progress 0%
         fetchAndDisplayTodaySchedule(); // Tampilkan pesan login
+        fetchAndDisplayOngoingActivities();
+        displayDaysWidget();
     }
     
     // Inisialisasi UI Slider Prioritas
     const info = document.getElementById("gem-info");
     if (info) info.innerText = "Pilih level prioritas";
+
+    // Refresh ongoing activities
+    setInterval(fetchAndDisplayOngoingActivities, 6000);
 });
