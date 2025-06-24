@@ -10,46 +10,52 @@
 
     <!-- tailwind -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
-    <!-- google fonts here -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">    <!-- google fonts here -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
-    <title>Clockin</title>
+      <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Add auth and database scripts for streak functionality -->
+    <script src="auth.js"></script>
+    <script src="db.js"></script>
+    <script src="dark.js"></script>
+    
+    <title>Profile - Clockin</title>
 </head>
 
-<body class="font-sans transition-color bg-primary duration-300">
+<body class="font-sans transition-color bg-primary dark:bg-gray-600 duration-300">
     <!-- Header Section -->
     <header class="fixed w-full top-0 z-50 text-text-100 bg-accent-900  backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
 
                 <div class="flex items-center">
-                    <span class="text-xl text-text-100 font-extrabold font-heading">CLOCKIN</span>
+                    <span class="text-xl text-text-100 text-accent dark:text-primary font-extrabold font-heading">CLOCKIN</span>
                 </div>
 
                 <ul class="hidden md:flex space-x-8">
                     <li>
                         <a href="/public/index.html" class="text-accent
-                        
+                        dark:text-primary
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
                         transition-colors">Dashboard</a>
                     </li>
                     <li>
                         <a href="#schedule" class="text-accent
-                        
+                        dark:text-primary
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
                         transition-colors">Schedule</a>
                     </li>
                     <li>
-                        <a href="#friends" class="text-accent
-                        
+                        <a href="../public/achievements.html" class="text-accent
+                        dark:text-primary   
                         hover:text-accent/80 
                         dark:hover:text-accent/80 
                         
-                        transition-colors">Friends</a>
+                        transition-colors">Achievements</a>
                     </li>
                 </ul>
 
@@ -61,19 +67,19 @@
                 <div class="flex items-center space-x-4">
                     <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
                     <button title="Profile">
-                        <i class="fa-solid fa-user text-accent hover:text-accent/80 
+                        <i class="fa-solid fa-user text-accent dark:text-primary hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
 
                      <!-- Settings Icon -->
                     <button title="Settings">
-                        <i class="fa-solid fa-gear text-accent hover:text-accent/80 
+                        <i class="fa-solid fa-gear text-accent dark:text-primary hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
 
                      <!-- Logout Icon -->
                     <button title="Logout">
-                        <i class="fa-solid fa-right-from-bracket text-accent hover:text-accent/80 
+                        <i class="fa-solid fa-right-from-bracket dark:text-primary text-accent hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
                     
@@ -94,75 +100,590 @@
 
     <div class="flex flex-col lg:mx-24 gap-6 mb-12">
         <section class="pt-20 mx-3 lg:mx-16">
-            <div class="grid lg:grid-cols-3 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">
+            <div class="grid lg:grid-cols-3 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">                
                 <!-- PROFILE -->
-                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center cols-span-3 lg:col-span-2">
-                        <div class="flex items-center space-x-4">
-                            
-                            <img class="w-32 h-32" src="/assets/Aset_Aplikasi_Personal_4.png" alt="">
-                            
-                            <div class="flex flex-col">
-                                <span class="text-accent text-3xl font-black font-heading">Aristo</span>
-                                <span class="text-accent text-sm font-medium font-body">yuukiyuna</span>
+                <div class="flex justify-between p-4 bg-secondary dark:bg-gray-800 rounded-lg drop-shadow-default items-center cols-span-3 lg:col-span-2">
+                        <div class="flex items-center space-x-4">                            
+                            <!-- Profile Picture with Click to Change -->
+                            <div class="relative cursor-pointer" id="profilePictureContainer">
+                                <div class="w-32 h-32 rounded-full 
+                                border-4 border-gray-300 dark:border-gray-300 hover:border-accent dark:hover:border-accent transition-colors duration-300 overflow-hidden 
+                                bg-gray-100 dark:bg-gray-500 flex items-center justify-center">
+                                    <img id="profilePicture" class="w-full h-full object-contain" 
+                                        src="/assets/Aset_Aplikasi_Personal_4.png" alt="Profile Picture">
+                                </div>
                             </div>
-                            
+                            <div class="flex flex-col">
+                                <span id="nickname" class="text-accent dark:text-primary text-3xl font-black font-heading">Login to see profile</span>
+                                <span id="username" class="text-accent dark:text-primary text-sm font-medium font-body">Please login first</span>
+                                <!-- Edit Profile Button -->
+                                <button id="editProfileBtn" class="mt-4 px-8 py-3 bg-accent text-secondary dark:text-secondary rounded-lg text-base font-medium hover:bg-accent/80 dark:hover:bg-accent/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed w-40" disabled>
+                                    Edit Profile
+                                </button>
+                            </div>
                         </div>
                         
-                </div>
+                </div>                
                 <!-- STREAK -->
-                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center">
+                <div class="flex justify-between p-4 bg-secondary dark:bg-gray-800 rounded-lg drop-shadow-default items-center">
                     <div class="flex flex-col">
-                        <span class="text-accent font-body text-sm ">Your Streak</span>
-                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
+                        <span class="text-accent dark:text-primary font-body text-sm">Your Streak</span>
+                        <span id="currentStreakDisplay" class="text-accent dark:text-primary font-heading text-2xl font-black">
+                            Login to see streak
+                        </span>
                     </div>
                     <img class="w-16 h-16" src="/assets/Aset_Aplikasi_Api.png" alt="">
-                    
                 </div>
 
             </div>
-        </section>
-
-        <section class=" mx-3 lg:mx-16">
-            <div class="grid lg:grid-cols-3 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">
-                <!-- BADGE -->
-                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center">
-                        <div class="flex items-center space-x-4">
-                            
-                            <img class="w-32 h-32" src="/assets/Aset_Aplikasi_Personal_4.png" alt="">
-                            
-                            <div class="flex flex-col">
-                                <span class="text-accent text-3xl font-black font-heading">Aristo</span>
-                                <span class="text-accent text-sm font-medium font-body">yuukiyuna</span>
-                            </div>
-                            
+        </section>        <!-- User's Graph Section -->
+        <section class="mx-3 lg:mx-16">
+            <div class="bg-white dark:bg-gray-800 rounded-lg drop-shadow-default p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                    <h3 class="text-accent dark:text-primary text-2xl font-bold font-heading">
+                        Productivity Overview
+                    </h3>
+                <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                        <button id="weekBtn" class="filter-btn flex-1 sm:flex-none px-4 py-2 bg-accent dark:bg-gray-700 text-white dark:text-primary rounded-lg text-sm font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors min-w-0">Week</button>
+                        <button id="monthBtn" class="filter-btn flex-1 sm:flex-none px-4 py-2 bg-accent dark:bg-gray-700 text-white dark:text-primary rounded-lg text-sm font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors min-w-0">Month</button>
+                        <button id="yearBtn" class="filter-btn flex-1 sm:flex-none px-4 py-2 bg-accent dark:bg-gray-700 text-white dark:text-primary rounded-lg text-sm font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors min-w-0">Year</button>
+                    </div>
+                </div>                <!-- Graph container -->
+                <div class="h-64 bg-gray-100 rounded-lg p-4 relative">
+                    <canvas id="productivityChart"></canvas>
+                    <!-- Data simulation notice -->
+                    <div id="graphNotice" class="absolute inset-0 flex items-center justify-center 
+                    bg-white bg-opacity-90 rounded-lg">
+                        <div class="text-center">
+                            <p class="text-accent dark:text-accent text-lg font-medium">📊 This data is simulated</p>
+                            <p class="text-gray-600 dark:text-gray-300 text-sm mt-1">Login to see your real productivity stats</p>
                         </div>
-                        
-                </div>
-                <!-- BADGE -->
-                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center">
-                    <div class="flex flex-col">
-                        <span class="text-accent font-body text-sm ">Your Streak</span>
-                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
                     </div>
-                    <img class="w-16 h-16" src="/assets/Aset_Aplikasi_Api.png" alt="">
-                    
                 </div>
-
-                <div class="flex justify-between p-4 bg-secondary rounded-lg drop-shadow-default items-center">
-                    <div class="flex flex-col">
-                        <span class="text-accent font-body text-sm ">Your Streak</span>
-                        <span class="text-accent font-heading text-2xl font-black">293 Days</span>
+                  <!-- Graph stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                    <div class="text-center">
+                        <p class="stat-value text-2xl font-bold text-accent dark:text-primary">85%</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Completion Rate</p>
                     </div>
-                    <img class="w-16 h-16" src="/assets/Aset_Aplikasi_Api.png" alt="">
-                    
+                    <div class="text-center">
+                        <p class="stat-value text-2xl font-bold text-accent dark:text-primary">42h</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">This Week</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="stat-value text-2xl font-bold text-accent dark:text-primary">18</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Tasks Done</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="stat-value text-2xl font-bold text-accent dark:text-primary">7.2</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300">Avg Hours/Day</p>
+                    </div>
                 </div>
-
             </div>
         </section>
-    </div>
-
-    <!-- Script.js -->
+    </div>    <!-- Profile Picture Selection Modal -->
+    <div id="profilePictureModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-full">
+            <div class="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white">Choose Profile Picture</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <i class="fa-solid fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="profile-option cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-image="/assets/Aset_Aplikasi_Personal_1.png">
+                    <img src="/assets/Aset_Aplikasi_Personal_1.png" alt="Avatar 1" class="w-full h-20 object-contain">
+                </div>
+                <div class="profile-option cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-image="/assets/Aset_Aplikasi_Personal_2.png">
+                    <img src="/assets/Aset_Aplikasi_Personal_2.png" alt="Avatar 2" class="w-full h-20 object-contain">
+                </div>
+                <div class="profile-option cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-image="/assets/Aset_Aplikasi_Personal_3.png">
+                    <img src="/assets/Aset_Aplikasi_Personal_3.png" alt="Avatar 3" class="w-full h-20 object-contain">
+                </div>
+                <div class="profile-option cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-image="/assets/Aset_Aplikasi_Personal_4.png">
+                    <img src="/assets/Aset_Aplikasi_Personal_4.png" alt="Avatar 4" class="w-full h-20 object-contain">
+                </div>
+                <div class="profile-option cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-image="/assets/Aset_Aplikasi_Personal_5.png">
+                    <img src="/assets/Aset_Aplikasi_Personal_5.png" alt="Avatar 5" class="w-full h-20 object-contain">
+                </div>
+                <div class="profile-option cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-image="/assets/Aset_Aplikasi_Personal_6.png">
+                    <img src="/assets/Aset_Aplikasi_Personal_6.png" alt="Avatar 6" class="w-full h-20 object-contain">
+                </div>
+            </div>
+            
+            <div class="flex justify-end space-x-3">
+                <button id="cancelProfileChange" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors">
+                    Cancel
+                </button>
+                <button id="saveProfilePicture" class="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/80 transition-colors" disabled>
+                    Save Changes
+                </button>            </div>
+        </div>
+    </div><!-- Script.js -->
     <script src="script.js"></script>
+    
+    <!-- Profile Authentication and Data Loading Script -->
+    <script>        // Check authentication status and load user data
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("Profile page loaded");
+            
+            // Initialize dark mode detection
+            initDarkModeDetection();
+            
+            // Check if user is logged in
+            const token = localStorage.getItem('jwtToken');
+            const userId = localStorage.getItem('userId');
+            
+            console.log("Token:", token ? "Found" : "Not found");
+            console.log("UserId:", userId ? userId : "Not found");
+              if (token && userId) {
+                // User is logged in, load their data
+                loadUserProfile(userId, token);
+                loadUserStreak(userId, token);
+                enableProfileFeatures();
+                hideGraphNotice();
+            } else {
+                // User not logged in, show default message
+                console.log("User not logged in - showing default messages");
+                disableProfileFeatures();
+                showGraphNotice();
+            }
+            
+            // Initialize profile picture modal functionality
+            initProfilePictureModal();
+        });
+
+        // Enable profile features for logged-in users
+        function enableProfileFeatures() {
+            const editBtn = document.getElementById('editProfileBtn');
+            const profileContainer = document.getElementById('profilePictureContainer');
+            
+            if (editBtn) {
+                editBtn.disabled = false;
+                editBtn.addEventListener('click', openEditProfileModal);
+            }
+            
+            if (profileContainer) {
+                profileContainer.addEventListener('click', openProfilePictureModal);
+            }
+        }
+
+        // Disable profile features for non-logged-in users
+        function disableProfileFeatures() {
+            const editBtn = document.getElementById('editProfileBtn');
+            const profileContainer = document.getElementById('profilePictureContainer');
+            
+            if (editBtn) {
+                editBtn.disabled = true;
+            }
+            
+            if (profileContainer) {
+                profileContainer.style.cursor = 'default';
+                profileContainer.addEventListener('click', function() {
+                    alert('Please login to change your profile picture');
+                });
+            }
+        }        // Open edit profile modal (placeholder for now)
+        function openEditProfileModal() {
+            alert('Edit Profile feature coming soon! For now, you can change your profile picture by clicking on it.');
+        }
+
+        // Show graph notice for non-logged-in users
+        function showGraphNotice() {
+            const notice = document.getElementById('graphNotice');
+            if (notice) {
+                notice.style.display = 'flex';
+            }
+        }
+
+        // Hide graph notice for logged-in users
+        function hideGraphNotice() {
+            const notice = document.getElementById('graphNotice');
+            if (notice) {
+                notice.style.display = 'none';
+            }
+        }
+
+        // Initialize profile picture modal functionality
+        function initProfilePictureModal() {
+            const modal = document.getElementById('profilePictureModal');
+            const closeBtn = document.getElementById('closeModal');
+            const cancelBtn = document.getElementById('cancelProfileChange');
+            const saveBtn = document.getElementById('saveProfilePicture');
+            const profileOptions = document.querySelectorAll('.profile-option');
+            
+            let selectedImage = null;
+            
+            // Close modal functions
+            function closeModal() {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                selectedImage = null;
+                saveBtn.disabled = true;                // Remove selection highlights
+                profileOptions.forEach(option => {
+                    option.classList.remove('ring-2', 'ring-accent', 'bg-accent/10', 'dark:bg-accent/20');
+                });
+            }
+            
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            
+            // Profile option selection
+            profileOptions.forEach(option => {
+                option.addEventListener('click', function() {                    // Remove previous selection
+                    profileOptions.forEach(opt => {
+                        opt.classList.remove('ring-2', 'ring-accent', 'bg-accent/10', 'dark:bg-accent/20');
+                    });
+                    
+                    // Add selection to clicked option
+                    this.classList.add('ring-2', 'ring-accent', 'bg-accent/10', 'dark:bg-accent/20');
+                    selectedImage = this.dataset.image;
+                    saveBtn.disabled = false;
+                });
+            });
+            
+            // Save profile picture
+            saveBtn.addEventListener('click', function() {
+                if (selectedImage) {
+                    const profilePicture = document.getElementById('profilePicture');
+                    profilePicture.src = selectedImage;
+                    
+                    // Save to localStorage for persistence
+                    localStorage.setItem('userProfilePicture', selectedImage);
+                    
+                    // TODO: Save to backend when available
+                    console.log('Profile picture changed to:', selectedImage);
+                    
+                    closeModal();
+                }
+            });
+        }
+
+        // Open profile picture modal
+        function openProfilePictureModal() {
+            const token = localStorage.getItem('jwtToken');
+            if (!token) {
+                alert('Please login to change your profile picture');
+                return;
+            }
+            
+            const modal = document.getElementById('profilePictureModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // Load user profile data
+        async function loadUserProfile(userId, token) {
+            try {
+                const response = await fetch(`http://localhost:8080/api/users/${userId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const userData = await response.json();
+                    console.log("User data loaded:", userData);
+                    
+                    // Update profile display
+                    const userNameElement = document.getElementById('nickname');
+                    const userUsernameElement = document.getElementById('username');
+                    
+                    if (userNameElement) {
+                        userNameElement.textContent = userData.nama || userData.username || 'User';
+                    }
+                    if (userUsernameElement) {
+                        userUsernameElement.textContent = `@${userData.username || 'username'}`;
+                    }
+                } else {
+                    console.error('Failed to load user profile:', response.status);
+                    // Keep default "Login to see profile" message
+                }
+            } catch (error) {
+                console.error('Error loading user profile:', error);
+                // Keep default "Login to see profile" message
+            }
+        }
+
+        // Load user streak data
+        async function loadUserStreak(userId, token) {
+            const streakElement = document.getElementById('currentStreakDisplay');
+            if (!streakElement) return;
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/users/${userId}/streak`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const streakData = await response.json();
+                    console.log("Streak data loaded:", streakData);
+                    
+                    // Update streak display
+                    const streakCount = streakData.currentStreak || 0;
+                    streakElement.textContent = `${streakCount} Days`;
+                    
+                    // Add visual feedback for good streaks
+                    if (streakCount > 0) {
+                        streakElement.classList.add('text-green-600');
+                        if (streakCount >= 7) {
+                            streakElement.classList.add('animate-pulse');
+                        }
+                    }
+                } else {
+                    console.error('Failed to load streak data:', response.status);
+                    streakElement.textContent = 'Error loading streak';
+                }
+            } catch (error) {
+                console.error('Error loading streak data:', error);
+                streakElement.textContent = 'Error loading streak';
+            }
+        }
+
+        // Record user interaction for streak (when user performs actions)
+        async function recordUserInteraction() {
+            const token = localStorage.getItem('jwtToken');
+            const userId = localStorage.getItem('userId');
+            
+            if (!token || !userId) {
+                console.warn('User not logged in - cannot record interaction');
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://localhost:8080/api/users/${userId}/record-interaction`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("User interaction recorded:", data);
+                    
+                    // Refresh streak display
+                    loadUserStreak(userId, token);
+                } else {
+                    console.error('Failed to record interaction:', response.status);
+                }
+            } catch (error) {
+                console.error('Error recording interaction:', error);
+            }
+        }        // Make recordUserInteraction available globally
+        window.recordUserInteraction = recordUserInteraction;
+
+        // Initialize dark mode detection and handling
+        function initDarkModeDetection() {
+            // Update chart theme immediately if chart exists
+            if (typeof updateChartTheme === 'function') {
+                updateChartTheme();
+            }
+            
+            // Listen for theme changes from dark.js
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        const isDark = document.documentElement.classList.contains('dark');
+                        console.log('Dark mode changed:', isDark);
+                        
+                        // Update chart theme
+                        if (typeof updateChartTheme === 'function') {
+                            updateChartTheme();
+                        }
+                        
+                        // Update any custom elements that need theme changes
+                        updateThemeElements(isDark);
+                    }
+                });
+            });
+            
+            // Observe changes to the html element's class attribute
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        }
+
+        // Update custom theme elements
+        function updateThemeElements(isDark) {
+            // Add any custom theme updates here if needed
+            console.log('Updating theme elements for', isDark ? 'dark' : 'light', 'mode');
+        }
+    </script>
+    
+    <!-- Chart.js Implementation -->
+    <script>
+        // Chart data for different time periods
+        const chartData = {
+            week: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                data: [6.5, 8.2, 7.1, 9.3, 6.8, 4.2, 5.7],
+                stats: { completion: '85%', total: '42h', tasks: '18', avg: '7.2' }
+            },
+            month: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                data: [38.5, 42.1, 39.8, 45.2],
+                stats: { completion: '78%', total: '165h', tasks: '72', avg: '6.8' }
+            },
+            year: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                data: [165, 142, 178, 156, 189, 167, 198, 176, 154, 187, 163, 145],
+                stats: { completion: '82%', total: '2020h', tasks: '864', avg: '7.1' }
+            }
+        };
+
+        let currentChart;
+        let currentPeriod = 'week';        // Initialize chart
+        function initChart() {
+            const ctx = document.getElementById('productivityChart').getContext('2d');
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            currentChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartData[currentPeriod].labels,
+                    datasets: [{
+                        label: 'Hours Worked',
+                        data: chartData[currentPeriod].data,
+                        borderColor: isDark ? '#60A5FA' : '#4F46E5',
+                        backgroundColor: isDark ? 'rgba(96, 165, 250, 0.1)' : 'rgba(79, 70, 229, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: isDark ? '#60A5FA' : '#4F46E5',
+                        pointBorderColor: isDark ? '#374151' : '#FFFFFF',
+                        pointBorderWidth: 2,
+                        pointRadius: 6,
+                        pointHoverRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                color: isDark ? '#D1D5DB' : '#666'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)'
+                            },
+                            ticks: {
+                                color: isDark ? '#D1D5DB' : '#666'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            updateStats();
+        }// Update chart colors for dark mode
+        function updateChartTheme() {
+            if (!currentChart) return;
+            
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            // Update chart colors
+            currentChart.options.scales.y.grid.color = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            currentChart.options.scales.y.ticks.color = isDark ? '#D1D5DB' : '#666';
+            currentChart.options.scales.x.grid.color = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+            currentChart.options.scales.x.ticks.color = isDark ? '#D1D5DB' : '#666';
+            
+            // Update line and point colors
+            currentChart.data.datasets[0].borderColor = isDark ? '#60A5FA' : '#4F46E5';
+            currentChart.data.datasets[0].backgroundColor = isDark ? 'rgba(96, 165, 250, 0.1)' : 'rgba(79, 70, 229, 0.1)';
+            currentChart.data.datasets[0].pointBackgroundColor = isDark ? '#60A5FA' : '#4F46E5';
+            currentChart.data.datasets[0].pointBorderColor = isDark ? '#374151' : '#FFFFFF';
+            
+            currentChart.update();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const stats = chartData[currentPeriod].stats;
+            const statElements = document.querySelectorAll('.stat-value');
+            
+            statElements[0].textContent = stats.completion;
+            statElements[1].textContent = stats.total;
+            statElements[2].textContent = stats.tasks;
+            statElements[3].textContent = stats.avg;
+        }
+
+        // Update chart data
+        function updateChart(period) {
+            currentPeriod = period;
+            
+            currentChart.data.labels = chartData[period].labels;
+            currentChart.data.datasets[0].data = chartData[period].data;
+            currentChart.update('active');
+            
+            updateStats();
+        }        // Button event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize chart
+            initChart();
+            
+            // Listen for dark mode changes
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        updateChartTheme();
+                    }
+                });
+            });
+            
+            // Observe changes to the html element's class attribute
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+            
+            // Filter button functionality
+            const buttons = {
+                weekBtn: 'week',
+                monthBtn: 'month',
+                yearBtn: 'year'
+            };
+              Object.keys(buttons).forEach(btnId => {
+                document.getElementById(btnId).addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    Object.keys(buttons).forEach(id => {
+                        const btn = document.getElementById(id);
+                        btn.classList.remove('bg-accent', 'text-secondary');
+                        btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-accent', 'dark:text-accent');
+                    });
+                    
+                    // Add active class to clicked button
+                    this.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-accent', 'dark:text-accent');
+                    this.classList.add('bg-accent', 'text-secondary');
+                    
+                    // Update chart
+                    updateChart(buttons[btnId]);
+                });
+            });
+        });
+    </script>
 
     
 
