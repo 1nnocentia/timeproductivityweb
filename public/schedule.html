@@ -710,6 +710,50 @@
         }
     }
 
+    function closeCategoryModal() {
+        const modal = document.getElementById('addCategoryModal');
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+
+    async function addCategory(event) {
+        // Mencegah halaman reload saat form di-submit
+        event.preventDefault(); 
+
+        const nameInput = document.getElementById('categoryNameInput');
+        const colorInput = document.getElementById('categoryColorInput');
+
+        const categoryName = nameInput.value;
+        const categoryColor = colorInput.value;
+
+        if (!categoryName) {
+            alert('Nama kategori tidak boleh kosong.');
+            return;
+        }
+
+        try {
+            // Panggil fungsi backend dari schedule_db.js untuk membuat kategori baru
+            const newCategory = await window.createKategoriBackend(categoryName, categoryColor);
+
+            if (newCategory) {
+                alert('Kategori berhasil ditambahkan!');
+                closeCategoryModal(); // Tutup modal setelah berhasil
+                
+                // Reset form input
+                nameInput.value = ''; 
+                colorInput.value = '#E29B9C';
+
+                // Panggil kembali fungsi displayCategories agar daftar kategori langsung ter-update
+                await displayCategories(); 
+            } else {
+                alert('Gagal menambahkan kategori. Periksa koneksi atau data Anda.');
+            }
+        } catch (error) {
+            console.error('Error adding category:', error);
+            alert('Terjadi kesalahan saat menambahkan kategori.');
+        }
+    }
     // --- DOMContentLoaded ---
     document.addEventListener('DOMContentLoaded', async function() {
         generateFullDayGrid();
@@ -739,7 +783,15 @@
             currentDate = new Date();
             updateCalendarView();
         });
-        
+
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+        const addCategoryModal = document.getElementById('addCategoryModal');
+        if (addCategoryBtn && addCategoryModal) {
+            addCategoryBtn.addEventListener('click', () => {
+                addCategoryModal.classList.remove('hidden');
+            });
+        }
+            
         const logoutButton = document.getElementById('logoutButton');
         if(logoutButton) logoutButton.addEventListener('click', window.handleLogout);
 

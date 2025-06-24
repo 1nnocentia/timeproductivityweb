@@ -230,6 +230,55 @@ async function fetchAndDisplayTodaySchedule() {
     }
 }
 
+/**
+ * Mengambil dan menampilkan aktivitas (event) yang sedang berlangsung saat ini.
+ */
+async function fetchAndDisplayOngoingActivities() {
+    const container = document.getElementById('ongoingActivitiesContainer');
+    if (!container) return;
+
+    if (!window.userId) {
+        container.innerHTML = '<div class="text-accent/50 text-center">Tidak ada aktivitas yang sedang berlangsung.</div>';
+        return;
+    }
+
+    try {
+        const response = await window.fetchProtected(`${window.BASE_URL}/data-jadwal`);
+        if (response) {
+            const allDataJadwal = await response.json();
+            
+            // Dapatkan waktu dan tanggal saat ini
+            const now = new Date();
+            const todayString = now.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            const currentTime = now.toTimeString().split(' ')[0]; // Format: HH:MM:SS
+
+            const ongoingEvents = allDataJadwal.filter(item => {
+                // Pastikan item adalah 'event' dan memiliki data yang diperlukan
+                if (!item.event || !item.event.tanggal || !item.event.jamMulai || !item.event.jamAkhir) {
+                    return false;
+                }
+
+                // Cek apakah event berlangsung hari ini dan sedang dalam rentang waktu
+                const isToday = item.event.tanggal === todayString;
+                const isTimeCorrect = item.event.jamMulai <= currentTime && item.event.jamAkhir >= currentTime;
+
+                return isToday && isTimeCorrect;
+            });
+
+            container.innerHTML = ''; // Kosongkan kontainer
+            if (ongoingEvents.length === 0) {
+                container.innerHTML = '<div class="text-accent/50 text-center">Tidak ada aktivitas yang sedang berlangsung.</div>';
+            } else {
+                ongoingEvents.forEach(item => container.appendChild(createScheduleElement(item)));
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching ongoing activities:", error);
+        container.innerHTML = '<div class="text-red-500 text-center">Gagal memuat aktivitas.</div>';
+    }
+}
+
+
 
 // --- FUNGSI-FUNGSI HANDLER INTERAKSI PENGGUNA ---
 
@@ -476,15 +525,20 @@ document.addEventListener('DOMContentLoaded', function() {
         recordUserInteraction(); // Ini akan memanggil fetchAndDisplayStreak di dalamnya
         fetchAndDisplayPrioritasProgress();
         fetchAndDisplayTodaySchedule();
+        fetchAndDisplayOngoingActivities();
     } else {
         // Tampilkan state default jika belum login
         fetchAndDisplayGreeting(); // Tampilkan sapaan default
         fetchAndDisplayStreak(); // Tampilkan pesan login
         fetchAndDisplayPrioritasProgress(); // Tampilkan progress 0%
         fetchAndDisplayTodaySchedule(); // Tampilkan pesan login
+        fetchAndDisplayOngoingActivities();
     }
     
     // Inisialisasi UI Slider Prioritas
     const info = document.getElementById("gem-info");
     if (info) info.innerText = "Pilih level prioritas";
+
+    // Refresh ongoing activities
+    setInterval(fetchAndDisplayOngoingActivities, 6000);
 });
