@@ -101,37 +101,7 @@ const gemData = [
 
 let currentLevel = -1;
 
-window.setLevel = function(level) {
-    if (currentLevel === level) {
-        return;
-    }
 
-    const fillWidths = [5, 35, 70, 100];
-    const sliderFill = document.getElementById("slider-fill");
-    if (sliderFill) {
-        sliderFill.style.width = `${fillWidths[level]}%`;
-        sliderFill.style.backgroundColor = gemData[level].color;
-    }
-
-    for (let i = 0; i < gemData.length; i++) {
-        const gemImage = document.getElementById(`gem-${i}`);
-        if (gemImage) {
-            if (i === level) {
-                gemImage.src = gemData[i].active;
-            } else {
-                gemImage.src = gemData[i].inactive;
-            }
-        }
-    }
-
-    const info = document.getElementById("gem-info");
-    if (info) {
-        info.innerText = `${gemData[level].description}`;
-        info.style.color = gemData[level].color;
-    }
-    
-    currentLevel = level;
-}
 
 // Fungsi untuk mendapatkan nama
 async function fetchAndDisplayGreeting() {
@@ -150,7 +120,7 @@ async function fetchAndDisplayGreeting() {
         const response = await window.fetchProtected(`${window.BASE_URL}/users/${window.userId}`);
         if (response) {
             const userData = await response.json();
-            console.log("Data user yang diterima dari server:", userData);
+            
             const displayName = userData.nama || userData.username;
 
             if (userData && displayName) {
