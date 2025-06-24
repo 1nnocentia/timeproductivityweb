@@ -10,7 +10,7 @@
 
     <!-- google fonts here -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet">   
     <style>
         .toggle-checkbox {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -28,51 +28,49 @@
     </style>
     <title>Login - Clockin</title>
 </head>
-<body class="font-body transition-color bg-primary duration-300">
+<body class="font-body transition-colors duration-300">    
     <!-- Header Section -->
     <header class="fixed w-full top-0 z-50 text-text-100 backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
-                <!-- CLOCKIN -->
-                <div class="flex items-center">
-                    <span class="text-xl font-extrabold font-heading dark:text-primary">CLOCKIN</span>
+
+                <div class="flex items-center text-accent dark:text-primary">
+                    <span class="text-xl font-extrabold font-heading">CLOCKIN</span>
                 </div>
-                <!-- Theme Toggle & Menu Toggle -->
-                <div class="flex items-center space-x-4">
-                    <button id="themeToggle" class="">
-                        <i class="fa-solid fa-moon text-accent dark:text-primary"></i>
-                    </button>
-                    
-                    <button class="md:hidden p-2" id="menuToggle">
-                        <div class="w-6 h-5 flex flex-col justify-between">
-                            <span class="w-full bg-gray-600 dark:bg-gray-400 h-0.5 transition-all"></span>
-                        </div>
+
+                <div class="flex items-center">
+                    <!-- Theme Toggle Button -->
+                    <button id="themeToggle" class="p-2 rounded-lg transition-colors">
+                        <i class="fa-solid fa-moon text-gray-900 dark:text-gray-100"></i>
                     </button>
                 </div>
             </nav>
-            </div>
-        </header>
-        <!-- Login Box -->
-        <section class="bg-primary dark:bg-gray-500 min-h-screen flex items-center justify-center px-4 py-16 sm:py-24">
+        </div>
+    </header>       
+    <!-- Login Box -->        
+    <section class="bg-primary dark:bg-gray-800 min-h-screen flex items-center justify-center px-4 py-16 sm:py-24">
         <div class="w-full max-w-4xl mx-auto">
-            <div class="flex flex-col md:flex-row bg-white/90 dark:bg-gray-700 rounded-2xl shadow-lg overflow-hidden">
+            <div class="flex flex-col md:flex-row bg-white dark:bg-gray-600 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <!-- Left side - Login Form -->
                 <div class="w-full md:w-1/2 p-6 sm:p-8">
-                    <h3 class="text-gray-800 dark:text-gray-100 text-center text-2xl font-heading font-bold mb-4">Welcome Back</h3>
-                    <p class="text-gray-600 dark:text-gray-100 mb-8 text-center text-sm sm:text-base">Helping and boost your productivity with Clockin.<br>
-                        Get started for free.</p>
-                    
+                    <h3 class="text-gray-800 dark:text-gray-100 text-center text-2xl font-heading font-bold mb-4">
+                        Welcome Back
+                    </h3>
+                    <p class="text-gray-600 dark:text-gray-100 mb-8 text-center text-sm sm:text-base">
+                        Helping and boost your productivity with Clockin.<br>
+                        Get started for free.
+                    </p>
                     <form class="space-y-6">
                         <!-- Username -->
-                        <div>
+                        <div>                            
                             <input type="text" id="username" placeholder="Username" required 
-                                class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
+                                class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none">
                         </div>
                         
                         <!-- Password -->
-                        <div class="relative">
+                        <div class="relative">                            
                             <input type="password" id="password" placeholder="Password" required
-                                class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500">
+                                class="w-full px-4 py-3 rounded-full text-gray-800 dark:text-gray-100 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 focus:outline-none">
                             <button type="button" onclick="togglePassword()"
                                 class="absolute right-4 top-1/2 transform -translate-y-1/2 
                                 text-gray-600 dark:text-gray-300 transition-colors
@@ -96,29 +94,36 @@
                         </script>
                         
                         <!-- Remember Me & Forgot Password -->
-                        <div class="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0">                            <label class="flex items-center">
+                        <div class="flex flex-col sm:flex-row justify-between gap-4 sm:gap-0">                            
+                            <label class="flex items-center">
                                 <div class="relative inline-block w-8 h-4 mr-2 align-middle select-none">
                                     <input type="checkbox" id="rememberMe"
-                                        class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-800 appearance-none cursor-pointer transition-transform duration-200 ease-in-out left-0 top-0"
+                                        class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-2 border-gray-300 dark:border-gray-800 appearance-none cursor-pointer transition-transform duration-200 ease-in-out left-0 top-0"
                                     />
                                     <div class="toggle-label block overflow-hidden h-4 rounded-full bg-gray-300 dark:bg-gray-800 cursor-pointer"></div>
                                 </div>
                                 <span class="text-sm text-gray-600 dark:text-white">Remember me</span>
                             </label>
-                            <a href="../public/forgot_password.html" class="text-sm text-gray-500 dark:text-gray-400/70 hover:text-accent dark:hover:text-primary transition-colors">Forgot password?</a>
-                        </div>
-                        
-                        <!-- Submit -->
-                        <button type="submit" 
-                            class="w-full font-semibold bg-accent dark:bg-primary text-white dark:text-gray-700 py-3 rounded-full focus:ring-2 focus:ring-offset-2 focus:ring-accent dark:focus:ring-accent">
+                            <a href="../public/forgot_password.html" class="text-sm text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Forgot password?</a>
+                        </div>                        <button type="submit" 
+                            class="
+                            w-full font-semibold 
+                            bg-accent/80 hover:bg-accent 
+                            dark:bg-primary/70 dark:hover:bg-primary
+                            text-white dark:text-accent/70
+                            py-3 rounded-full 
+                            focus:ring-2 focus:ring-offset-2 focus:ring-accent transition-colors">
                             Login
                         </button>
                     </form>
                     <!-- Register link -->
-                    <div class="mt-8 text-center">
-                        <p class="text-gray-600 dark:text-gray-100">
+                    <div class="mt-8 text-center">                          
+                        <p class="text-gray-600 dark:text-gray-300">
                             Not a member? 
-                            <a href="../public/register.html" class="text-white font-semibold hover:text-primary transition-colors">Register now</a>
+                            <a href="../public/register.html" class="
+                            text-accent/70 hover:text-accent font-semibold 
+                            dark:text-primary dark:hover:text-primary/80 
+                            transition-colors">Register now</a>
                         </p>
                     </div>
                 </div>
@@ -131,31 +136,42 @@
         </section>
 
         <script src="auth.js"></script>
-        <script>
-            // Theme toggle functionality
+        <script>            // Theme toggle functionality
             document.addEventListener('DOMContentLoaded', function() {
-                const themeToggle = document.getElementById('themeToggle');
+                // Check if user is already logged in
+                const token = localStorage.getItem('jwtToken');
+                const userLoggedIn = localStorage.getItem('userLoggedIn');
+                  if (token && userLoggedIn === 'true') {
+                    // User is already logged in, redirect to dashboard
+                    window.location.href = 'profile.html';
+                    return;
+                }                const themeToggle = document.getElementById('themeToggle');
                 const html = document.documentElement;
-                const icon = themeToggle.querySelector('i');
-
-                // Check for saved theme preference
-                if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    html.classList.add('dark');
-                    icon.classList.replace('fa-moon', 'fa-sun');
+                const icon = themeToggle.querySelector('i');                // Function to update icon
+                function updateIcon(isDark) {
+                    if (isDark) {
+                        icon.className = 'fa-solid fa-sun text-white';
+                    } else {
+                        icon.className = 'fa-solid fa-moon text-gray-900 dark:text-gray-100';
+                    }
                 }
 
-                // Toggle theme
+                // Check for saved theme preference or system preference
+                const savedTheme = localStorage.getItem('theme');
+                const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                
+                if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                    html.classList.add('dark');
+                    updateIcon(true);
+                } else {
+                    html.classList.remove('dark');
+                    updateIcon(false);
+                }                // Toggle theme on button click
                 themeToggle.addEventListener('click', function() {
-                    html.classList.toggle('dark');
-                    
-                    // Update icon
-                    if (html.classList.contains('dark')) {
-                        icon.classList.replace('fa-moon', 'fa-sun');
-                        localStorage.theme = 'dark';
-                    } else {
-                        icon.classList.replace('fa-sun', 'fa-moon');
-                        localStorage.theme = 'light';
-                    }
+                    const isDark = html.classList.toggle('dark');
+                    updateIcon(isDark);
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                    console.log('Theme toggled to:', isDark ? 'dark' : 'light'); // Debug log
                 });
 
                 // Load saved credentials if remember me was checked
@@ -202,6 +218,18 @@
                 const username = document.getElementById('username').value;
                 const password = document.getElementById('password').value;
                 const rememberMe = document.getElementById('rememberMe').checked;
+                const submitBtn = document.querySelector('button[type="submit"]');
+
+                // Validate inputs
+                if (!username.trim() || !password.trim()) {
+                    alert('Please enter both username and password');
+                    return;
+                }
+
+                // Show loading state
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Logging in...';
+                submitBtn.disabled = true;
 
                 // Save or clear credentials based on remember me checkbox
                 saveCredentials(username, password, rememberMe);
@@ -221,14 +249,25 @@
                     if (response.ok) {
                         const data = await response.json();
                         
-                        // Save JWT token
+                        // Save JWT token and user information
                         localStorage.setItem('jwtToken', data.token);
                         localStorage.setItem('userId', data.userId);
+                        localStorage.setItem('userLoggedIn', 'true');
                         
-                        alert('Login successful!');
-                        window.location.href = 'index.html'; // Redirect to dashboard
+                        // Show success message briefly before redirect
+                        submitBtn.textContent = 'Login Successful! Redirecting...';
+                        
+                        // Redirect to user dashboard after a brief delay
+                        setTimeout(() => {
+                            window.location.href = 'profile.html'; // Redirect to user dashboard
+                        }, 1500);
                     } else {
                         const data = await response.json();
+                        
+                        // Reset button state
+                        submitBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        
                         alert('Login failed: ' + (data.message || 'Please check your credentials'));
                         
                         // If login failed, clear saved credentials
@@ -238,6 +277,10 @@
                         }
                     }
                 } catch (error) {
+                    // Reset button state on error
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    
                     alert('Error during login: ' + error.message);
                 }
             });
