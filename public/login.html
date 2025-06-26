@@ -143,7 +143,7 @@
                 const userLoggedIn = localStorage.getItem('userLoggedIn');
                   if (token && userLoggedIn === 'true') {
                     // User is already logged in, redirect to dashboard
-                    window.location.href = 'profile.html';
+                    window.location.href = 'user_dashboard.html';
                     return;
                 }                const themeToggle = document.getElementById('themeToggle');
                 const html = document.documentElement;
@@ -259,7 +259,7 @@
                         
                         // Redirect to user dashboard after a brief delay
                         setTimeout(() => {
-                            window.location.href = 'profile.html'; // Redirect to user dashboard
+                            window.location.href = 'user_dashboard.html'; // Redirect to user dashboard
                         }, 1500);
                     } else {
                         const data = await response.json();
