@@ -78,7 +78,7 @@
                     </button>
 
                      <!-- Logout Icon -->
-                    <button title="Logout">
+                    <button id="logoutButton" title="Logout">
                         <i class="fa-solid fa-right-from-bracket dark:text-primary text-accent hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
@@ -263,6 +263,11 @@
                 disableProfileFeatures();
                 showGraphNotice();
             }
+
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton && typeof window.handleLogout === 'function') {
+                logoutButton.addEventListener('click', window.handleLogout);
+            }
             
             // Initialize profile picture modal functionality
             initProfilePictureModal();
@@ -350,20 +355,40 @@
             });
             
             // Save profile picture
-            saveBtn.addEventListener('click', function() {
+            saveBtn.addEventListener('click', async function() {
                 if (selectedImage) {
-                    const profilePicture = document.getElementById('profilePicture');
-                    profilePicture.src = selectedImage;
-                    
-                    // Save to localStorage for persistence
-                    localStorage.setItem('userProfilePicture', selectedImage);
-                    
-                    // TODO: Save to backend when available
-                    console.log('Profile picture changed to:', selectedImage);
-                    
-                    closeModal();
+                    const userUId = localStorage.getItem('userId');
+                    if (!userUId) {
+                        console.error('Error: User ID not found. Please log in again.');
+                        return;
+                    }
+                    try {
+                    // Panggil fungsi handleUpdateUser dari auth.js
+                    // Kita hanya mengirim userId dan path gambar (selectedImage)
+                    // Parameter lain diisi null karena tidak diubah
+                    const response = await window.handleUpdateUser(userId, null, null, null, null, selectedImage);
+
+                    if (response) { // Jika handleUpdateUser mengembalikan response
+                        // Update gambar di halaman secara langsung
+                        const profilePicture = document.getElementById('profilePicture');
+                        profilePicture.src = selectedImage;
+
+                        // Hapus item localStorage lama, karena data sekarang dari database
+                        localStorage.removeItem('userProfilePicture');
+
+                        alert('Profile picture updated successfully!');
+                        closeModal();
+                    } else {
+                        // handleUpdateUser biasanya akan menampilkan error sendiri
+                        alert('Failed to update profile picture. Please check console for details.');
+                    }
+
+                } catch (error) {
+                    console.error('Error saving profile picture:', error);
+                    alert('An error occurred while saving your profile picture.');
                 }
-            });
+            }
+        });
         }
 
         // Open profile picture modal
@@ -403,6 +428,16 @@
                     }
                     if (userUsernameElement) {
                         userUsernameElement.textContent = `@${userData.username || 'username'}`;
+                    }
+
+                    const profilePictureElement = document.getElementById('profilePicture');
+                    if (userData.profilePictureId && profilePictureElement) {
+                        const basePath = "../assets/";
+                        const imageName = userData.profilePictureId; // misal: "Aset_Aplikasi_Personal_1.png"
+                        profilePictureElement.src = basePath + imageName;
+                    } else if (profilePictureElement) {
+                        // Fallback ke gambar default jika user belum mengatur foto profil
+                        profilePictureElement.src = '/assets/Aset_Aplikasi_Personal_1.png';
                     }
                 } else {
                     console.error('Failed to load user profile:', response.status);

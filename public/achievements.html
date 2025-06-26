@@ -75,7 +75,7 @@
                     </button>
 
                     <!-- Logout Icon -->
-                    <button title="Logout">
+                    <button id="logoutButton" title="Logout">
                         <i class="fa-solid fa-right-from-bracket text-accent dark:text-primary hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
@@ -103,7 +103,7 @@
                         <div class="flex items-center space-x-4">
                             
                             <div class="w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-600 overflow-hidden flex-shrink-0">
-                                <img class="w-full h-full object-cover" src="../assets/Aset_Aplikasi_Personal_4.png" alt="">
+                                <img id="profilePicture" class="w-full h-full object-cover" src="../assets/Aset_Aplikasi_Personal_1.png" alt="">
                             </div>
                             
                             <div class="flex flex-col">
@@ -150,7 +150,7 @@
                             <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 tracking-widest uppercase">STREAK</div>
                         </div>
                     </div>                    <!-- Card Footer -->
-                    <div id="achievement-streak-7-status" class="px-4 py-2 border-t border-gray-200 dark:border-gray-600">
+                    <div id="achievement-streak-7-status"  class="px-4 py-2 border-t border-gray-200 dark:border-gray-600 dark:text-white">
                         <div class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
                     </div>
                 </div>                
@@ -173,8 +173,8 @@
                             <div class="text-xs font-semibold text-gray-500 dark:text-gray-400 tracking-widest uppercase">STREAK</div>
                         </div>
                     </div>                    <!-- Card Footer -->
-                    <div class="px-4 py-2 border-t border-gray-200 dark:border-gray-600">
-                        <div id="achievement-streak-30-status" class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
+                    <div id="achievement-streak-30-status" class="px-4 py-2 border-t border-gray-200 dark:border-gray-600 dark:text-white" style="text-align: center;">
+                        <div class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
                     </div>
                 </div>                
                 <!-- 100 Days Streak Badge -->
@@ -196,8 +196,8 @@
                         </div>
                     </div>
                     <!-- Card Footer -->
-                    <div class="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 px-4 py-2 border-t border-gray-200 dark:border-gray-600">
-                        <div id="achievement-streak-100-status" class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
+                     <div id="achievement-streak-100-status" class="px-4 py-2 border-t border-gray-200 dark:border-gray-600 dark:text-white" style="text-align: center;">
+                        <div class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
                     </div>
                 </div>                <!-- 365 Days Streak Badge -->
                 <div id="achievement-streak-365" class="achievement-card bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
@@ -218,8 +218,8 @@
                         </div>
                     </div>
                     <!-- Card Footer -->
-                    <div class="bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 px-4 py-2 border-t border-gray-200 dark:border-gray-600">
-                        <div id="achievement-streak-365-status" class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
+                    <div id="achievement-streak-365-status" class="px-4 py-2 border-t border-gray-200 dark:border-gray-600 dark:text-white" style="text-align: center;">
+                        <div class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
                     </div>
                 </div>                
                 
@@ -241,7 +241,7 @@
                         </div>
                     </div>
                     <!-- Card Footer -->
-                    <div id="achievement-first-task-status" class="bg-gradient-to-r from-red-50 to-red-100 dark:from-red-900/20 dark:to-red-800/20 px-4 py-2 border-t border-gray-200 dark:border-gray-600">
+                    <div id="achievement-first-task-status" class="px-4 py-2 border-t border-gray-200 dark:border-gray-600 dark:text-white" style="text-align: center;">
                         <div class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
                     </div>
                 </div>                
@@ -263,7 +263,7 @@
                         </div>
                     </div>
                     <!-- Card Footer -->
-                    <div id="achievement-productive-week-status" class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 px-4 py-2 border-t border-gray-200 dark:border-gray-600">
+                    <div id="achievement-productive-week-status" class="px-4 py-2 border-t border-gray-200 dark:border-gray-600 dark:text-white" style="text-align: center;">
                         <div class="text-xs text-gray-600 dark:text-gray-400 text-center">Unlocked</div>
                     </div>
                 </div>
@@ -271,9 +271,8 @@
             </div>
         </section>
     </div>    <!-- Scripts -->
-    <!-- <script src="auth.js"></script> -->
-    <!-- <script src="achievements.js"></script> -->
-    <!-- <script src="script.js"></script> -->
+    <script src="auth.js"></script>
+    <script src="achievements.js"></script>
     <script src="dark.js"></script>
     <style>
         /* Custom styles for achievement cards */

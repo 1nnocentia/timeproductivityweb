@@ -459,7 +459,7 @@
   <aside class="w-full lg:w-80 bg-white dark:bg-gray-700 rounded-xl shadow p-3 sm:p-5 drop-shadow-default h-full flex flex-col overflow-hidden">
     <div class="flex-1 overflow-y-auto min-h-0">
       <h2 class="text-xl sm:text-2xl font-heading font-bold mb-2 text-accent-500 dark:text-white">CATEGORY</h2>
-      <button id="addCategoryBtn" class="text-accent-500 dark:text-accent text-left text-sm mb-2 hover:text-accent-600 dark:hover:text-accent-300">+ add category</button>
+      <button id="addCategoryBtn" class="text-accent dark:text-primary text-left text-sm mb-2 hover:text-accent-600 dark:hover:text-accent-300">+ Add Category</button>
       <!-- No activity type or form here -->
       <div id="categoryList" class="overflow-y-auto"></div>
     </div>
@@ -571,29 +571,37 @@
     </div>
 </div>
 <!-- Add Category Modal -->
-<div id="addCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center z-50 hidden">
-  <div class="bg-white rounded-lg p-6 max-w-xs w-full mx-4 mb-4">
-    <div class="flex justify-between items-center mb-4">
-      <span class="text-accent font-heading text-xl font-black">Add Category</span>
-      <button onclick="closeCategoryModal()">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-    <form id="categoryForm" class="space-y-4" onsubmit="addCategory(event)">
-      <div>
-        <label class="block text-accent/90 mb-1 text-sm font-medium font-body">Category Name</label>
-        <input type="text" id="categoryNameInput" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" required>
-      </div>
-      <div>
-        <label class="block text-accent/90 mb-1 text-sm font-medium font-body">Pick Color</label>
-        <input type="color" id="categoryColorInput" value="#E29B9C" class="w-10 h-10 p-0 border-0 bg-transparent cursor-pointer">
-      </div>
-      <div>
-        <button type="submit" class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default w-full">
-          Add
+<div id="addCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+  <div class="flex items-center justify-center min-h-full p-4">
+    <div class="bg-white dark:bg-gray-700 rounded-lg p-6 max-w-xs w-full shadow-xl transform transition-all duration-300 ease-out" style="transform: scale(0.95); opacity: 0;">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-accent dark:text-white font-heading text-xl font-black">Add Category</span>
+        <button onclick="closeCategoryModal()" class="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded transition-colors">
+          <i class="fa-solid fa-xmark text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white"></i>
         </button>
       </div>
-    </form>
+      <form id="categoryForm" class="space-y-4" onsubmit="addCategory(event)">
+        <div>
+          <label class="block text-accent dark:text-white mb-1 text-sm font-medium font-body">Category Name</label>
+          <input type="text" id="categoryNameInput" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 bg-white dark:bg-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+        </div>
+        <div>
+          <label class="block text-accent dark:text-white mb-1 text-sm font-medium font-body">Pick Color</label>
+          <div class="flex items-center gap-2">
+            <input type="color" id="categoryColorInput" value="#E29B9C" class="w-12 h-10 border border-gray-300 dark:border-gray-600 rounded cursor-pointer">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Choose category color</span>
+          </div>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeCategoryModal()" class="flex-1 py-2 px-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+            Cancel
+          </button>
+          <button type="submit" class="flex-1 py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default hover:bg-accent/90 transition-colors">
+            Add
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
   <!-- <script src="auth.js"></script> -->
@@ -1252,10 +1260,33 @@
         }
     }
 
+    function openCategoryModal() {
+        const modal = document.getElementById('addCategoryModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            // Add animation after modal is shown
+            setTimeout(() => {
+                const modalContent = modal.querySelector('div > div');
+                if (modalContent) {
+                    modalContent.style.transform = 'scale(1)';
+                    modalContent.style.opacity = '1';
+                }
+            }, 10);
+        }
+    }
+
     function closeCategoryModal() {
         const modal = document.getElementById('addCategoryModal');
         if (modal) {
-            modal.classList.add('hidden');
+            const modalContent = modal.querySelector('div > div');
+            if (modalContent) {
+                modalContent.style.transform = 'scale(0.95)';
+                modalContent.style.opacity = '0';
+            }
+            // Hide modal after animation completes
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
         }
     }
 
@@ -1393,8 +1424,13 @@
         const addCategoryBtn = document.getElementById('addCategoryBtn');
         const addCategoryModal = document.getElementById('addCategoryModal');
         if (addCategoryBtn && addCategoryModal) {
-            addCategoryBtn.addEventListener('click', () => {
-                addCategoryModal.classList.remove('hidden');
+            addCategoryBtn.addEventListener('click', openCategoryModal);
+            
+            // Close modal when clicking outside
+            addCategoryModal.addEventListener('click', (e) => {
+                if (e.target === addCategoryModal) {
+                    closeCategoryModal();
+                }
             });
         }
             
