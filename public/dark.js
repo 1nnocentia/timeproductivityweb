@@ -12,13 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('theme');
     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     
-    // Set initial theme
+    // Set initial theme - default to light mode if no preference
     if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
         html.classList.add('dark');
         updateIcon(true);
+        console.log('Initial theme: dark');
     } else {
         html.classList.remove('dark');
         updateIcon(false);
+        console.log('Initial theme: light');
     }
     
     // Update toggle button icon
@@ -26,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const icon = themeToggle.querySelector('i');
         if (icon) {
             if (isDark) {
-                icon.className = 'fas fa-sun text-white';
+                icon.className = 'fa-solid fa-sun text-white dark:text-white';
             } else {
-                icon.className = 'fas fa-moon text-gray-600';
+                icon.className = 'fa-solid fa-moon text-gray-600 dark:text-white';
             }
         }
     }
@@ -53,9 +55,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add click event to toggle button
     themeToggle.addEventListener('click', function(e) {
         e.preventDefault();
+        e.stopPropagation();
+        console.log('Theme toggle button clicked');
         toggleTheme();
     });
     
     // Global toggle function
     window.toggleDarkMode = toggleTheme;
+    
+    // Force light mode function (for debugging)
+    window.forceLightMode = function() {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        updateIcon(false);
+        console.log('Forced to light mode');
+    };
+    
+    // Force dark mode function (for debugging)
+    window.forceDarkMode = function() {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        updateIcon(true);
+        console.log('Forced to dark mode');
+    };
 });

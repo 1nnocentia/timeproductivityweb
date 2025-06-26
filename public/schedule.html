@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth h-screen overflow-hidden">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,101 +9,209 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Cinzel:wght@400;700&display=swap" rel="stylesheet" />
   <title>Clockin</title>
+  
+  <style>
+    /* Enhanced calendar animations */
+    @keyframes pulse-line {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(0.8); }
+    }
+    
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2); }
+      50% { transform: scale(1.1); box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.5), 0 6px 12px rgba(0, 0, 0, 0.3); }
+    }
+    
+    @keyframes fade-in {
+      0% { opacity: 0; transform: translateY(-10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Grid cell hover effects */
+    .calendar-cell {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .calendar-cell::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .calendar-cell:hover::before {
+      left: 100%;
+    }
+    
+    /* Custom scrollbar for mobile */
+    .calendar-scroll::-webkit-scrollbar {
+      height: 4px;
+    }
+    
+    .calendar-scroll::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+    }
+    
+    .calendar-scroll::-webkit-scrollbar-thumb {
+      background: rgba(59, 130, 246, 0.5);
+      border-radius: 2px;
+    }
+    
+    .calendar-scroll::-webkit-scrollbar-thumb:hover {
+      background: rgba(59, 130, 246, 0.7);
+    }
+    
+    /* Perfect alignment for time labels and grid cells */
+    .time-label-cell, .calendar-grid-cell {
+      min-height: 2rem; /* 32px for mobile */
+      max-height: 2rem;
+      line-height: 1;
+      box-sizing: border-box !important;
+    }
+    
+    @media (min-width: 640px) {
+      .time-label-cell, .calendar-grid-cell {
+        min-height: 2.5rem; /* 40px for desktop */
+        max-height: 2.5rem;
+      }
+    }
+    
+    /* Ensure no extra spacing on grid container */
+    #calendarGrid {
+      line-height: 1;
+    }
+    
+    #time-labels-container {
+      line-height: 1;
+    }
+  </style>
 </head>
 
-<body class="font-sans transition-color bg-primary duration-300 text-text-100">
-  <!-- Header Section -->
-  <header class="fixed w-full top-0 z-50 bg-accent-900 text-text-100 backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
-    <div class="container mx-auto px-4">
-      <nav class="flex justify-between items-center py-4">
-        <div class="flex items-center">
-          <span class="text-xl font-extrabold font-heading">CLOCKIN</span>
-        </div>
+<body class="font-sans transition-colors bg-primary dark:bg-gray-600 duration-300 h-screen overflow-hidden">    <!-- Header Section -->
+    <!-- Header Section -->
+    <header class="fixed w-full top-0 z-50 backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
 
-        <ul class="hidden md:flex space-x-8">
-          <li><a href="user_dashboard.html" class="text-accent hover:text-accent/80 transition-colors">Dashboard</a></li>
-          <li><a href="schedule.html" class="text-accent hover:text-accent/80 transition-colors">Schedule</a></li>
-          <li><a href="achievements.html" class="text-accent hover:text-accent/80 transition-colors">Achievement</a></li>
-          <li><a href="#friends" class="text-accent hover:text-accent/80 transition-colors">Friends</a></li>
-        </ul>
+                <div class="flex items-center">
+                    <span class="text-xl text-accent dark:text-primary font-extrabold font-heading">CLOCKIN</span>
+                </div>
 
-        <div class="flex items-center space-x-4">
-          <button title="Profile">
-            <a href="/public/profile.html"><i class="fa-solid fa-user text-accent  hover:text-accent/80 
-            dark:hover:text-accent/80 transition-colors"></i></a>
-          </button>
-          <button title="Settings"><i class="fa-solid fa-gear text-accent hover:text-accent/80 transition-colors"></i></button>
-          <button id="logoutButton" title="Logout"><i class="fa-solid fa-right-from-bracket text-accent hover:text-accent/80 transition-colors"></i></button>
-          <button id="themeToggle"><i class="fa-solid fa-moon text-primary-200"></i></button>
-          <button class="md:hidden p-2" id="menuToggle">
-            <div class="w-6 h-5 flex flex-col justify-between">
-              <span class="w-full h-0.5 bg-accent transition-all"></span>
-            </div>
-          </button>
+                <ul class="font-body hidden md:flex space-x-8">
+                    <li>
+                        <a href="../public/user_dashboard.html" class="
+                        text-accent
+                        dark:text-primary
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="schedule.html" class="
+                        text-accent
+                        dark:text-primary
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        transition-colors">Schedule</a>
+                    </li>
+                    <li>
+                        <a href="achievements.html" class="
+                        text-accent
+                        dark:text-primary
+                        hover:text-accent/80 
+                        dark:hover:text-accent/80 
+                        
+                        transition-colors">Achievements</a>
+                    </li>
+                </ul>
+
+                <!-- <button class="bg-accent p-2">
+                    <a href="#" class="text-primary">Login</a>
+                </button> -->
+
+
+                <div class="flex items-center space-x-4">
+                    <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
+                    <button title="Profile">
+                        <a href="profile.html" class="fa-solid fa-user text-accent dark:text-primary hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></a>
+                    </button>
+
+                    <!-- Settings Icon -->
+                    <button title="Settings">
+                        <i class="fa-solid fa-gear text-accent dark:text-primary hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+
+                    <!-- Logout Icon -->
+                    <button title="Logout">
+                        <i class="fa-solid fa-right-from-bracket text-accent dark:text-primary hover:text-accent/80 
+                        dark:hover:text-accent/80 transition-colors"></i>
+                    </button>
+                    
+                    <button id="themeToggle" class="ml-auto text-gray-600 dark:text-white hover:text-gray-800 dark:hover:text-gray-300 transition-colors">
+                        <i class="fas fa-moon text-gray-600 dark:text-white"></i>
+                    </button>
+
+                    <button class="md:hidden p-2" id="menuToggle">
+                        <div class="w-6 h-5 flex flex-col justify-between">
+                            <span class="w-full h-0.5 bg-accent transition-all"></span>
+                        </div>
+                    </button>
+                </div>
+
+            </nav>
         </div>
-      </nav>
-    </div>
-  </header>
+    </header>
 
 <!-- MAIN CONTENT -->
-<main class="max-w-7xl mx-auto mt-28 px-2 flex gap-4" style="align-items: stretch;">
+<main class="max-w-7xl mx-auto mt-28 px-2 md:px-4 flex flex-col lg:flex-row gap-4 font-body h-[calc(100vh-7rem)] overflow-hidden">
   <!-- Calendar Card -->
-  <section class="flex-1 bg-white rounded-xl shadow p-5 drop-shadow-default min-w-0 flex flex-col" style="height:700px;">
+  <section class="flex-1 bg-white dark:bg-gray-700 rounded-xl shadow p-3 sm:p-5 drop-shadow-default min-w-0 h-full flex flex-col">
     <!-- Header and Controls -->
-    <div class="flex justify-between items-center mb-2">
-      <div class="flex items-center gap-2">
-        <span class="font-heading text-2xl text-primary-400 font-bold">CALENDAR</span>
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
+        <span class="font-heading text-accent dark:text-white text-xl sm:text-2xl text-primary-400 font-bold">CALENDAR</span>
         <!-- Tombol Navigasi -->
-            <div class="flex items-center gap-2">
-                <button id="todayBtn" class="py-1 px-3 bg-gray-200 text-accent-500 text-xs font-semibold rounded-lg hover:bg-gray-300">Today</button>
-                <button id="prevWeekBtn" title="Previous Week" class="p-2 text-accent-500 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-chevron-left"></i></button>
-                <button id="nextWeekBtn" title="Next Week" class="p-2 text-accent-500 hover:bg-gray-200 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-chevron-right"></i></button>
-            <!-- </div> -->
-            <span class="ml-4 text-lg text-primary-400 font-bold" id="calendar-title"></span>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button id="todayBtn" class="py-1 px-2 sm:px-3 bg-gray-200 text-accent-500 text-xs font-semibold rounded-lg hover:bg-gray-300">Today</button>
+          <button id="prevWeekBtn" title="Previous Week" class="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-chevron-left"></i></button>
+          <button id="nextWeekBtn" title="Next Week" class="p-2 text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 rounded-full w-8 h-8 flex items-center justify-center"><i class="fa-solid fa-chevron-right"></i></button>
+          <span class="ml-2 text-sm sm:text-lg text-primary-400 dark:text-white font-bold" id="calendar-title"></span>
         </div>
       </div>
-      <!-- Calendar Controls
-      <div class="flex items-center gap-2">
-        <button id="weekBtn" class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500">Week</button>
-        <button id="monthBtn" class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500">Month</button>
-        <button id="yearBtn" class="py-2 px-3 bg-primary-500 text-accent-950 text-sm font-semibold rounded-lg border border-accent-500">Year</button>
-      </div> -->
-
-      <div class="flex items-center gap-2 mb-4">
-      <span class="text-xs text-primary-400">Filter :</span>
-      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Priority</button>
-      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Category</button>
-      <button class="py-1 px-3 bg-accent-500 text-primary-950 text-xs font-semibold rounded-lg">Date</button>
+      
+      <!-- Filter Section -->
+      <div class="flex items-center gap-2 flex-wrap w-full sm:w-auto">
+        <span class="text-sm sm:text-base text-primary-400 dark:text-white">Filter :</span>
+        <button class="py-1 px-2 sm:px-3 bg-accent dark:bg-primary text-primary dark:text-accent hover:bg-gray-500 dark:hover:bg-gray-100 transition-colors text-sm sm:text-base font-semibold rounded-lg">Priority</button>
+        <button class="py-1 px-2 sm:px-3 bg-accent dark:bg-primary text-primary dark:text-accent hover:bg-gray-500 dark:hover:bg-gray-100 transition-colors text-sm sm:text-base font-semibold rounded-lg">Category</button>
+        <button class="py-1 px-2 sm:px-3 bg-accent dark:bg-primary text-primary dark:text-accent hover:bg-gray-500 dark:hover:bg-gray-100 transition-colors text-sm sm:text-base font-semibold rounded-lg">Date</button>
       </div>
     </div>
     
     <!-- Calendar Views -->
-    <div class="relative flex-1 overflow-x-hidden calendar-scroll h-full">
-      <div class="w-full h-full overflow-y-auto">
+    <div class="flex-1 overflow-auto min-h-0 bg-gradient-to-br from-white to-gray-50 dark:from-gray-700 dark:to-gray-800 rounded-lg border border-gray-200 dark:border-gray-600">
+      <div class="w-full h-full overflow-auto">
         <!-- WEEK VIEW -->
-        <div id="week-view" class="flex h-full">
+        <div id="week-view" class="flex h-full min-w-[600px]">
           <!-- Time Labels -->
-          <div id="time-labels-container" lass="flex flex-col w-16 border-r border-gray-200">
-            <!-- <div class="h-8"> -->
-            </div>
+          <div id="time-labels-container" class="flex flex-col w-12 sm:w-16 border-r-2 border-gray-300 dark:border-gray-500 flex-shrink-0 bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
             <!-- Generated Time Labels -->
-            <!-- <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">06:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">07:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">08:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">09:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">10:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">11:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">12:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">13:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">14:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">15:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">16:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">17:00</div>
-            <div class="h-10 flex items-start justify-end pr-2 text-xs text-accent-400">18:00</div>
-          </div> -->
+          </div>
           <!-- Week Grid --> 
-          <div class="flex-1" style="height:700px;">
-            <div class="grid grid-cols-7 border-t border-l border-gray-200 bg-white rounded-xl h-full min-w-full relative text=sm" id="calendarGrid" style="position:relative; height:672px;">
+          <div class="flex-1 min-w-0">
+            <div class="grid grid-cols-7 bg-white dark:bg-gray-700 h-full w-full relative text-sm" id="calendarGrid">
+              <!-- Week headers and dynamic content will be generated here -->
+            </div>
+          </div>
+        </div>
               <!-- Header Row -->
               <!-- <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Sun</div>
               <div class="border-b border-r border-gray-200 h-10 flex items-center justify-center text-xs font-heading font-bold text-accent-500">Mon</div>
@@ -348,11 +456,13 @@
     </button>
   </section>
   <!-- Category Card -->
-  <aside class="w-80 bg-white rounded-xl shadow p-5 drop-shadow-default h-full" style="height:700px;">
-    <h2 class="text-2xl font-heading font-bold mb-2 text-accent-500">CATEGORY</h2>
-    <button id="addCategoryBtn" class="text-accent-500 text-left text-sm mb-2">+ add category</button>
-    <!-- No activity type or form here -->
-    <div id="categoryList"></div>
+  <aside class="w-full lg:w-80 bg-white dark:bg-gray-700 rounded-xl shadow p-3 sm:p-5 drop-shadow-default h-full flex flex-col overflow-hidden">
+    <div class="flex-1 overflow-y-auto min-h-0">
+      <h2 class="text-xl sm:text-2xl font-heading font-bold mb-2 text-accent-500 dark:text-white">CATEGORY</h2>
+      <button id="addCategoryBtn" class="text-accent dark:text-primary text-left text-sm mb-2 hover:text-accent-600 dark:hover:text-accent-300">+ Add Category</button>
+      <!-- No activity type or form here -->
+      <div id="categoryList" class="overflow-y-auto"></div>
+    </div>
   </aside>
 </main>
 
@@ -461,34 +571,84 @@
     </div>
 </div>
 <!-- Add Category Modal -->
-<div id="addCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-  <div class="bg-white rounded-lg p-6 max-w-xs w-full mx-4 mb-4">
-    <div class="flex justify-between items-center mb-4">
-      <span class="text-accent font-heading text-xl font-black">Add Category</span>
-      <button onclick="closeCategoryModal()">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-    </div>
-    <form id="categoryForm" class="space-y-4" onsubmit="addCategory(event)">
-      <div>
-        <label class="block text-accent/90 mb-1 text-sm font-medium font-body">Category Name</label>
-        <input type="text" id="categoryNameInput" class="w-full border border-gray-300 rounded-lg px-4 py-2.5" required>
-      </div>
-      <div>
-        <label class="block text-accent/90 mb-1 text-sm font-medium font-body">Pick Color</label>
-        <input type="color" id="categoryColorInput" value="#E29B9C" class="w-10 h-10 p-0 border-0 bg-transparent cursor-pointer">
-      </div>
-      <div>
-        <button type="submit" class="py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default w-full">
-          Add
+<div id="addCategoryModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+  <div class="flex items-center justify-center min-h-full p-4">
+    <div class="bg-white dark:bg-gray-700 rounded-lg p-6 max-w-xs w-full shadow-xl transform transition-all duration-300 ease-out" style="transform: scale(0.95); opacity: 0;">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-accent dark:text-white font-heading text-xl font-black">Add Category</span>
+        <button onclick="closeCategoryModal()" class="p-1 hover:bg-gray-100 dark:hover:bg-gray-600 rounded transition-colors">
+          <i class="fa-solid fa-xmark text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white"></i>
         </button>
       </div>
-    </form>
+      <form id="categoryForm" class="space-y-4" onsubmit="addCategory(event)">
+        <div>
+          <label class="block text-accent dark:text-white mb-1 text-sm font-medium font-body">Category Name</label>
+          <input type="text" id="categoryNameInput" class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-2.5 bg-white dark:bg-gray-600 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+        </div>
+        <div>
+          <label class="block text-accent dark:text-white mb-1 text-sm font-medium font-body">Pick Color</label>
+          <div class="flex items-center gap-2">
+            <input type="color" id="categoryColorInput" value="#E29B9C" class="w-12 h-10 border border-gray-300 dark:border-gray-600 rounded cursor-pointer">
+            <span class="text-sm text-gray-500 dark:text-gray-400">Choose category color</span>
+          </div>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="button" onclick="closeCategoryModal()" class="flex-1 py-2 px-3 bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 text-sm font-semibold rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition-colors">
+            Cancel
+          </button>
+          <button type="submit" class="flex-1 py-2 px-3 bg-accent text-secondary text-sm font-semibold rounded-lg drop-shadow-default hover:bg-accent/90 transition-colors">
+            Add
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-  <script src="auth.js"></script>
-  <!-- <script src="script copy.js"></script> -->
-   <script src="dashboard.js"></script>
+  <!-- <script src="auth.js"></script> -->
+  <script src="dark.js"></script>
+  <script>
+    // Fallback theme toggle function in case dark.js fails to load
+    if (!window.toggleDarkMode) {
+      window.toggleDarkMode = function() {
+        const html = document.documentElement;
+        const isDark = html.classList.contains('dark');
+        
+        if (isDark) {
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          console.log('Switched to light mode');
+        } else {
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          console.log('Switched to dark mode');
+        }
+        
+        // Update icon
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle?.querySelector('i');
+        if (icon) {
+          if (isDark) {
+            icon.className = 'fa-solid fa-moon text-gray-600 dark:text-white';
+          } else {
+            icon.className = 'fa-solid fa-sun text-white dark:text-white';
+          }
+        }
+      };
+      
+      // Add click listener if not already added
+      document.addEventListener('DOMContentLoaded', function() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle && !themeToggle.hasAttribute('data-listener-added')) {
+          themeToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.toggleDarkMode();
+          });
+          themeToggle.setAttribute('data-listener-added', 'true');
+        }
+      });
+    }
+  </script>
+  <script src="dashboard.js"></script>
   <script src="schedule_db.js"></script>
   <script>
     // --- STATE & KONFIGURASI KALENDER ---
@@ -503,28 +663,241 @@
         const timeLabelsContainer = document.getElementById('time-labels-container');
         if (!grid || !timeLabelsContainer) return;
 
-        grid.innerHTML = ''; // Kosongkan grid
-        timeLabelsContainer.innerHTML = ''; // Kosongkan label
+        grid.innerHTML = ''; // Clear grid
+        timeLabelsContainer.innerHTML = ''; // Clear labels
 
-        // Spacer untuk header hari
+        // Enhanced header spacer with exact height match
         const headerSpacer = document.createElement('div');
-        headerSpacer.className = "h-10"; // Sesuaikan dengan tinggi header hari
+        headerSpacer.className = "h-10 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-b-2 border-gray-300 dark:border-gray-500 flex items-center justify-center";
+        headerSpacer.style.boxSizing = 'border-box';
+        headerSpacer.style.minHeight = '2.5rem'; // Fixed 40px height
+        headerSpacer.style.maxHeight = '2.5rem';
+        headerSpacer.style.lineHeight = '1';
+        
+        const timeLabel = document.createElement('span');
+        timeLabel.className = "text-xs font-bold text-gray-600 dark:text-gray-300";
+        timeLabel.textContent = "TIME";
+        headerSpacer.appendChild(timeLabel);
         timeLabelsContainer.appendChild(headerSpacer);
         
+        const currentHour = new Date().getHours();
+        
+        // Generate time labels and grid cells in perfect sync
         for (let hour = 0; hour < 24; hour++) {
-            // Buat label waktu (00:00, 01:00, dst.)
-            const timeLabel = document.createElement('div');
-            timeLabel.className = "h-10 flex items-start justify-end pr-2 text-xs text-gray-400";
-            timeLabel.textContent = `${String(hour).padStart(2, '0')}:00`;
-            timeLabelsContainer.appendChild(timeLabel);
+            // Create time label with exact height specifications
+            const timeLabelDiv = document.createElement('div');
+            const isCurrentHour = hour === currentHour;
+            
+            // Exact height specifications for perfect alignment
+            timeLabelDiv.className = `time-label-cell h-8 sm:h-10 flex items-center justify-end pr-2 sm:pr-3 text-xs font-medium border-b border-gray-200 dark:border-gray-600 ${
+                isCurrentHour 
+                    ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 font-bold' 
+                    : 'text-gray-600 dark:text-gray-400'
+            }`;
+            
+            // Force exact dimensions for perfect alignment
+            timeLabelDiv.style.boxSizing = 'border-box';
+            timeLabelDiv.style.lineHeight = '1';
+            timeLabelDiv.style.display = 'flex';
+            timeLabelDiv.style.alignItems = 'center';
+            
+            timeLabelDiv.textContent = `${String(hour).padStart(2, '0')}:00`;
+            timeLabelsContainer.appendChild(timeLabelDiv);
 
-            // Buat baris sel grid untuk setiap jam
+            // Create grid cells for this hour with identical height specifications
             for (let day = 0; day < 7; day++) {
                 const cell = document.createElement('div');
-                cell.className = 'border-b border-r border-gray-200 h-10';
+                const isWorkingHour = hour >= 9 && hour <= 17;
+                const isWeekend = day === 5 || day === 6; // Saturday = 5, Sunday = 6
+                const isLunchTime = hour === 12;
+                const isEarlyMorning = hour >= 6 && hour <= 8;
+                const isEvening = hour >= 18 && hour <= 20;
+                
+                // Identical height classes and styling as time labels
+                let cellClasses = `calendar-grid-cell border-b border-r border-gray-200 dark:border-gray-600 h-8 sm:h-10 transition-all duration-200 relative cursor-pointer group`;
+                
+                // Background colors based on time and day
+                if (isCurrentHour) {
+                    cellClasses += ` bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 border-blue-300 dark:border-blue-600`;
+                } else if (isLunchTime) {
+                    cellClasses += ` bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/10 dark:to-orange-800/10`;
+                } else if (isWorkingHour && !isWeekend) {
+                    cellClasses += ` bg-white dark:bg-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/10`;
+                } else if (isWeekend) {
+                    cellClasses += ` bg-white dark:bg-gray-700 hover:bg-blue-50 dark:hover:bg-blue-900/10`;
+                } else if (isEarlyMorning || isEvening) {
+                    cellClasses += ` bg-gradient-to-br from-gray-25 to-gray-75 dark:from-gray-800/30 dark:to-gray-700/50 hover:bg-gray-100 dark:hover:bg-gray-600`;
+                } else {
+                    cellClasses += ` bg-gray-50/80 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-700`;
+                }
+                
+                cell.className = cellClasses;
+                
+                // Force exact dimensions matching time labels
+                cell.style.boxSizing = 'border-box';
+                cell.style.display = 'flex';
+                cell.style.alignItems = 'center';
+                
+                // Position cell in the correct row (hour + 2 to account for header row)
+                cell.style.gridColumn = `${day + 1}`;
+                cell.style.gridRow = `${hour + 2}`;
+                
+                // First column border to match time labels
+                if (day === 0) {
+                    cell.classList.add('border-l-2', 'border-l-gray-300', 'dark:border-l-gray-500');
+                }
+                
+                // Interactive hover effects
+                cell.addEventListener('mouseenter', function() {
+                    if (!this.querySelector('.time-tooltip')) {
+                        const tooltip = document.createElement('div');
+                        tooltip.className = 'time-tooltip absolute top-0 left-0 bg-gray-800 dark:bg-gray-200 text-white dark:text-gray-800 text-xs px-2 py-1 rounded shadow-lg z-50 opacity-0 transition-opacity duration-200';
+                        tooltip.textContent = `${String(hour).padStart(2, '0')}:00 - ${getDayName(day)}`;
+                        this.appendChild(tooltip);
+                        setTimeout(() => tooltip.classList.add('opacity-100'), 10);
+                    }
+                });
+                
+                cell.addEventListener('mouseleave', function() {
+                    const tooltip = this.querySelector('.time-tooltip');
+                    if (tooltip) {
+                        tooltip.classList.remove('opacity-100');
+                        setTimeout(() => tooltip.remove(), 200);
+                    }
+                });
+                
+                // Click event for scheduling
+                cell.addEventListener('click', function() {
+                    console.log(`Clicked on ${getDayName(day)} at ${String(hour).padStart(2, '0')}:00`);
+                });
+                
                 grid.appendChild(cell);
             }
         }
+        
+        // Generate week headers after all cells
+        generateWeekHeaders();
+        
+        // Add current time line
+        addCurrentTimeLine();
+        
+        // Add visual enhancements
+        addGridPatterns();
+        
+        // Auto-scroll to current time
+        setTimeout(() => scrollToCurrentTime(), 100);
+    }
+
+    /**
+     * Add visual grid patterns for better structure
+     */
+    function addGridPatterns() {
+        const grid = document.getElementById('calendarGrid');
+        if (!grid) return;
+        
+        // Add subtle shadow lines every 6 hours (quarter day divisions)
+        for (let hour = 6; hour < 24; hour += 6) {
+            const shadowLine = document.createElement('div');
+            shadowLine.className = 'absolute left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent dark:via-gray-600 z-10 opacity-50';
+            const rowHeight = window.innerWidth < 640 ? 32 : 40;
+            const headerHeight = 40; // Account for week header
+            shadowLine.style.top = `${headerHeight + (hour * rowHeight)}px`;
+            grid.appendChild(shadowLine);
+        }
+    }
+
+    /**
+     * Auto-scroll to current time
+     */
+    function scrollToCurrentTime() {
+        const currentHour = new Date().getHours();
+        const isMobile = window.innerWidth < 640;
+        const rowHeight = isMobile ? 32 : 40;
+        const headerHeight = 40;
+        const scrollContainer = document.querySelector('.calendar-scroll .overflow-auto');
+        
+        if (scrollContainer) {
+            const targetPosition = (currentHour * rowHeight) + headerHeight - 100; // Offset for better visibility
+            scrollContainer.scrollTo({
+                top: Math.max(0, targetPosition),
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    /**
+     * Get day name helper function
+     */
+    function getDayName(dayIndex) {
+        const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        return days[dayIndex] || 'Unknown';
+    }
+
+    /**
+     * Add a current time indicator line
+     */
+    function addCurrentTimeLine() {
+        const grid = document.getElementById('calendarGrid');
+        if (!grid) return;
+        
+        // Remove existing time line
+        const existingLine = grid.querySelector('.current-time-line');
+        if (existingLine) {
+            existingLine.remove();
+        }
+        
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinutes = now.getMinutes();
+        
+        // Calculate position - account for header row
+        const isMobile = window.innerWidth < 640;
+        const rowHeight = isMobile ? 32 : 40;
+        const headerHeight = 40; // Week header height
+        const minuteOffset = (currentMinutes / 60) * rowHeight;
+        const top = headerHeight + (currentHour * rowHeight) + minuteOffset;
+        
+        // Create enhanced time line container
+        const timeLineContainer = document.createElement('div');
+        timeLineContainer.className = 'current-time-line absolute left-0 right-0 z-30 pointer-events-none';
+        timeLineContainer.style.top = `${top}px`;
+        
+        // Main time line
+        const timeLine = document.createElement('div');
+        timeLine.style.cssText = `
+            height: 2px;
+            background: linear-gradient(90deg, #ef4444 0%, #f97316 50%, #ef4444 100%);
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6), 0 0 16px rgba(239, 68, 68, 0.3);
+            animation: pulse-line 2s ease-in-out infinite;
+        `;
+        
+        // Time indicator dot with enhanced styling
+        const timeIndicator = document.createElement('div');
+        timeIndicator.className = 'absolute -left-2 -top-2 w-6 h-6 rounded-full shadow-lg';
+        timeIndicator.style.cssText = `
+            background: radial-gradient(circle, #ef4444 0%, #dc2626 100%);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.3), 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: pulse-dot 2s ease-in-out infinite;
+        `;
+        
+        // Current time text
+        const timeText = document.createElement('div');
+        timeText.className = 'absolute -top-8 -left-8 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded shadow-lg';
+        timeText.textContent = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        timeText.style.animation = 'fade-in 0.5s ease-out';
+        
+        timeLineContainer.appendChild(timeLine);
+        timeLineContainer.appendChild(timeIndicator);
+        timeLineContainer.appendChild(timeText);
+        
+        grid.appendChild(timeLineContainer);
+        
+        // Update time text every minute
+        setInterval(() => {
+            const newTime = new Date();
+            timeText.textContent = newTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }, 60000);
     }
 
 
@@ -532,6 +905,14 @@
      * Fungsi utama untuk mengupdate seluruh tampilan kalender.
      */
     async function updateCalendarView() {
+        // DISABLED: Login check for calendar updates
+        // Uncomment the code below if you want to re-enable login requirements
+        /*
+        if (!window.userId) {
+            return;
+        }
+        */
+        
         const calendarTitle = document.getElementById('calendar-title');
         if (calendarTitle) {
             calendarTitle.textContent = currentDate.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
@@ -539,44 +920,87 @@
 
         generateWeekHeaders();
 
+        // DISABLED: Login-dependent schedule fetching
+        // Uncomment the code below if you want to re-enable login requirements for schedules
+        /*
         if (allUserSchedules.length === 0 && window.userId) {
             allUserSchedules = await fetchAllSchedules();
         }
         renderSchedulesToCalendar(allUserSchedules);
+        */
+        
+        // Scroll to current time after rendering
+        setTimeout(() => scrollToCurrentTime(), 100);
     }
-    
-    /**
+      /**
      * Membuat header untuk setiap hari dalam seminggu.
      */
     function generateWeekHeaders() {
         const grid = document.getElementById('calendarGrid');
+        // DISABLED: Login check for week headers
+        // Uncomment the code below if you want to re-enable login requirements
+        // if (!grid || !window.userId) return;
         if (!grid) return;
 
-        const oldHeaders = grid.querySelectorAll('.week-day-header');
-        oldHeaders.forEach(header => header.remove());
+        // Remove existing headers
+        const existingHeaders = grid.querySelectorAll('.week-day-header');
+        existingHeaders.forEach(header => header.remove());
 
         const startOfWeek = getStartOfWeek(currentDate);
+        const today = new Date();
 
+        // Generate week day headers as the first row of the grid
         for (let i = 0; i < 7; i++) {
             const day = new Date(startOfWeek);
             day.setDate(day.getDate() + i);
-            const isToday = isSameDay(day, new Date());
+            const isToday = isSameDay(day, today);
+            const isWeekend = i === 5 || i === 6; // Saturday and Sunday
             
             const headerCell = document.createElement('div');
-            headerCell.className = `week-day-header sticky top-0 bg-white z-20 border-b-2 border-r border-gray-200 h-10 flex flex-col items-center justify-center font-heading text-accent-500`;
+            headerCell.className = `week-day-header border-b-2 border-r border-gray-300 dark:border-gray-500 h-10 flex flex-col items-center justify-center font-heading transition-all duration-300 cursor-pointer ${
+                isToday 
+                    ? 'bg-gradient-to-b from-blue-200 to-blue-300 dark:from-blue-800 dark:to-blue-900 text-blue-900 dark:text-blue-100 shadow-inner' 
+                    : 'bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-600 dark:to-gray-700 text-gray-700 dark:text-gray-200 hover:from-gray-100 hover:to-gray-200 dark:hover:from-gray-500 dark:hover:to-gray-600'
+            }`;
+
+            // Position the header cell at the top of each column
             headerCell.style.gridColumn = `${i + 1}`;
-            headerCell.style.gridRow = `1`;
+            headerCell.style.gridRow = '1';
 
             const dayName = document.createElement('span');
-            dayName.className = 'text-xs font-bold';
-            dayName.textContent = day.toLocaleDateString('id-ID', { weekday: 'short' }).toUpperCase();
+            dayName.className = 'text-xs font-bold tracking-wider';
+            dayName.textContent = day.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
 
             const dayNumber = document.createElement('span');
-            dayNumber.className = `text-lg font-bold ${isToday ? 'bg-blue-600 text-white rounded-full w-7 h-7 flex items-center justify-center' : ''}`;
+            dayNumber.className = `text-sm sm:text-base font-bold transition-all duration-200 ${
+                isToday 
+                    ? 'bg-blue-600 text-white rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center shadow-lg animate-pulse' 
+                    : ''
+            }`;
             dayNumber.textContent = day.getDate();
 
             headerCell.appendChild(dayName);
             headerCell.appendChild(dayNumber);
+            
+            // Enhanced hover and click effects
+            headerCell.addEventListener('mouseenter', () => {
+                if (!isToday) {
+                    headerCell.style.transform = 'translateY(-1px)';
+                    headerCell.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+                }
+            });
+
+            headerCell.addEventListener('mouseleave', () => {
+                if (!isToday) {
+                    headerCell.style.transform = 'translateY(0)';
+                    headerCell.style.boxShadow = 'none';
+                }
+            });
+
+            headerCell.addEventListener('click', () => {
+                console.log(`Clicked on ${day.toDateString()}`);
+            });
+
             grid.appendChild(headerCell);
         }
     }
@@ -597,6 +1021,26 @@
         if (!grid) return;
 
         document.querySelectorAll('.event-block').forEach(e => e.remove());
+        document.querySelectorAll('.login-placeholder').forEach(e => e.remove());
+        
+        // DISABLED: Login check for schedule rendering
+        // Uncomment the code below if you want to re-enable login requirements
+        /*
+        // Show login message if no user is logged in
+        if (!window.userId) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'login-placeholder absolute inset-0 flex items-center justify-center bg-white/90 dark:bg-gray-700/90 backdrop-blur-sm z-20 rounded-lg';
+            placeholder.innerHTML = `
+                <div class="text-center p-8">
+                    <i class="fa-solid fa-lock text-4xl text-gray-400 mb-4"></i>
+                    <p class="text-gray-600 dark:text-gray-300 text-lg font-medium">Silakan login untuk melihat jadwal Anda</p>
+                    <p class="text-gray-400 dark:text-gray-500 text-sm mt-2">Masuk ke akun Anda untuk mengakses kalender dan jadwal</p>
+                </div>
+            `;
+            grid.appendChild(placeholder);
+            return;
+        }
+        */
         
         const startOfWeek = getStartOfWeek(currentDate);
         const endOfWeek = new Date(startOfWeek);
@@ -617,38 +1061,144 @@
             const eventDate = new Date(dateStr + 'T00:00:00');
             const dayIndex = (eventDate.getDay() + 6) % 7; 
             const startHour = parseInt(startTimeStr.split(':')[0], 10);
+            const startMinute = parseInt(startTimeStr.split(':')[1], 10);
             
             let durationInHours = 1;
             if (endTimeStr) {
                 const endHour = parseInt(endTimeStr.split(':')[0], 10);
-                durationInHours = Math.max(1, endHour - startHour);
+                const endMinute = parseInt(endTimeStr.split(':')[1], 10);
+                durationInHours = Math.max(0.5, (endHour + endMinute/60) - (startHour + startMinute/60));
             }
 
-            const rowHeight = 40;
-            const topOffset = 40; 
-            const top = (startHour * rowHeight) + topOffset;
-            const height = durationInHours * rowHeight - 4;
+            // Responsive row height - account for header row
+            const isMobile = window.innerWidth < 640;
+            const rowHeight = isMobile ? 32 : 40;
+            const headerHeight = 40; // Week header height
+            const minuteOffset = (startMinute / 60) * rowHeight;
+            const top = headerHeight + (startHour * rowHeight) + minuteOffset;
+            const height = Math.max(20, durationInHours * rowHeight - 2);
 
             const block = document.createElement('div');
-            block.className = "event-block absolute rounded-lg px-2 py-1 text-xs font-semibold text-white flex flex-col justify-start overflow-hidden";
+            const priorityColors = {
+                'Emergency': '#dc2626',
+                'Urgent': '#ea580c', 
+                'Perventive': '#ca8a04',
+                'Non Critical': '#059669'
+            };
+            
+            const priorityName = item.prioritas?.namaPrioritas || 'Non Critical';
+            const eventColor = item.kategori?.color || priorityColors[priorityName] || "#9BDCE2";
+            
+            block.className = "event-block absolute rounded-lg shadow-sm border-l-4 px-1 sm:px-2 py-1 text-white flex flex-col justify-start overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-200 hover:scale-105";
             block.style.cssText = `
                 position: absolute;
-                background-color: ${item.kategori?.color || "#9BDCE2"};
-                left: calc((${dayIndex} * 100%) / 7 + 4px);
-                width: calc(100% / 7 - 8px);
+                background: linear-gradient(135deg, ${eventColor}dd, ${eventColor});
+                border-left-color: ${eventColor};
+                left: calc((${dayIndex} * 100%) / 7 + 2px);
+                width: calc(100% / 7 - 4px);
                 top: ${top}px;
                 height: ${height}px;
                 z-index: 10;
+                backdrop-filter: blur(8px);
             `;
             
-            const gemAssets = { 'Non Critical': "/assets/Aset_Aplikasi_Non_critical.png", 'Perventive': "/assets/Aset_Aplikasi_Perventive.png", 'Urgent': "/assets/Aset_Aplikasi_Urgent.png", 'Emergency': "/assets/Aset_Aplikasi_Emergency.png" };
-            const priorityName = item.prioritas?.namaPrioritas || 'Non Critical';
-            const gemSrc = gemAssets[priorityName];
+            const gemAssets = { 
+                'Non Critical': "/assets/Aset_Aplikasi_Non_critical.png", 
+                'Perventive': "/assets/Aset_Aplikasi_Perventive.png", 
+                'Urgent': "/assets/Aset_Aplikasi_Urgent.png", 
+                'Emergency': "/assets/Aset_Aplikasi_Emergency.png" 
+            };
             
-            block.innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center; width:100%;"><span class="font-bold">${startTimeStr}</span>${gemSrc ? `<img src="${gemSrc}" alt="${priorityName}" style="width:16px; height:16px;">` : ''}</div><span class="font-normal whitespace-nowrap overflow-hidden text-ellipsis">${item.judulJadwal}</span>`;
+            const gemSrc = gemAssets[priorityName];
+            const isSmallEvent = height < 40;
+            
+            if (isSmallEvent) {
+                // Compact view for small events
+                block.innerHTML = `
+                    <div class="flex items-center justify-between w-full">
+                        <span class="font-semibold text-xs truncate flex-1">${item.judulJadwal}</span>
+                        ${gemSrc ? `<img src="${gemSrc}" alt="${priorityName}" class="w-3 h-3 ml-1 flex-shrink-0">` : ''}
+                    </div>
+                `;
+            } else {
+                // Full view for larger events
+                block.innerHTML = `
+                    <div class="flex items-center justify-between w-full mb-1">
+                        <span class="font-bold text-xs">${startTimeStr}</span>
+                        ${gemSrc ? `<img src="${gemSrc}" alt="${priorityName}" class="w-3 h-3 sm:w-4 sm:h-4">` : ''}
+                    </div>
+                    <div class="flex-1">
+                        <div class="font-semibold text-xs sm:text-sm mb-1 line-clamp-2">${item.judulJadwal}</div>
+                        ${item.deskripsi ? `<div class="text-xs opacity-90 line-clamp-1">${item.deskripsi}</div>` : ''}
+                    </div>
+                    ${item.kategori ? `<div class="text-xs opacity-75 mt-1">${item.kategori.namaKategori}</div>` : ''}
+                `;
+            }
+            
+            // Add click handler for event details
+            block.addEventListener('click', (e) => {
+                e.stopPropagation();
+                showEventDetails(item);
+            });
             
             grid.appendChild(block);
         });
+    }
+
+    /**
+     * Show event details in a tooltip or modal
+     */
+    function showEventDetails(item) {
+        // Create a simple tooltip/popup for event details
+        const tooltip = document.createElement('div');
+        tooltip.className = 'fixed bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-xl p-4 z-50 max-w-sm';
+        
+        const priorityName = item.prioritas?.namaPrioritas || 'Non Critical';
+        const startTime = item.event?.jamMulai || item.task?.jamDeadline;
+        const endTime = item.event?.jamAkhir;
+        
+        tooltip.innerHTML = `
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="font-bold text-gray-900 dark:text-white">${item.judulJadwal}</h3>
+                <button onclick="this.parentElement.parentElement.remove()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fa-solid fa-times"></i>
+                </button>
+            </div>
+            ${item.deskripsi ? `<p class="text-gray-600 dark:text-gray-300 text-sm mb-2">${item.deskripsi}</p>` : ''}
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+                <div class="flex items-center gap-2 mb-1">
+                    <i class="fa-solid fa-clock"></i>
+                    <span>${startTime}${endTime ? ` - ${endTime}` : ''}</span>
+                </div>
+                ${item.kategori ? `
+                    <div class="flex items-center gap-2 mb-1">
+                        <div class="w-3 h-3 rounded-full" style="background-color: ${item.kategori.color}"></div>
+                        <span>${item.kategori.namaKategori}</span>
+                    </div>
+                ` : ''}
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-flag"></i>
+                    <span>${priorityName}</span>
+                </div>
+            </div>
+        `;
+        
+        // Position tooltip
+        const rect = event.target.getBoundingClientRect();
+        tooltip.style.left = `${Math.min(rect.left, window.innerWidth - 300)}px`;
+        tooltip.style.top = `${rect.bottom + 10}px`;
+        
+        document.body.appendChild(tooltip);
+        
+        // Remove tooltip when clicking outside
+        setTimeout(() => {
+            document.addEventListener('click', function handleClick(e) {
+                if (!tooltip.contains(e.target)) {
+                    tooltip.remove();
+                    document.removeEventListener('click', handleClick);
+                }
+            });
+        }, 100);
     }
 
     // --- HELPER FUNCTIONS ---
@@ -692,12 +1242,12 @@
             categories.forEach(category => {
                 const categoryElement = document.createElement('div');
                 // Anda bisa menambahkan class dari Tailwind CSS untuk styling
-                categoryElement.className = 'flex items-center p-2 mb-2 bg-gray-50 dark:bg-accent-950/50 rounded-lg';
+                categoryElement.className = 'flex items-center p-2 mb-2 bg-gray-50 dark:bg-gray-600 rounded-lg';
 
                 // Isi konten elemen dengan nama dan warna kategori
                 categoryElement.innerHTML = `
-                    <span class="w-3 h-3 rounded-full mr-3 border border-gray-300" style="background-color: ${category.color};"></span>
-                    <span class="text-sm font-medium text-accent dark:text-text-100">${category.namaKategori}</span>
+                    <span class="w-3 h-3 rounded-full mr-3 border border-gray-300 dark:border-gray-500" style="background-color: ${category.color};"></span>
+                    <span class="text-sm font-medium text-accent dark:text-white">${category.namaKategori}</span>
                 `;
 
                 // Tambahkan elemen kategori ke dalam kontainer
@@ -710,10 +1260,33 @@
         }
     }
 
+    function openCategoryModal() {
+        const modal = document.getElementById('addCategoryModal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            // Add animation after modal is shown
+            setTimeout(() => {
+                const modalContent = modal.querySelector('div > div');
+                if (modalContent) {
+                    modalContent.style.transform = 'scale(1)';
+                    modalContent.style.opacity = '1';
+                }
+            }, 10);
+        }
+    }
+
     function closeCategoryModal() {
         const modal = document.getElementById('addCategoryModal');
         if (modal) {
-            modal.classList.add('hidden');
+            const modalContent = modal.querySelector('div > div');
+            if (modalContent) {
+                modalContent.style.transform = 'scale(0.95)';
+                modalContent.style.opacity = '0';
+            }
+            // Hide modal after animation completes
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 150);
         }
     }
 
@@ -756,18 +1329,82 @@
     }
     // --- DOMContentLoaded ---
     document.addEventListener('DOMContentLoaded', async function() {
-        generateFullDayGrid();
-
+        // DISABLED: Login requirement check
+        // Uncomment the code below if you want to re-enable login requirements
+        
+        /*
+        // Wait for auth.js to be fully loaded and initialized
+        let checkCount = 0;
+        const maxChecks = 50; // 5 seconds max wait
+        
+        const waitForAuth = () => {
+            return new Promise((resolve) => {
+                const checkAuth = () => {
+                    checkCount++;
+                    if (window.userId !== undefined || checkCount >= maxChecks) {
+                        resolve();
+                    } else {
+                        setTimeout(checkAuth, 100);
+                    }
+                };
+                checkAuth();
+            });
+        };
+        
+        await waitForAuth();
+        
         if (!window.userId) {
+            // Show a clean login message without generating any grid elements
             const grid = document.getElementById('calendarGrid');
-            const placeholder = document.createElement('div');
-            placeholder.className = "col-span-7 text-center py-20 text-gray-400";
-            placeholder.textContent = "Silakan login untuk melihat jadwal Anda.";
-            grid.appendChild(placeholder);
+            const timeLabelsContainer = document.getElementById('time-labels-container');
+            
+            if (timeLabelsContainer) {
+                timeLabelsContainer.innerHTML = `
+                    <div class="h-full flex items-center justify-center bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
+                        <div class="text-center p-4">
+                            <i class="fa-solid fa-clock text-2xl text-gray-400 mb-2"></i>
+                            <p class="text-gray-500 dark:text-gray-400 text-xs font-medium">Login Required</p>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="col-span-7 h-full flex items-center justify-center bg-gradient-to-br from-white to-gray-50 dark:from-gray-700 dark:to-gray-800">
+                        <div class="text-center p-8">
+                            <i class="fa-solid fa-lock text-4xl text-gray-400 dark:text-gray-500 mb-4"></i>
+                            <p class="text-gray-600 dark:text-gray-300 text-lg font-medium mb-2">Silakan login untuk melihat jadwal Anda</p>
+                            <p class="text-gray-400 dark:text-gray-500 text-sm">Masuk ke akun Anda untuk mengakses kalender dan jadwal</p>
+                            <div class="mt-6">
+                                <a href="login.html" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors">
+                                    <i class="fa-solid fa-sign-in-alt mr-2"></i>
+                                    Login Sekarang
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
             return;
         }
+        */
 
-        await displayCategories();
+        // Force generate grid regardless of login status
+        generateFullDayGrid();
+        
+        // DISABLED: Login-dependent category display
+        // Uncomment the line below if you want to re-enable login requirements for categories
+        // await displayCategories();
+
+        // Add resize handler to maintain alignment on screen size changes
+        window.addEventListener('resize', debounce(() => {
+            // DISABLED: Login check for resize handler
+            // if (window.userId) {
+                generateFullDayGrid();
+                updateCalendarView();
+            // }
+        }, 250));
 
         document.getElementById('prevWeekBtn').addEventListener('click', () => {
             currentDate.setDate(currentDate.getDate() - 7);
@@ -787,8 +1424,13 @@
         const addCategoryBtn = document.getElementById('addCategoryBtn');
         const addCategoryModal = document.getElementById('addCategoryModal');
         if (addCategoryBtn && addCategoryModal) {
-            addCategoryBtn.addEventListener('click', () => {
-                addCategoryModal.classList.remove('hidden');
+            addCategoryBtn.addEventListener('click', openCategoryModal);
+            
+            // Close modal when clicking outside
+            addCategoryModal.addEventListener('click', (e) => {
+                if (e.target === addCategoryModal) {
+                    closeCategoryModal();
+                }
             });
         }
             
@@ -797,6 +1439,19 @@
 
         await updateCalendarView();
     });
+    
+    // Debounce helper function for responsive handling
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
   </script>
 </body>
 </html>
