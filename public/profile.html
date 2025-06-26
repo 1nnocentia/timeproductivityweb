@@ -100,14 +100,14 @@
 
     <div class="flex flex-col lg:mx-24 gap-6 mb-12">
         <section class="pt-20 mx-3 lg:mx-16">
-            <div class="grid lg:grid-cols-3 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">                
+            <div class="grid lg:grid-cols-4 grid-cols-1 space-y-4 lg:space-y-0 lg:gap-6">                
                 <!-- PROFILE -->
-                <div class="flex justify-between p-4 bg-secondary dark:bg-gray-800 rounded-lg drop-shadow-default items-center cols-span-3 lg:col-span-2">
+                <div class="flex justify-between p-4 bg-secondary dark:bg-gray-800 rounded-lg drop-shadow-default items-center cols-span-4 lg:col-span-2">
                         <div class="flex items-center space-x-4">                            
-                            <!-- Profile Picture with Click to Change -->
-                            <div class="relative cursor-pointer" id="profilePictureContainer">
+                            <!-- Profile Picture -->
+                            <div class="relative" id="profilePictureContainer">
                                 <div class="w-32 h-32 rounded-full 
-                                border-4 border-gray-300 dark:border-gray-300 hover:border-accent dark:hover:border-accent transition-colors duration-300 overflow-hidden 
+                                border-4 border-gray-300 dark:border-gray-300 transition-colors duration-300 overflow-hidden 
                                 bg-gray-100 dark:bg-gray-500 flex items-center justify-center">
                                     <img id="profilePicture" class="w-full h-full object-contain" 
                                         src="/assets/Aset_Aplikasi_Personal_4.png" alt="Profile Picture">
@@ -124,10 +124,10 @@
                         </div>
                         
                 </div>                
-                <!-- STREAK -->
+                <!-- CURRENT STREAK -->
                 <div class="flex justify-between p-4 bg-secondary dark:bg-gray-800 rounded-lg drop-shadow-default items-center">
                     <div class="flex flex-col">
-                        <span class="text-accent dark:text-primary font-body text-sm">Your Streak</span>
+                        <span class="text-accent dark:text-primary font-body text-sm">Current Streak</span>
                         <span id="currentStreakDisplay" class="text-accent dark:text-primary font-heading text-2xl font-black">
                             Login to see streak
                         </span>
@@ -135,9 +135,21 @@
                     <img class="w-16 h-16" src="/assets/Aset_Aplikasi_Api.png" alt="">
                 </div>
 
+                <!-- LONGEST STREAK -->
+                <div class="flex justify-between p-4 bg-secondary dark:bg-gray-800 rounded-lg drop-shadow-default items-center">
+                    <div class="flex flex-col">
+                        <span class="text-accent dark:text-primary font-body text-sm">Longest Streak</span>
+                        <span id="longestStreakDisplay" class="text-accent dark:text-primary font-heading text-2xl font-black">
+                            Login to see streak
+                        </span>
+                    </div>
+                    <img class="w-16 h-16" src="/assets/Aset_Aplikasi_juara.png" alt="">
+                </div>
+
             </div>
-        </section>        <!-- User's Graph Section -->
-        <section class="mx-3 lg:mx-16">
+        </section>        
+        <!-- User's Graph Section -->
+        <section class="font-body mx-3 lg:mx-16">
             <div class="bg-white dark:bg-gray-800 rounded-lg drop-shadow-default p-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                     <h3 class="text-accent dark:text-primary text-2xl font-bold font-heading">
@@ -148,7 +160,8 @@
                         <button id="monthBtn" class="filter-btn flex-1 sm:flex-none px-4 py-2 bg-accent dark:bg-gray-700 text-white dark:text-primary rounded-lg text-sm font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors min-w-0">Month</button>
                         <button id="yearBtn" class="filter-btn flex-1 sm:flex-none px-4 py-2 bg-accent dark:bg-gray-700 text-white dark:text-primary rounded-lg text-sm font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors min-w-0">Year</button>
                     </div>
-                </div>                <!-- Graph container -->
+                </div>                
+                <!-- Graph container -->
                 <div class="h-64 bg-gray-100 rounded-lg p-4 relative">
                     <canvas id="productivityChart"></canvas>
                     <!-- Data simulation notice -->
@@ -219,10 +232,10 @@
                 </button>
                 <button id="saveProfilePicture" class="px-4 py-2 bg-accent text-white rounded-lg hover:bg-accent/80 transition-colors" disabled>
                     Save Changes
-                </button>            </div>
+                </button>            
+            </div>
         </div>
-    </div><!-- Script.js -->
-    <script src="script.js"></script>
+    </div>
     
     <!-- Profile Authentication and Data Loading Script -->
     <script>        // Check authentication status and load user data
@@ -238,7 +251,7 @@
             
             console.log("Token:", token ? "Found" : "Not found");
             console.log("UserId:", userId ? userId : "Not found");
-              if (token && userId) {
+            if (token && userId) {
                 // User is logged in, load their data
                 loadUserProfile(userId, token);
                 loadUserStreak(userId, token);
@@ -258,15 +271,10 @@
         // Enable profile features for logged-in users
         function enableProfileFeatures() {
             const editBtn = document.getElementById('editProfileBtn');
-            const profileContainer = document.getElementById('profilePictureContainer');
             
             if (editBtn) {
                 editBtn.disabled = false;
                 editBtn.addEventListener('click', openEditProfileModal);
-            }
-            
-            if (profileContainer) {
-                profileContainer.addEventListener('click', openProfilePictureModal);
             }
         }
 
@@ -281,13 +289,10 @@
             
             if (profileContainer) {
                 profileContainer.style.cursor = 'default';
-                profileContainer.addEventListener('click', function() {
-                    alert('Please login to change your profile picture');
-                });
             }
-        }        // Open edit profile modal (placeholder for now)
+        }        // Open edit profile modal - now opens profile picture modal
         function openEditProfileModal() {
-            alert('Edit Profile feature coming soon! For now, you can change your profile picture by clicking on it.');
+            openProfilePictureModal();
         }
 
         // Show graph notice for non-logged-in users
@@ -411,8 +416,10 @@
 
         // Load user streak data
         async function loadUserStreak(userId, token) {
-            const streakElement = document.getElementById('currentStreakDisplay');
-            if (!streakElement) return;
+            const currentStreakElement = document.getElementById('currentStreakDisplay');
+            const longestStreakElement = document.getElementById('longestStreakDisplay');
+            
+            if (!currentStreakElement || !longestStreakElement) return;
 
             try {
                 const response = await fetch(`http://localhost:8080/api/users/${userId}/streak`, {
@@ -427,24 +434,38 @@
                     const streakData = await response.json();
                     console.log("Streak data loaded:", streakData);
                     
-                    // Update streak display
-                    const streakCount = streakData.currentStreak || 0;
-                    streakElement.textContent = `${streakCount} Days`;
+                    // Update current streak display
+                    const currentStreak = streakData.currentStreak || 0;
+                    currentStreakElement.textContent = `${currentStreak} Days`;
+                    
+                    // Update longest streak display
+                    const longestStreak = streakData.longestStreak || streakData.maxStreak || 0;
+                    longestStreakElement.textContent = `${longestStreak} Days`;
                     
                     // Add visual feedback for good streaks
-                    if (streakCount > 0) {
-                        streakElement.classList.add('text-green-600');
-                        if (streakCount >= 7) {
-                            streakElement.classList.add('animate-pulse');
+                    if (currentStreak > 0) {
+                        currentStreakElement.classList.add('text-green-600');
+                        if (currentStreak >= 7) {
+                            currentStreakElement.classList.add('animate-pulse');
+                        }
+                    }
+                    
+                    // Add visual feedback for impressive longest streaks
+                    if (longestStreak > 0) {
+                        longestStreakElement.classList.add('text-yellow-600', 'dark:text-yellow-400');
+                        if (longestStreak >= 30) {
+                            longestStreakElement.classList.add('animate-pulse');
                         }
                     }
                 } else {
                     console.error('Failed to load streak data:', response.status);
-                    streakElement.textContent = 'Error loading streak';
+                    currentStreakElement.textContent = 'Error loading streak';
+                    longestStreakElement.textContent = 'Error loading streak';
                 }
             } catch (error) {
                 console.error('Error loading streak data:', error);
-                streakElement.textContent = 'Error loading streak';
+                currentStreakElement.textContent = 'Error loading streak';
+                longestStreakElement.textContent = 'Error loading streak';
             }
         }
 
