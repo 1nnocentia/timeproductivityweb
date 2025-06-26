@@ -110,7 +110,56 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // handleNonStreakAchievements(); 
+    /**
+     * Memeriksa dan memperbarui pencapaian yang tidak terkait dengan streak.
+     * @param {Array} allSchedules - Array semua jadwal dari pengguna.
+     * @param {Array} weeklyTaskCounts - Array jumlah tugas per minggu dari API.
+     */
+    function updateNonStreakAchievementCards(allSchedules, weeklyTaskCounts) {
+        // 1. Pencapaian "First Task"
+        // Cek apakah ada setidaknya satu item dalam allSchedules yang merupakan task dan statusnya 'SELESAI'
+        const hasCompletedTask = allSchedules.some(item => item.task && (item.task.status.toUpperCase() === 'SELESAI'));
+        const firstTaskCard = document.getElementById('achievement-first-task');
+        const firstTaskStatus = document.getElementById('achievement-first-task-status');
+
+        if (firstTaskCard && firstTaskStatus && hasCompletedTask) {
+            unlockCard(firstTaskCard, firstTaskStatus, 'Unlocked');
+        }
+
+        // 2. Pencapaian "Productive Week"
+        // Cek apakah ada minggu di mana jumlah tugas yang diselesaikan >= 5
+        const isProductiveWeekAchieved = weeklyTaskCounts.some(week => week.count >= 5); // Angka 5 bisa disesuaikan
+        const productiveWeekCard = document.getElementById('achievement-productive-week');
+        const productiveWeekStatus = document.getElementById('achievement-productive-week-status');
+        
+        if (productiveWeekCard && productiveWeekStatus) {
+            if (isProductiveWeekAchieved) {
+                unlockCard(productiveWeekCard, productiveWeekStatus, 'Unlocked');
+            } else {
+                productiveWeekStatus.textContent = `Locked (Selesaikan 5 tugas dalam seminggu)`;
+            }
+        }
+    }
+    
+    /**
+     * Helper function untuk mengubah tampilan kartu menjadi "Unlocked".
+     * @param {HTMLElement} cardElement - Elemen kartu utama.
+     * @param {HTMLElement} statusElement - Elemen teks status di footer.
+     * @param {string} text - Teks status (e.g., "Unlocked").
+     */
+    function unlockCard(cardElement, statusElement, text) {
+        cardElement.classList.remove('opacity-50');
+        cardElement.classList.add('unlocked');
+        statusElement.textContent = text;
+        statusElement.style.color = '#10B981'; // Warna hijau
+        statusElement.style.fontWeight = 'bold';
+    }
+    
+    // Tambahkan event listener untuk tombol logout jika ada
+    const logoutButton = document.getElementById('logoutButton');
+    if (logoutButton && typeof window.handleLogout === 'function') {
+        logoutButton.addEventListener('click', window.handleLogout);
+    }
     }
 
     initializeAchievementsPage();
