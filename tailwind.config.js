@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./public/**/*.{html,js}"],
+  darkMode: 'class', // Enable dark mode support
   theme: {
-    darkMode: 'class', // Enable dark mode support
     extend: {
       dropShadow:{
         default: '2px 2px 5px rgba(0,0,0,0.25)',
