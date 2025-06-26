@@ -64,8 +64,8 @@
                 <div class="flex items-center space-x-4">
                     <!-- Profile, masih mau diubah, krna nanti sesuai nama dan profile pengguna -->
                     <button title="Profile">
-                        <i class="fa-solid fa-user text-accent dark:text-primary hover:text-accent/80 
-                        dark:hover:text-accent/80 transition-colors"></i>
+                        <a href="/public/profile.html"><i class="fa-solid fa-user text-accent  hover:text-accent/80 
+                         dark:hover:text-accent/80 transition-colors"></i></a>
                     </button>
 
                     <!-- Settings Icon -->
@@ -75,7 +75,7 @@
                     </button>
 
                     <!-- Logout Icon -->
-                    <button title="Logout">
+                    <button id="logoutButton" title="Logout">
                         <i class="fa-solid fa-right-from-bracket text-accent dark:text-primary hover:text-accent/80 
                         dark:hover:text-accent/80 transition-colors"></i>
                     </button>
@@ -103,7 +103,7 @@
                         <div class="flex items-center space-x-4">
                             
                             <div class="w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-600 overflow-hidden flex-shrink-0">
-                                <img class="w-full h-full object-cover" src="../assets/Aset_Aplikasi_Personal_4.png" alt="">
+                                <img id="profilePicture" class="w-full h-full object-cover" src="../assets/Aset_Aplikasi_Personal_1.png" alt="">
                             </div>
                             
                             <div class="flex flex-col">

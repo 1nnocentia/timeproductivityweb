@@ -212,6 +212,7 @@ window.handleUpdateUser = async function(userId, nama, username, email, password
         if (response) {
             const data = await response.json();
             window.displayResponse(data);
+            return data;
         }
     } catch (error) {
         console.error('Error updating user:', error);

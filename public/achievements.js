@@ -112,8 +112,14 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateProfileInfo(userData) {
         const profileNameEl = document.getElementById('profileName');
         const profileUsernameEl = document.getElementById('profileUsername');
+        const profilePictureEl = document.getElementById('profilePicture');
         if (profileNameEl) profileNameEl.textContent = userData.nama || 'User';
         if (profileUsernameEl) profileUsernameEl.textContent = `@${userData.username}` || '';
+        if (profilePictureEl && userData.profilePictureId) {
+        const basePath = "../assets/"; 
+        const imageName = userData.profilePictureId; 
+        profilePictureEl.src = basePath + imageName;
+    } 
     }
 
     /**
@@ -203,4 +209,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Panggil fungsi inisialisasi untuk memulai semuanya
     initializeAchievementsPage();
+
+    
 });
