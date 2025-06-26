@@ -28,7 +28,7 @@
                     <span class="text-xl text-text-100 text-accent dark:text-primary font-extrabold font-heading">CLOCKIN</span>
                 </div>
 
-                <ul class="hidden md:flex space-x-8">
+                <ul class="font-body hidden md:flex space-x-8">
                     <li>
                         <a href="../public/user_dashboard.html" class="
                         text-accent
@@ -102,11 +102,13 @@
                 <div class="flex justify-between p-4 bg-white dark:bg-gray-800 rounded-lg drop-shadow-default items-center cols-span-3 lg:col-span-2">
                         <div class="flex items-center space-x-4">
                             
-                            <img class="w-32 h-32" src="../assets/Aset_Aplikasi_Personal_4.png" alt="">
+                            <div class="w-32 h-32 rounded-full bg-gray-200 dark:bg-gray-600 overflow-hidden flex-shrink-0">
+                                <img class="w-full h-full object-cover" src="../assets/Aset_Aplikasi_Personal_4.png" alt="">
+                            </div>
                             
                             <div class="flex flex-col">
-                                <span id="profileName" class="text-accent text-3xl font-black font-heading">Aristo</span>
-                                <span id="profileUsername" class="text-accent text-sm font-medium font-body">yuukiyuna</span>
+                                <span id="profileName" class="text-accent dark:text-primary text-3xl font-black font-heading">Aristo</span>
+                                <span id="profileUsername" class="text-accent dark:text-primary text-sm font-medium font-body">yuukiyuna</span>
                             </div>
                             
                         </div>
@@ -115,8 +117,8 @@
                 <!-- STREAK -->
                 <div class="flex justify-between p-4 bg-white dark:bg-gray-800 rounded-lg drop-shadow-default items-center">
                     <div class="flex flex-col">
-                        <span class="text-accent font-heading text-sm">Your Streak</span>
-                        <span id="currentStreakDisplay" class="text-accent font-heading text-2xl font-black">293 Days</span>
+                        <span class="text-accent dark:text-primary font-heading text-sm">Your Streak</span>
+                        <span id="currentStreakDisplay" class="text-accent dark:text-primary font-heading text-2xl font-black">293 Days</span>
                     </div>
                     <img class="w-16 h-16" src="../assets/Aset_Aplikasi_Api.png" alt="">
                     
