@@ -1,10 +1,8 @@
 // public/achievements.js
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Pastikan pengguna sudah login sebelum menjalankan fungsi apa pun
     if (!window.userId) {
         alert('You have to login first.');
-        // Redirect ke halaman login jika belum
         window.location.href = '../public/login.html';
         return;
     }
@@ -16,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
         { id: 'streak-30', requiredStreak: 30 },
         { id: 'streak-100', requiredStreak: 100 },
         { id: 'streak-365', requiredStreak: 365 },
-        // Anda bisa tambahkan milestone 1000 jika ada cardnya di HTML
     ];
 
     /**
@@ -100,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (maxStreak >= ach.requiredStreak) {
                     // UNLOCKED
                     cardElement.classList.remove('opacity-50'); // Hapus efek terkunci
-                    cardElement.classList.add('unlocked'); // Tambah kelas jika perlu styling khusus
+                    cardElement.classList.add('unlocked');
                     statusElement.textContent = 'Unlocked';
                     statusElement.style.color = '#10B981'; // Warna hijau untuk unlocked
                     statusElement.style.fontWeight = 'bold';
@@ -113,10 +110,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Di sini Anda bisa menambahkan logika untuk achievement non-streak
         // handleNonStreakAchievements(); 
     }
 
-    // Panggil fungsi inisialisasi untuk memulai semuanya
     initializeAchievementsPage();
 });
