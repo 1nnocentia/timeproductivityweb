@@ -14,14 +14,14 @@
     <title>Clockin</title>
     
 </head>
-<body class="font-body transition-color bg-primary duration-300">
+<body class="font-body transition-color duration-300">
     <!-- Header Section -->
     <header class="fixed w-full top-0 z-50 text-text-100 backdrop-blur-xl drop-shadow-default_1 transition-all duration-300">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
 
                 <div class="flex items-center text-accent">
-                    <span class="text-xl font-extrabold font-heading">CLOCKIN</span>
+                    <span class="text-xl font-extrabold font-heading text-accent dark:text-primary">CLOCKIN</span>
                 </div>
 
                 <div class="flex items-center">
@@ -34,16 +34,16 @@
     </header>
 
     <!-- Landing Page Section -->
-    <section class="min-h-screen pt-20 bg-primary transition-colors duration-300">
+    <section class="min-h-screen pt-20 bg-primary dark:bg-gray-600 transition-colors duration-300">
         <!-- Hero Section -->
         <div class="container mx-auto px-4 py-16">
             <div class="flex flex-col-reverse lg:flex-row items-center justify-between">
                 <!-- Left Content -->
                 <div class="w-full lg:w-1/2 text-center lg:text-left mt-8 lg:mt-0">
-                    <h1 class="text-4xl lg:text-5xl font-bold font-heading text-accent dark:text-white mb-6">
+                    <h1 class="text-4xl lg:text-5xl font-bold font-heading text-accent dark:text-primary mb-6">
                     CLOCKIN
                     </h1>
-                    <p class="text-xl lg:text-2xl text-gray-600 mb-8">
+                    <p class="text-xl lg:text-2xl text-gray-600 dark:text-gray-300 mb-8">
                         Your personal<br>
                         interactive time management
                     </p>
@@ -67,26 +67,25 @@
         </div>
 
         <!-- Features Section -->
-        <div id="features" class="bg-white dark:bg-gray-900/5 py-16 transition-colors duration-300">
+        <div id="features" class="bg-white dark:bg-gray-700 py-16 transition-colors duration-300">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center text-gray-900 dark:text-gray-100 mb-12">
                     Why Choose Clockin?
                 </h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Feature 1 -->
-                    <div class="feature-card bg-primary p-6 rounded-xl backdrop-blur-sm transition-colors duration-300">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">                    <!-- Feature 1 -->
+                    <div class="feature-card bg-primary dark:bg-accent p-6 rounded-xl backdrop-blur-sm">
                         <img src="../assets/Aset_Aplikasi_Dashboard-Icon.png" alt="Dashboard" class="w-12 h-12 mb-4">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Smart Dashboard</h3>
                         <p class="text-gray-600 dark:text-gray-300">Track your productivity with our intuitive dashboard</p>
                     </div>
                     <!-- Feature 2 -->
-                    <div class="feature-card bg-primary p-6 rounded-xl backdrop-blur-sm transition-colors duration-300">
+                    <div class="feature-card bg-primary dark:bg-accent p-6 rounded-xl backdrop-blur-sm">
                         <img src="../assets/Aset_Aplikasi_Calendar-Icon.png" alt="Calendar" class="w-12 h-12 mb-4">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Schedule Management</h3>
                         <p class="text-gray-600 dark:text-gray-300">Organize your time efficiently with our calendar features</p>
                     </div>
                     <!-- Feature 3 -->
-                    <div class="feature-card bg-primary p-6 rounded-xl backdrop-blur-sm transition-colors duration-300">
+                    <div class="feature-card bg-primary dark:bg-accent p-6 rounded-xl backdrop-blur-sm">
                         <img src="../assets/Aset_Aplikasi_Priority-1.png" alt="Priority" class="w-12 h-12 mb-4">
                         <h3 class="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">Priority Tasks</h3>
                         <p class="text-gray-600 dark:text-gray-300">Never miss important deadlines with priority management</p>
@@ -104,23 +103,41 @@
         }
         .animate-bounce-slow {
             animation: bounce-slow 3s infinite;
-        }          /* Feature cards animation */
+        }        /* Feature cards slide-up animation */
         .feature-card {
             opacity: 0;
-            transform: scale(0.6) translateY(50px);
-            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-            will-change: transform, opacity;
+            transform: translateY(60px);
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .feature-card.show {
+        .feature-card.slide-up {
             opacity: 1;
-            transform: scale(1) translateY(0);
+            transform: translateY(0);
         }
         
-        /* Add delay for each card */
-        .feature-card:nth-child(1) { transition-delay: 0.2s; }
-        .feature-card:nth-child(2) { transition-delay: 0.4s; }
-        .feature-card:nth-child(3) { transition-delay: 0.6s; }
+        /* Separate transition for color changes only */
+        .feature-card {
+            transition-property: opacity, transform;
+        }
+        
+        .feature-card * {
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+        
+        /* Add staggered animation delays */
+        .feature-card:nth-child(1) {
+            transition-delay: 0s;
+        }
+        
+        .feature-card:nth-child(2) {
+            transition-delay: 0.1s;
+        }
+        
+        .feature-card:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+        
     </style>
 
     <script>
@@ -154,24 +171,35 @@
                 icon.classList.remove(html.classList.contains('dark') ? 'fa-moon' : 'fa-sun');
                 icon.classList.add(html.classList.contains('dark') ? 'fa-sun' : 'fa-moon');
             });
-        });
-
-        // Intersection Observer for feature cards
+        });        // Intersection Observer for feature cards slide-up animation
         document.addEventListener('DOMContentLoaded', function() {            
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        entry.target.classList.add('show');
+                        // Get all feature cards
+                        const featureCards = document.querySelectorAll('.feature-card');
+                        
+                        // Trigger slide-up animation for each card with staggered timing
+                        featureCards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.classList.add('slide-up');
+                            }, index * 150); // 150ms delay between each card
+                        });
+                        
+                        // Stop observing after animation is triggered
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
-                threshold: 0.5,
-                rootMargin: '-70px'
+                threshold: 0.3,
+                rootMargin: '-50px'
             });
 
-            document.querySelectorAll('.feature-card').forEach((card) => {
-                observer.observe(card);
-            });
+            // Observe the features section container
+            const featuresSection = document.getElementById('features');
+            if (featuresSection) {
+                observer.observe(featuresSection);
+            }
         });
     </script>
 </body>
